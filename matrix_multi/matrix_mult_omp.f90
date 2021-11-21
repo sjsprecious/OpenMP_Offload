@@ -6,10 +6,11 @@ program matrix_mult
    character(10) :: rowsBChar
    character(10) :: colsBChar
    integer, parameter:: DEFAULT_DIM=1024
+   integer, parameter:: LOOP_COUNT=10
    real, parameter:: MAT_A_VAL=3.0
    real, parameter:: MAT_B_VAL=2.0
    real, parameter:: VERIF_TOL=1.0E-6
-   integer :: i, j, k,rowsA, colsA, rowsB, colsB
+   integer :: i, j, k, n, rowsA, colsA, rowsB, colsB
    integer :: t1, t2, dt, count_rate, count_max
    real, allocatable, dimension(:,:) :: a, b, c_cpu, c_gpu
    real :: tmp, secs
@@ -70,41 +71,46 @@ program matrix_mult
 ! Compute matrix addition on CPU
 
       call system_clock(t1)
-      do j=1,colsB
-         do i=1,rowsA
-            tmp = 0.0
-            do k=1,rowsB
-                tmp = tmp + a(i,k) * b(k,j)
+
+      do n = 1, LOOP_COUNT
+         do j=1,colsB
+            do i=1,rowsA
+               tmp = 0.0
+               do k=1,rowsB
+                   tmp = tmp + a(i,k) * b(k,j)
+               enddo
+               c_cpu(i,j) = tmp
             enddo
-            c_cpu(i,j) = tmp
          enddo
       enddo
     
       call system_clock(t2)
       dt = t2-t1
-      secs = real(dt)/real(count_rate)
+      secs = real(dt)/real(count_rate)/real(LOOP_COUNT)
       write(*,"('CPU Matrix Multiplication completed in ',f12.5,' secs')") secs
  
 ! Compute matrix addition on GPU
 
       call system_clock(t1)
 
-!$omp target data map(to:a,b) map(from:c_gpu)
-!$omp target teams distribute parallel do collapse(2) reduction(+:tmp)
-      do j=1,colsB
-         do i=1,rowsA
-            tmp = 0.0
-            do k=1,rowsB
-                tmp = tmp + a(i,k) * b(k,j)
+      do n = 1, LOOP_COUNT
+         !$omp target data map(to:a,b) map(from:c_gpu)
+         !$omp target teams distribute parallel do reduction(+:tmp)
+         do j=1,colsB
+            do i=1,rowsA
+               tmp = 0.0
+               do k=1,rowsB
+                   tmp = tmp + a(i,k) * b(k,j)
+               enddo
+               c_gpu(i,j) = tmp
             enddo
-            c_gpu(i,j) = tmp
          enddo
+         !$omp end target data
       enddo
-!$omp end target data
 
       call system_clock(t2)
       dt = t2-t1
-      secs = real(dt)/real(count_rate)
+      secs = real(dt)/real(count_rate)/real(LOOP_COUNT)
       write(*,"('GPU Matrix Multiplication completed in ',f12.5,' secs')") secs
 
 ! Verify GPU results against CPU

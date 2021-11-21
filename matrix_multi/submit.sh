@@ -24,7 +24,7 @@ nvidia-smi
 # Move to the correct directory and run the executable
 echo -e "\nBeginning code output:\n-------------\n"
 
-for i in 1024 2048 4096 8192 16384 32768
+for i in 1024 2048 4096 8192
 do
   ./matrix_mult.exe $i $i $i $i
 done
