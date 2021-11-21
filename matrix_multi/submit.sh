@@ -1,9 +1,9 @@
 #!/bin/bash -l
 #PBS -N GPU_matrix_mult 
 #PBS -A NTDD0004
-#PBS -l select=1:ncpus=1:mpiprocs=1:mem=100GB:ngpus=1
+#PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1
 #PBS -l gpu_type=v100
-#PBS -l walltime=00:03:00
+#PBS -l walltime=01:59:00
 #PBS -q casper 
 #PBS -j oe
 #PBS -k eod
@@ -23,5 +23,8 @@ nvidia-smi
 
 # Move to the correct directory and run the executable
 echo -e "\nBeginning code output:\n-------------\n"
-#srun nvprof ./matrix_mult.exe 
-./matrix_mult.exe 
+
+for i in 1024 2048 4096 8192 16384 32768
+do
+  ./matrix_mult.exe $i $i $i $i
+done

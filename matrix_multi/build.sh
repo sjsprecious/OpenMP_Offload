@@ -5,6 +5,7 @@ module purge
 module load ncarenv/1.3
 module load nvhpc/21.9
 module load cuda/11.4.0
+module load ncarcompilers/0.5.0
 module list
 
 # Export variables for use in the Makefile

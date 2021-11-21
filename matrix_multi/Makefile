@@ -14,6 +14,7 @@ FCFLAGS= -tp=skylake -target=gpu -gpu=cc70 -mp=gpu,autopar -Minfo=all -I${NVHPC_
 OBJECTS= matrix_mult_omp.o
 else
 FCFLAGS=
+OBJECTS= matrix_mult.o
 endif
 
 # The binary to be built by this Makefile
