@@ -3,7 +3,7 @@
 #PBS -A NTDD0004
 #PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1
 #PBS -l gpu_type=v100
-#PBS -l walltime=01:59:00
+#PBS -l walltime=09:59:00
 #PBS -q casper 
 #PBS -j oe
 #PBS -k eod

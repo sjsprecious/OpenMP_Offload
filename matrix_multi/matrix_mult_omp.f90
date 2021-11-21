@@ -6,12 +6,12 @@ program matrix_mult
    character(10) :: rowsBChar
    character(10) :: colsBChar
    integer, parameter:: DEFAULT_DIM=1024
-   integer, parameter:: LOOP_COUNT=10
+   integer, parameter:: LOOP_COUNT=100
    real, parameter:: MAT_A_VAL=3.0
    real, parameter:: MAT_B_VAL=2.0
    real, parameter:: VERIF_TOL=1.0E-6
    integer :: i, j, k, n, rowsA, colsA, rowsB, colsB
-   integer :: t1, t2, dt, count_rate, count_max
+   real :: t1, t2, dt
    real, allocatable, dimension(:,:) :: a, b, c_cpu, c_gpu
    real :: tmp, secs
    logical:: ver_flag
@@ -43,9 +43,8 @@ program matrix_mult
    endif
 
 !Initialize timing information
-   call system_clock(count_max=count_max, count_rate=count_rate)
 
-      call system_clock(t1)
+      call cpu_time(t1)
 
       allocate( a(rowsA,colsA), b(rowsB,colsB), c_cpu(rowsA,colsB), c_gpu(rowsA,colsB) )
 
@@ -62,15 +61,15 @@ program matrix_mult
          enddo
       enddo
 
-      call system_clock(t2)
+      call cpu_time(t2)
       dt = t2-t1
-      secs = real(dt)/real(count_rate)
+      secs = dt
       write(*,"('Initialized Mat A, size ',i6,' x ',i6,' and ')") rowsA,colsA
       write(*,"('Initialized Mat B, size ',i6,' x ',i6,' in ',f12.5,'secs')") rowsB,colsB, secs
 
 ! Compute matrix addition on CPU
 
-      call system_clock(t1)
+      call cpu_time(t1)
 
       do n = 1, LOOP_COUNT
          do j=1,colsB
@@ -84,14 +83,14 @@ program matrix_mult
          enddo
       enddo
     
-      call system_clock(t2)
+      call cpu_time(t2)
       dt = t2-t1
-      secs = real(dt)/real(count_rate)/real(LOOP_COUNT)
+      secs = dt/real(LOOP_COUNT)
       write(*,"('CPU Matrix Multiplication completed in ',f12.5,' secs')") secs
  
 ! Compute matrix addition on GPU
 
-      call system_clock(t1)
+      call cpu_time(t1)
 
       do n = 1, LOOP_COUNT
          !$omp target data map(to:a,b) map(from:c_gpu)
@@ -108,9 +107,9 @@ program matrix_mult
          !$omp end target data
       enddo
 
-      call system_clock(t2)
+      call cpu_time(t2)
       dt = t2-t1
-      secs = real(dt)/real(count_rate)/real(LOOP_COUNT)
+      secs = dt/real(LOOP_COUNT)
       write(*,"('GPU Matrix Multiplication completed in ',f12.5,' secs')") secs
 
 ! Verify GPU results against CPU
