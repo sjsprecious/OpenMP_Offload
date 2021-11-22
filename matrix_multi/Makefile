@@ -10,7 +10,7 @@ FCFLAGS= -acc -gpu=cc70 -Minfo=all -I${NVHPC_ROOT_PATH}/include
 # List of object files separated by spaces (e.g. main.o device.o)
 OBJECTS= matrix_mult.o
 else ifeq ($(_OPENMP),true)
-FCFLAGS= -tp=skylake -target=gpu -gpu=cc70 -mp=gpu,autopar -Minfo=all -I${NVHPC_ROOT_PATH}/include
+FCFLAGS= -tp=skylake -target=gpu -gpu=cc70 -mp=gpu -Minfo=all -I${NVHPC_ROOT_PATH}/include
 OBJECTS= matrix_mult_omp.o
 else
 FCFLAGS=
