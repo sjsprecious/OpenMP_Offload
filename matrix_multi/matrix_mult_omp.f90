@@ -94,7 +94,7 @@ program matrix_mult
 
       do n = 1, LOOP_COUNT
          !$omp target data map(to:a,b) map(from:c_gpu)
-         !$omp target teams distribute parallel do reduction(+:tmp)
+         !$omp target teams distribute parallel do collapse (2) reduction(+:tmp)
          do j=1,colsB
             do i=1,rowsA
                tmp = 0.0

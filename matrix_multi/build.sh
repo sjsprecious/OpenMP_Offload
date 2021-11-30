@@ -14,4 +14,4 @@ export NVHPC_ROOT_PATH="${NCAR_ROOT_NVHPC}/Linux_x86_64/21.9/compilers"
 # Remove any previous build attempts
 make clean
 # Do a build
-make _OPENACC=true
+make _OPENMP=true _OPENACC=false
