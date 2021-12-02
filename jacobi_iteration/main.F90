@@ -11,10 +11,10 @@ program jacobi_iteration
    character(10) :: rowsChar
    character(10) :: colsChar
    integer, parameter :: DEFAULT_DIM = 1024
-   integer, parameter :: ITER_MAX = 1000
-   real(wp), parameter :: BC = 100._wp
-   real(wp), parameter :: TOL = 1.e-3_wp      ! tolerance for Jacobi iteration
-   real(wp), parameter :: VERIF_TOL = 1.0E-6_wp
+   integer, parameter :: ITER_MAX = 10000
+   real(wp), parameter :: BC = 1._wp
+   real(wp), parameter :: TOL = 1.e-4_wp         ! tolerance for Jacobi iteration
+   real(wp), parameter :: VERIF_TOL = 1.e-3_wp   ! tolerance for verification test
    integer :: i, j, iter, rows, cols
    real(wp) :: t1, t2, dt, error
    real(wp), allocatable, dimension(:,:) :: a_new, a_cpu, a_gpu
@@ -197,12 +197,12 @@ program jacobi_iteration
    ver_flag = .true. 
    verify_loop: do j = 1, cols
       do i = 1, rows
-         if (abs(a_gpu(i,j)-a_cpu(i,j))/a_cpu(i,j) > VERIF_TOL) then
+         if (abs(a_gpu(i,j)-a_cpu(i,j)) > VERIF_TOL) then
              write(*,"('Verification failed')")
              write(*,"('   1st relative error > tolerance encountered at A_CPU[',i6,'][',i6,']')") i, j
              write(*,"('   A_CPU[',i6,'][',i6,']=',f15.8,'')") i,j,a_cpu(i,j)
              write(*,"('   A_GPU[',i6,'][',i6,']=',f15.8,'')") i,j,a_gpu(i,j)
-             write(*,"('   Relative error: ABS(A_GPU-A_CPU)/A_CPU =',f15.8,'')") abs(a_gpu(i,j)-a_cpu(i,j))/a_cpu(i,j)
+             write(*,"('   ABS(A_GPU-A_CPU) =',f15.8,'')") abs(a_gpu(i,j)-a_cpu(i,j))
              ver_flag = .false.
              exit verify_loop
          end if
