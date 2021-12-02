@@ -1,0 +1,1 @@
+This Jacobi iteration / Stencil example is originally borrowed from https://nanohub.org/resources/19384/download/Directive_Based_Programming.pdf and https://www.nec.com/en/global/solutions/hpc/articles/tech04.html.
