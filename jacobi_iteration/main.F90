@@ -115,9 +115,9 @@ program jacobi_iteration
       !$acc loop gang vector collapse (2)
       do j = 1, cols
          do i = 1, rows
-            a_new(i,j) = 0.25_wp * (a_gpu(i+1,j) + &
+            a_new(i,j) = 0.25_wp * (a_gpu(i,j-1) + &
                                     a_gpu(i-1,j) + &
-                                    a_gpu(i,j-1) + &
+                                    a_gpu(i+1,j) + &
                                     a_gpu(i,j+1))
          end do
       end do
@@ -149,9 +149,9 @@ program jacobi_iteration
       !$omp target teams distribute parallel do simd collapse (2)
       do j = 1, cols
          do i = 1, rows
-            a_new(i,j) = 0.25_wp * (a_gpu(i+1,j) + &
+            a_new(i,j) = 0.25_wp * (a_gpu(i,j-1) + &
                                     a_gpu(i-1,j) + &
-                                    a_gpu(i,j-1) + &
+                                    a_gpu(i+1,j) + &
                                     a_gpu(i,j+1))
          end do
       end do
