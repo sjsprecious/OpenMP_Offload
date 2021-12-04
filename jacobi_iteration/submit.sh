@@ -1,9 +1,9 @@
 #!/bin/bash -l
 #PBS -N GPU_Jacobi_iteration
 #PBS -A NTDD0004
-#PBS -l select=1:ncpus=1:mpiprocs=1:mem=300GB:ngpus=1
+#PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1
 #PBS -l gpu_type=v100
-#PBS -l walltime=00:10:00
+#PBS -l walltime=04:00:00
 #PBS -q casper 
 #PBS -j oe
 #PBS -k eod
@@ -24,7 +24,9 @@ nvidia-smi
 # Move to the correct directory and run the executable
 echo -e "\nBeginning code output:\n-------------\n"
 
-for i in 1024 2048
+export OMP_NUM_THREADS=1
+
+for i in 128 256 512 1024 2048 4096
 do
   ./jacobi_iteration.exe $i $i
 done

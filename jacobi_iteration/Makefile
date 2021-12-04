@@ -31,7 +31,7 @@ BINARY= jacobi_iteration.exe
 all: $(BINARY) 
 
 $(BINARY): $(OBJECTS)
-	$(F90) -o $(BINARY) $(OBJECTS) $(FCFLAGS) 
+	$(F90) -o $(BINARY) $(OBJECTS) $(FFLAGS) $(FCFLAGS) 
 
 %.o: %.f90 Makefile
 	$(F90) -c $(FFLAGS) $(FCFLAGS) $<
