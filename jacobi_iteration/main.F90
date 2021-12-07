@@ -85,9 +85,9 @@ program jacobi_iteration
    do iter = 1, ITER_MAX
       do j = 1, cols
          do i = 1, rows
-            a_new(i,j) = 0.25_wp * (a_cpu(i+1,j) + &
+            a_new(i,j) = 0.25_wp * (a_cpu(i,j-1) + &
                                     a_cpu(i-1,j) + &
-                                    a_cpu(i,j-1) + &
+                                    a_cpu(i+1,j) + &
                                     a_cpu(i,j+1))
          end do
       end do
