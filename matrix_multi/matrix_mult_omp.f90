@@ -104,6 +104,7 @@ program matrix_mult
                c_gpu(i,j) = tmp
             enddo
          enddo
+         !$omp end target teams distribute parallel do
          !$omp end target data
       enddo
 
@@ -124,7 +125,6 @@ program matrix_mult
                         ver_flag = 0
                         exit jloop
                 end if
-
          enddo
       enddo jloop
  
