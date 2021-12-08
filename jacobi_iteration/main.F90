@@ -13,7 +13,7 @@ program jacobi_iteration
    character(10) :: rowsChar
    character(10) :: colsChar
    integer, parameter :: DEFAULT_DIM = 1024
-   integer, parameter :: ITER_MAX = 1000 
+   integer, parameter :: ITER_MAX = 50000 
    real(wp), parameter :: BC = 10._wp
    real(wp), parameter :: VERIF_TOL = 1.e-2_wp   ! tolerance for verification test
    integer :: i, j, iter, rows, cols, ii, jj

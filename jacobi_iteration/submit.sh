@@ -3,7 +3,7 @@
 #PBS -A NTDD0004
 #PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1
 #PBS -l gpu_type=v100
-#PBS -l walltime=02:00:00
+#PBS -l walltime=00:10:00
 #PBS -q casper 
 #PBS -j oe
 #PBS -k eod
@@ -26,7 +26,7 @@ echo -e "\nBeginning code output:\n-------------\n"
 
 export OMP_NUM_THREADS=1
 
-for i in 128 256 512 1024 2048
+for i in 128 256 512 1024
 do
   ./jacobi_iteration.exe $i $i
 done

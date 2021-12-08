@@ -6,7 +6,9 @@ FFLAGS= -O3 -Wall -Mfree
 
 ifeq ($(_OPENMP),true)
 ifeq ($(_OPENACC),true)
-$(error _OPENMP and _OPENACC can not be both true.)
+#$(error _OPENMP and _OPENACC can not be both true.)
+FCFLAGS= -tp=skylake -acc -target=gpu -gpu=cc70 -mp=gpu -Minfo=all -I${NVHPC_ROOT_PATH}/include
+DM= -D_OPENMP -D_OPENACC
 else
 FCFLAGS= -tp=skylake -target=gpu -gpu=cc70 -mp=gpu -Minfo=all -I${NVHPC_ROOT_PATH}/include
 DM= -D_OPENMP 
