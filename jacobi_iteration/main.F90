@@ -15,7 +15,7 @@ program jacobi_iteration
    integer, parameter :: DEFAULT_DIM = 1024
    integer, parameter :: ITER_MAX = 1000 
    real(wp), parameter :: BC = 10._wp
-   real(wp), parameter :: VERIF_TOL = 1.e-3_wp   ! tolerance for verification test
+   real(wp), parameter :: VERIF_TOL = 1.e-2_wp   ! tolerance for verification test
    integer :: i, j, iter, rows, cols, ii, jj
    real(wp) :: t1, t2, dt, error
    real(wp), allocatable, dimension(:,:) :: a_new, a_cpu, a_gpu
@@ -146,7 +146,7 @@ program jacobi_iteration
 
    !$omp target data map (tofrom:a_gpu) map (alloc:a_new)
    do iter = 1, ITER_MAX
-      !$omp target teams distribute parallel do simd collapse (2)
+      !$omp target teams distribute parallel do simd collapse(2)
       do j = 1, cols
          do i = 1, rows
             a_new(i,j) = 0.25_wp * (a_gpu(i,j-1) + &
@@ -157,7 +157,7 @@ program jacobi_iteration
       end do
       !$omp end target teams distribute parallel do simd
 
-      !$omp target teams distribute parallel do simd collapse (2)
+      !$omp target teams distribute parallel do simd collapse(2)
       do j = 1, cols
          do i = 1, rows
             a_gpu(i,j) = a_new(i,j)
@@ -179,23 +179,23 @@ program jacobi_iteration
    jj = 0
    do j = 1, cols
       do i = 1, rows
-         if (abs(a_gpu(i,j)-a_cpu(i,j))/a_cpu(i,j) > error) then
+         if (abs(a_gpu(i,j)-a_cpu(i,j)) > error) then
              ii = i
              jj = j
-             error = abs(a_gpu(i,j)-a_cpu(i,j))/a_cpu(i,j)
+             error = abs(a_gpu(i,j)-a_cpu(i,j))
          end if
       end do
    end do
 
    if ( error < VERIF_TOL ) then 
       write(*,"('Verification passed')")
-      write(*,"('   Max relative error = ',f15.8,' at ii = ',i6,', jj = ',i6,'')") error, ii, jj
+      write(*,"('   Max abs error = ',f15.8,' at ii = ',i6,', jj = ',i6,'')") error, ii, jj
    else
       write(*,"('Verification failed')")
       write(*,"('   Max relative error > tolerance encountered at A_CPU[',i6,'][',i6,']')") ii, jj
-      write(*,"('   A_CPU[',i6,'][',i6,']=',f15.8,'')") ii,jj,a_cpu(ii,jj)
-      write(*,"('   A_GPU[',i6,'][',i6,']=',f15.8,'')") ii,jj,a_gpu(ii,jj)
-      write(*,"('   ABS(A_GPU-A_CPU)/A_CPU =',f15.8,'')") error 
+      write(*,"('   A_CPU[',i6,'][',i6,']=',G15.8,'')") ii,jj,a_cpu(ii,jj)
+      write(*,"('   A_GPU[',i6,'][',i6,']=',G15.8,'')") ii,jj,a_gpu(ii,jj)
+      write(*,"('   ABS(A_GPU-A_CPU) =',f15.8,'')") error 
    end if
 
 !Release Memory to cleanup program
