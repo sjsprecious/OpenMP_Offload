@@ -14,7 +14,7 @@ FCFLAGS= -target-accel=nvidia70 -h cpu=x86-skylake,omp,fp3,aggress,vector3,msgs
 DM= -D_OPENMP 
 endif
 else ifeq ($(_OPENACC),true)
-FCFLAGS= -target-accel=nvidia70 -h cpu=x86-skylake,acc,fp3,aggress,vector3,msgs
+FCFLAGS= -target-accel=nvidia70 -h cpu=x86-skylake,acc,omp,fp3,aggress,vector3,msgs
 DM= -D_OPENACC
 else
 FCFLAGS=
