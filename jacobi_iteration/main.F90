@@ -111,7 +111,7 @@ program jacobi_iteration
 
    !$acc data copy (a_gpu) create(a_new)
    do iter = 1, ITER_MAX
-      !$acc parallel vector_length(128) default(present)
+      !$acc parallel vector_length(128)
       !$acc loop gang vector collapse (2)
       do j = 1, cols
          do i = 1, rows
