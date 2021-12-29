@@ -6,7 +6,7 @@ program matrix_mult
    character(10) :: rowsBChar
    character(10) :: colsBChar
    integer, parameter:: DEFAULT_DIM=1024
-   integer, parameter:: LOOP_COUNT=100
+   integer, parameter:: LOOP_COUNT=10
    real, parameter:: MAT_A_VAL=3.0
    real, parameter:: MAT_B_VAL=2.0
    real, parameter:: VERIF_TOL=1.0E-6
@@ -94,7 +94,8 @@ program matrix_mult
 
       do n = 1, LOOP_COUNT
          !$acc data copyin(a,b) copyout(c_gpu)
-         !$acc parallel loop collapse(2) reduction(+:tmp)
+         !$acc parallel
+         !$acc loop collapse(2) reduction(+:tmp)
          do j=1,colsB
             do i=1,rowsA
                tmp = 0.0
@@ -115,7 +116,7 @@ program matrix_mult
       write(*,"('GPU Matrix Multiplication completed in ',f12.5,' secs')") secs
 
 ! Verify GPU results against CPU
-      ver_flag = 1
+      ver_flag = .TRUE.
       jloop: do j=1,colsB
          do i=1,rowsA
                if (abs(c_gpu(i,j)-c_cpu(i,j)) > VERIF_TOL) then
@@ -123,7 +124,7 @@ program matrix_mult
                         write(*,"('   1st error > tolerance encountered at C_gpu[',i6,'][',i6,']')") i, j
                         write(*,"('   C_cpu[',i6,'][',i6,']=',f12.2,'')") i,j,c_cpu(i,j)
                         write(*,"('   C_gpu[',i6,'][',i6,']=',f12.2,'')") i,j,c_gpu(i,j)
-                        ver_flag = 0
+                        ver_flag = .FALSE.
                         exit jloop
                 end if
 

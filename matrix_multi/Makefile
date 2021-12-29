@@ -1,23 +1,23 @@
 # Compilers and linkers
-F90=nvfortran
+F90=ftn
 
 # Compilation flags
-FFLAGS= -O3 -Wall -Mfree
+FFLAGS= -O3
 
 ifeq ($(_OPENMP),true)
 ifeq ($(_OPENACC),true)
 $(error _OPENMP and _OPENACC can not be both true.)
 else
-FCFLAGS= -tp=skylake -target=gpu -gpu=cc70 -mp=gpu -Minfo=all -I${NVHPC_ROOT_PATH}/include
+FCFLAGS= -target-accel=nvidia70 -h cpu=x86-skylake,omp,fp3,aggress,vector3,msgs 
 # Description of necessary files and binaries
 # List of object files separated by spaces (e.g. main.o device.o)
 OBJECTS= matrix_mult_omp.o
 endif
 else ifeq ($(_OPENACC),true)
-FCFLAGS= -acc -gpu=cc70 -Minfo=all -I${NVHPC_ROOT_PATH}/include
+FCFLAGS= -target-accel=nvidia70 -h cpu=x86-skylake,acc,fp3,aggress,vector3,msgs
 OBJECTS= matrix_mult.o
 else
-FCFLAGS=
+FCFLAGS= -h cpu=x86-skylake,omp,fp3,aggress,vector3,msgs
 OBJECTS= matrix_mult.o
 endif
 
