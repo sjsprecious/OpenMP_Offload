@@ -6,7 +6,7 @@ program matrix_mult
    character(10) :: rowsBChar
    character(10) :: colsBChar
    integer, parameter:: DEFAULT_DIM=1024
-   integer, parameter:: LOOP_COUNT=10
+   integer, parameter:: LOOP_COUNT=100
    real, parameter:: MAT_A_VAL=3.0
    real, parameter:: MAT_B_VAL=2.0
    real, parameter:: VERIF_TOL=1.0E-6
@@ -99,7 +99,6 @@ program matrix_mult
          do j=1,colsB
             do i=1,rowsA
                tmp = 0.0
-               !$acc loop vector reduction(+:tmp)
                do k=1,rowsB
                    tmp = tmp + a(i,k) * b(k,j)
                enddo
