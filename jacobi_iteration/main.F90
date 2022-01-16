@@ -146,7 +146,8 @@ program jacobi_iteration
 
    !$omp target data map (tofrom:a_gpu) map (alloc:a_new)
    do iter = 1, ITER_MAX
-      !$omp target teams distribute parallel do simd collapse(2)
+      !$omp target teams
+      !$omp distribute parallel do simd collapse(2)
       do j = 1, cols
          do i = 1, rows
             a_new(i,j) = 0.25_wp * (a_gpu(i,j-1) + &
@@ -155,15 +156,16 @@ program jacobi_iteration
                                     a_gpu(i,j+1))
          end do
       end do
-      !$omp end target teams distribute parallel do simd
+      !$omp end distribute parallel do simd
 
-      !$omp target teams distribute parallel do simd collapse(2)
+      !$omp distribute parallel do simd collapse(2)
       do j = 1, cols
          do i = 1, rows
             a_gpu(i,j) = a_new(i,j)
          end do
       end do
-      !$omp end target teams distribute parallel do simd
+      !$omp end distribute parallel do simd
+      !$omp end target teams
    end do
    !$omp end target data
 

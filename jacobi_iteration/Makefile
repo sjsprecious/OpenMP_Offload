@@ -42,4 +42,4 @@ $(BINARY): $(OBJECTS)
 	cpp ${DM} $< > $@
 
 clean:
-	rm *.o $(BINARY)
+	rm *.o $(BINARY) *cub *ptx
