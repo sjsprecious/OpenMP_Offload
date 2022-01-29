@@ -2,7 +2,6 @@ This matrix multiplication is originally borrowed from https://github.com/sjspre
 
 To build and run a test case on Casper, do the following steps:
 
--  revise the **build.sh** and **Makefile** scripts for different compilation options.
--  compile the source code by **./build.sh**.
+-  compile the source code by the **build.sh** script. Check `./build.sh -h` for detailed options.
 -  revise the **submit.sh** script for job resource request.
 -  submit the **submit.sh** script to run a test on a compute node.
