@@ -1,0 +1,63 @@
+pbs_attach: process 47032 attached to job: 1979645.casper-pbs
+Starting palsd in node casper25... 
+pbs_attach: process 47147 attached to job: 1979645.casper-pbs
+Starting palsd in node casper25... 
+WARNING: underlay of /usr/bin/nvidia-smi required more than 50 (1241) bind mounts
+Currently Loaded Modulefiles:
+  1) cce/12.0.3              6) cray-libsci/21.08.1.2
+  2) craype/2.7.9            7) cray-pals/1.0.17
+  3) libfabric/1.11.0.4.75   8) cudatoolkit/21.3_11.0
+  4) craype-network-ofi      9) craype-accel-nvidia70
+  5) cray-mpich/8.1.9
+Thu Jan 27 22:51:16 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.57.02    Driver Version: 470.57.02    CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Tesla V100-SXM2...  On   | 00000000:61:00.0 Off |                    0 |
+| N/A   35C    P0    58W / 300W |      0MiB / 32510MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+
+Beginning code output:
+-------------
+
+Initialization done for domain size    130 x    130 in      0.00014secs
+GPU Jacobi iteration completed in      0.79749 secs with  10001 iterations
+Verification failed
+   Max relative error > tolerance encountered at A_CPU[     1][     1]
+   A_CPU[     1][     1]=     0.00000000000000    
+   A_GPU[     1][     1]=     9.99950476333810    
+   ABS(A_GPU-A_CPU) =        9.999504763338104
+Initialization done for domain size    258 x    258 in      0.00056secs
+GPU Jacobi iteration completed in      2.51385 secs with  10001 iterations
+Verification failed
+   Max relative error > tolerance encountered at A_CPU[     1][     1]
+   A_CPU[     1][     1]=     0.00000000000000    
+   A_GPU[     1][     1]=     9.99873383959876    
+   ABS(A_GPU-A_CPU) =        9.998733839598758
+Initialization done for domain size    514 x    514 in      0.00215secs
+GPU Jacobi iteration completed in      9.41926 secs with  10001 iterations
+Verification failed
+   Max relative error > tolerance encountered at A_CPU[     1][     1]
+   A_CPU[     1][     1]=     0.00000000000000    
+   A_GPU[     1][     1]=     9.99872695140780    
+   ABS(A_GPU-A_CPU) =        9.998726951407800
+Initialization done for domain size   1026 x   1026 in      0.00526secs
+GPU Jacobi iteration completed in     66.56455 secs with  10001 iterations
+Verification failed
+   Max relative error > tolerance encountered at A_CPU[     1][     1]
+   A_CPU[     1][     1]=     0.00000000000000    
+   A_GPU[     1][     1]=     9.99872695140778    
+   ABS(A_GPU-A_CPU) =        9.998726951407781

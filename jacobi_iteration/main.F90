@@ -13,9 +13,9 @@ program jacobi_iteration
    character(10) :: rowsChar
    character(10) :: colsChar
    integer, parameter :: DEFAULT_DIM = 1024
-   integer, parameter :: ITER_MAX = 50000 
+   integer, parameter :: ITER_MAX = 10000 
    real(wp), parameter :: BC = 10._wp
-   real(wp), parameter :: VERIF_TOL = 1.e-2_wp   ! tolerance for verification test
+   real(wp), parameter :: VERIF_TOL = 1.e-8_wp   ! tolerance for verification test
    integer :: i, j, iter, rows, cols, ii, jj
    real(wp) :: t1, t2, dt, error
    real(wp), allocatable, dimension(:,:) :: a_new, a_cpu, a_gpu
@@ -80,6 +80,8 @@ program jacobi_iteration
 
 ! Compute Jacobi iteration on CPU
 
+#ifdef _CPU
+
    t1 = omp_get_wtime()
 
    do iter = 1, ITER_MAX
@@ -104,9 +106,11 @@ program jacobi_iteration
    dt = t2-t1
    write(*,"('CPU Jacobi iteration completed in ',f12.5,' secs with ',i6,' iterations')") dt, iter 
 
-#ifdef _OPENACC
+#endif
+
 ! Compute Jacobi iteration on GPU (OpenACC)
 
+#ifdef _OPENACC
    t1 = omp_get_wtime()
 
    !$acc data copy (a_gpu) create(a_new)
@@ -121,7 +125,9 @@ program jacobi_iteration
                                     a_gpu(i,j+1))
          end do
       end do
+      !$acc end parallel
 
+      !$acc parallel vector_length(128)
       !$acc loop gang vector collapse (2)
       do j = 1, cols
          do i = 1, rows
@@ -129,7 +135,6 @@ program jacobi_iteration
          end do
       end do
       !$acc end parallel
-
    end do
    !$acc end data
 
@@ -139,15 +144,14 @@ program jacobi_iteration
    write(*,"('GPU Jacobi iteration completed in ',f12.5,' secs with ',i6,' iterations')") dt, iter
 #endif
 
-#ifdef _OPENMP
 ! Compute Jacobi iteration on GPU (OpenMP)
 
+#ifdef _OPENMP
    t1 = omp_get_wtime()
 
    !$omp target data map (tofrom:a_gpu) map (alloc:a_new)
    do iter = 1, ITER_MAX
-      !$omp target teams
-      !$omp distribute parallel do simd collapse(2)
+      !$omp target teams distribute parallel do simd collapse(2)
       do j = 1, cols
          do i = 1, rows
             a_new(i,j) = 0.25_wp * (a_gpu(i,j-1) + &
@@ -156,16 +160,15 @@ program jacobi_iteration
                                     a_gpu(i,j+1))
          end do
       end do
-      !$omp end distribute parallel do simd
+      !$omp end target teams distribute parallel do simd
 
-      !$omp distribute parallel do simd collapse(2)
+      !$omp target teams distribute parallel do simd collapse(2)
       do j = 1, cols
          do i = 1, rows
             a_gpu(i,j) = a_new(i,j)
          end do
       end do
-      !$omp end distribute parallel do simd
-      !$omp end target teams
+      !$omp end target teams distribute parallel do simd
    end do
    !$omp end target data
 
@@ -191,13 +194,13 @@ program jacobi_iteration
 
    if ( error < VERIF_TOL ) then 
       write(*,"('Verification passed')")
-      write(*,"('   Max abs error = ',f15.8,' at ii = ',i6,', jj = ',i6,'')") error, ii, jj
+      write(*,"('   Max abs error = ',f25.15,' at ii = ',i6,', jj = ',i6,'')") error, ii, jj
    else
       write(*,"('Verification failed')")
       write(*,"('   Max relative error > tolerance encountered at A_CPU[',i6,'][',i6,']')") ii, jj
-      write(*,"('   A_CPU[',i6,'][',i6,']=',G15.8,'')") ii,jj,a_cpu(ii,jj)
-      write(*,"('   A_GPU[',i6,'][',i6,']=',G15.8,'')") ii,jj,a_gpu(ii,jj)
-      write(*,"('   ABS(A_GPU-A_CPU) =',f15.8,'')") error 
+      write(*,"('   A_CPU[',i6,'][',i6,']=',G25.15,'')") ii,jj,a_cpu(ii,jj)
+      write(*,"('   A_GPU[',i6,'][',i6,']=',G25.15,'')") ii,jj,a_gpu(ii,jj)
+      write(*,"('   ABS(A_GPU-A_CPU) =',f25.15,'')") error 
    end if
 
 !Release Memory to cleanup program
