@@ -1,0 +1,103 @@
+# Conditional Makefile macros for this kernel & version:
+ 
+# User settings (all case-insensitive):
+COMPILER = nvhpc-openacc       # Intel, GNU, ARM (later, PGI?)
+ARCH     = bdw                 # Not currently used (using xHost/native modes)
+MPI      = yes                 # Yes/No, True/False or Enabled/Disabled
+DEBUG    = no
+ 
+# ******************************************************************
+# Provide system aliases that MIGHT need to be modified by the end user:
+MPIFC = mpif90         # Could be mpif90 (default), or mpiifort, etc
+ 
+# Convert all above vars to lower case:
+COMPILER := $(shell echo ${COMPILER} | tr '[:upper:]' '[:lower:]')
+ARCH     := $(shell echo ${ARCH}     | tr '[:upper:]' '[:lower:]')
+MPI      := $(shell echo ${MPI}      | tr '[:upper:]' '[:lower:]')
+ 
+# Zero out our key variables:
+FC :=
+FC_FLAGS :=
+LD_FLAGS :=
+ 
+# Convert all 'true' MPI answers to 'yes', otherwise no:
+ifeq ($(MPI),true)
+  MPI := yes
+else ifeq ($(MPI),enabled)
+  MPI := yes
+else ifeq ($(MPI),yes)
+  MPI := yes
+else
+  MPI := no
+endif
+ 
+ifeq ($(DEBUG),true)
+   DEBUG := yes
+else ifeq ($(DEBUG),enabled)
+   DEBUG := yes
+else ifeq ($(DEBUG),yes)
+   DEBUG := yes
+else
+   DEBUG := no
+endif
+ 
+# If the MKLROOT variable is set, add that to the link:
+ifneq ($(strip $(MKLROOT)),)
+  LD_FLAGS += -L${MKLROOT}/lib/intel64 -lmkl_rt
+endif
+ 
+# Note: For simplicity, we're going to ignore cross-compilation and use the "-march=native" (gnu),
+# "-mcpu=native" /armflang) and "-xHost" (intel) compiler flags to optimize for the platform we're on. 
+# Change in the second FC_FLAGS  setting below if that doesn't apply.
+ 
+# ********* Intel compiler options ************
+ifeq ($(COMPILER),intel)
+  FC := ifort
+  ifeq ($(DEBUG),yes)
+      FC_FLAGS += -qno-opt-dynamic-align -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source -qopt-report -xCORE_AVX2 -no-fma -qopenmp -O0 -g -check uninit -check bounds -check pointers -fpe0 -check noarg_temp_created
+  else
+      FC_FLAGS += -qno-opt-dynamic-align -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source -qopt-report -xCORE_AVX2 -no-fma -qopenmp -O2 -debug minimal
+  endif
+  LD_FLAGS +=
+endif
+
+# ********* NVHPC compiler options ************
+ifeq ($(COMPILER),nvhpc)
+  FC := nvfortran
+  FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma
+  LD_FLAGS +=
+endif
+
+# ********* NVHPC-OpenACC compiler options ************
+ifeq ($(COMPILER),nvhpc-openacc)
+  FC := nvfortran
+  FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__
+  LD_FLAGS +=
+endif
+
+# ********* NVHPC-OpenMP compiler options ************
+ifeq ($(COMPILER),nvhpc-openmp)
+  FC := nvfortran
+  FC_FLAGS += -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU
+  LD_FLAGS +=
+endif
+
+# ********* Cray-OpenACC compiler options ************
+ifeq ($(COMPILER),cray-openacc)
+  FC := ftn
+  FC_FLAGS += -target-accel=nvidia70 -h cpu=x86-skylake,acc,fp3,aggress,vector3 -D__OPENACC__
+  LD_FLAGS +=
+endif
+
+# ********* Cray-OpenMP compiler options ************
+ifeq ($(COMPILER),cray-openmp)
+  FC := ftn
+  FC_FLAGS += -target-accel=nvidia70 -x acc -h cpu=x86-skylake,omp,fp3,aggress,vector3 -DOPENMP_GPU
+  LD_FLAGS +=
+endif
+
+# ********* If we're using MPI, then use ${MPIFC} *********
+ifeq ($(MPI),yes)
+  FC := ${MPIFC}
+  FC_FLAGS += -D_MPI
+endif
