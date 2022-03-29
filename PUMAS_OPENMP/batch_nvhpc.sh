@@ -31,7 +31,7 @@ nvidia-cuda-mps-control -d && echo "MPS control daemon started"
 for n in 1
 do
     # add a loop to compile the code with different dfact
-    for i in 4608 # 36 72 144 288 576 1152 2304 4608 9216 
+    for i in 36 72 144 288 576 1152 2304 4608
     do
         # compile the code
         make clean

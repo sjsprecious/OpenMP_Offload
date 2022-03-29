@@ -31,14 +31,14 @@ nvidia-cuda-mps-control -d && echo "MPS control daemon started"
 for n in 1
 do
     # add a loop to compile the code with different dfact
-    for i in 4608
+    for i in 36 4608
     do
         # compile the code
         make clean
         make ntasks=$ntask pcols=$pcol dfact=$i
     
         # run the code
-        nsys profile --force-overwrite true -o openacc_dfact${i} --trace openacc,cuda,mpi mpirun -n $n ./kernel.exe
+        nsys profile --force-overwrite true -o openmp_dfact${i} --trace openacc,cuda,mpi mpirun -n $n ./kernel.exe
 
         # clean the files
         make clean
