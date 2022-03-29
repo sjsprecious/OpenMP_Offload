@@ -1,0 +1,1405 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+MPS control daemon started
+rm -f kernel.exe *.mod micro_mg_cam.o micro_mg3_0.o micro_pumas_utils.o wv_sat_methods.o shr_spfn_mod.o shr_kind_mod.o shr_const_mod.o kernel_driver.o kgen_utils.o *.optrpt *cub *ptx
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -c -o kgen_utils.o kgen_utils.f90
+kgen_perturb_real4_dim1:
+    175, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real4_dim2:
+    195, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real4_dim3:
+    217, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real8_dim1:
+    241, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real8_dim2:
+    261, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real8_dim3:
+    283, Memory set idiom, loop replaced by call to __c_mset4
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -c -o shr_kind_mod.o shr_kind_mod.F90
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -c -o shr_const_mod.o shr_const_mod.F90
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -DDFACT=4608 -c -o shr_spfn_mod.o shr_spfn_mod.F90
+shr_spfn_gamma_r8:
+     98, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+shr_spfn_gamma_nonintrinsic_r8:
+    247, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -DDFACT=4608 -c -o micro_pumas_utils.o micro_pumas_utils.F90
+rising_factorial_r8:
+    299, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+rising_factorial_r8_vec:
+    320, !$omp target teams loop
+        320, Generating "nvkernel_micro_mg_utils_rising_factorial_r8_vec__F1L320_2" GPU kernel
+             Generating NVIDIA GPU code
+          326, Loop parallelized across teams ! blockidx%x
+        320, Generating Multicore code
+          326, Loop parallelized across threads
+    320, Generating implicit map(tofrom:x(:),res(:)) 
+rising_factorial_integer:
+    340, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+rising_factorial_integer_vec:
+    378, !$omp target teams loop
+        373, Generating map(alloc:factor(:)) 
+        378, Generating "nvkernel_micro_mg_utils_rising_factorial_integer_vec__F1L378_4" GPU kernel
+             Generating NVIDIA GPU code
+          384, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+          394, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+          406, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+          416, Loop parallelized across teams ! blockidx%x
+          421, Loop parallelized across threads(128) ! threadidx%x
+        378, Generating Multicore code
+          384, Loop parallelized across threads
+          394, Loop parallelized across threads
+          406, Loop parallelized across threads
+          416, Loop parallelized across threads
+    378, Generating implicit map(tofrom:factor(:),x(:),res(:)) 
+calc_ab_line:
+    439, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+calc_ab_vect:
+    469, !$omp target teams loop
+        469, Generating "nvkernel_micro_mg_utils_calc_ab_vect__F1L469_6" GPU kernel
+             Generating NVIDIA GPU code
+          475, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        469, Generating Multicore code
+          475, Loop parallelized across threads
+    469, Generating implicit map(tofrom:ab(:),t(:),qv(:)) 
+size_dist_param_liq_line:
+    487, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+size_dist_param_liq_2d:
+    563, !$omp target teams loop
+        563, Generating "nvkernel_micro_mg_utils_size_dist_param_liq_2d__F1L563_8" GPU kernel
+             Generating NVIDIA GPU code
+          569, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          570,   ! blockidx%x threadidx%x collapsed
+        563, Generating Multicore code
+          569, Loop parallelized across threads
+    563, Generating implicit map(tofrom:pgamp1(:,:),ncic(:,:),qcic(:,:),rho(:,:),pgam(:,:)) 
+    596, !$omp target teams loop
+        596, Generating "nvkernel_micro_mg_utils_size_dist_param_liq_2d__F1L596_10" GPU kernel
+             Generating NVIDIA GPU code
+          603, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          604,   ! blockidx%x threadidx%x collapsed
+        596, Generating Multicore code
+          603, Loop parallelized across threads
+    596, Generating implicit map(tofrom:props,qcic(:,:),pgamp1(:,:),shapec(:,:),lbnd(:,:),ubnd(:,:),tmp(:,:)) 
+    625, !$omp target teams loop
+        558, Generating map(alloc:shapec(:,:),lbnd(:,:),pgamp1(:,:),ubnd(:,:),tmp(:,:)) 
+        625, Generating "nvkernel_micro_mg_utils_size_dist_param_liq_2d__F1L625_12" GPU kernel
+             Generating NVIDIA GPU code
+          632, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          633,   ! blockidx%x threadidx%x collapsed
+        625, Generating Multicore code
+          632, Loop parallelized across threads
+    625, Generating implicit map(tofrom:qcic(:,:),pgam(:,:),lamc(:,:)) 
+size_dist_param_liq_vect:
+    678, !$omp target teams loop
+        678, Generating "nvkernel_micro_mg_utils_size_dist_param_liq_vect__F1L678_14" GPU kernel
+             Generating NVIDIA GPU code
+          684, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        678, Generating Multicore code
+          684, Loop parallelized across threads
+    678, Generating implicit map(tofrom:pgamp1(:),ncic(:),qcic(:),rho(:),pgam(:)) 
+    709, !$omp target teams loop
+        709, Generating "nvkernel_micro_mg_utils_size_dist_param_liq_vect__F1L709_16" GPU kernel
+             Generating NVIDIA GPU code
+          716, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        709, Generating Multicore code
+          716, Loop parallelized across threads
+    709, Generating implicit map(tofrom:props,qcic(:),pgamp1(:),shapec(:),lbnd(:),ubnd(:),tmp(:)) 
+    736, !$omp target teams loop
+        673, Generating map(alloc:shapec(:),lbnd(:),pgamp1(:),ubnd(:),tmp(:)) 
+        736, Generating "nvkernel_micro_mg_utils_size_dist_param_liq_vect__F1L736_18" GPU kernel
+             Generating NVIDIA GPU code
+          743, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        736, Generating Multicore code
+          743, Loop parallelized across threads
+    736, Generating implicit map(tofrom:qcic(:),pgam(:),lamc(:)) 
+size_dist_param_basic_line:
+    764, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+size_dist_param_basic_vect:
+    827, !$omp target teams loop
+        827, Generating "nvkernel_micro_mg_utils_size_dist_param_basic_vect__F1L827_20" GPU kernel
+             Generating NVIDIA GPU code
+          833, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+          864, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        827, Generating Multicore code
+          833, Loop parallelized across threads
+          864, Loop parallelized across threads
+    827, Generating implicit map(tofrom:qic(:),nic(:),n0(:),lam(:)) 
+    833, Invariant if transformation
+size_dist_param_basic_2d:
+    897, !$omp target teams loop
+        897, Generating "nvkernel_micro_mg_utils_size_dist_param_basic_2d__F1L897_22" GPU kernel
+             Generating NVIDIA GPU code
+          903, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          904,   ! blockidx%x threadidx%x collapsed
+          936, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          937,   ! blockidx%x threadidx%x collapsed
+        897, Generating Multicore code
+          903, Loop parallelized across threads
+          936, Loop parallelized across threads
+    897, Generating implicit map(tofrom:qic(:,:),nic(:,:),n0(:,:),lam(:,:)) 
+    904, Invariant if transformation
+size_dist_param_basic_vect2:
+    970, !$omp target teams loop
+        970, Generating "nvkernel_micro_mg_utils_size_dist_param_basic_vect2__F1L970_24" GPU kernel
+             Generating NVIDIA GPU code
+          976, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+         1009, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        970, Generating Multicore code
+          976, Loop parallelized across threads
+         1009, Loop parallelized across threads
+    970, Generating implicit map(tofrom:nic(:),n0(:),qic(:),lam(:),shapec(:),ubnd(:),lbnd(:)) 
+    976, Invariant if transformation
+avg_diameter_vec:
+   1035, !$omp target teams loop
+       1035, Generating "nvkernel_micro_mg_utils_avg_diameter_vec__F1L1035_26" GPU kernel
+             Generating NVIDIA GPU code
+         1041, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1035, Generating Multicore code
+         1041, Loop parallelized across threads
+   1035, Generating implicit map(tofrom:n(:),rho_air(:),q(:),avg_diameter(:)) 
+var_coef_r8:
+   1051, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+var_coef_r8_vect:
+   1086, !$omp target teams loop
+       1080, Generating map(alloc:tmpa(:)) 
+       1086, Generating "nvkernel_micro_mg_utils_var_coef_r8_vect__F1L1086_28" GPU kernel
+             Generating NVIDIA GPU code
+         1092, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1086, Generating Multicore code
+         1092, Loop parallelized across threads
+   1086, Generating implicit map(tofrom:relvar(:),tmpa(:),res(:)) 
+var_coef_integer:
+   1106, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+var_coef_integer_vect:
+   1141, !$omp target teams loop
+       1135, Generating map(alloc:tmp(:)) 
+       1141, Generating "nvkernel_micro_mg_utils_var_coef_integer_vect__F1L1141_30" GPU kernel
+             Generating NVIDIA GPU code
+         1147, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1141, Generating Multicore code
+         1147, Loop parallelized across threads
+   1141, Generating implicit map(tofrom:relvar(:),tmp(:),res(:)) 
+ice_deposition_sublimation:
+   1214, !$omp target teams loop
+       1214, Generating "nvkernel_micro_mg_utils_ice_deposition_sublimation__F1L1214_32" GPU kernel
+             Generating NVIDIA GPU code
+         1220, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1214, Generating Multicore code
+         1220, Loop parallelized across threads
+   1214, Generating implicit map(tofrom:qi(:),qiic(:),niic(:),ab(:),ni(:),icldm(:)) 
+   1238, !$omp target teams loop
+       1203, Generating map(alloc:niic(:),qiic(:),n0i(:),ab(:),lami(:)) 
+       1238, Generating "nvkernel_micro_mg_utils_ice_deposition_sublimation__F1L1238_34" GPU kernel
+             Generating NVIDIA GPU code
+         1244, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1238, Generating Multicore code
+         1244, Loop parallelized across threads
+   1238, Generating implicit map(tofrom:n0i(:),lami(:),qvl(:),berg(:),icldm(:),vap_dep(:),t(:),qi(:),qv(:),ice_sublim(:),rho(:),dv(:),ab(:),qvi(:)) 
+kk2000_liq_autoconversion:
+   1326, !$omp target teams loop
+       1326, Generating "nvkernel_micro_mg_utils_kk2000_liq_autoconversion__F1L1326_36" GPU kernel
+             Generating NVIDIA GPU code
+         1332, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1326, Generating Multicore code
+         1332, Loop parallelized across threads
+   1326, Generating implicit map(tofrom:prc_coef(:)) 
+   1332, Memory set idiom, loop replaced by call to __c_mset8
+   1342, !$omp target teams loop
+       1316, Generating map(alloc:prc_coef(:)) 
+       1342, Generating "nvkernel_micro_mg_utils_kk2000_liq_autoconversion__F1L1342_38" GPU kernel
+             Generating NVIDIA GPU code
+         1349, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1342, Generating Multicore code
+         1349, Loop parallelized across threads
+   1342, Generating implicit map(tofrom:prc_coef(:),nprc1(:),prc(:),rho(:),qcic(:),ncic(:),nprc(:)) 
+sb2001v2_liq_autoconversion:
+   1421, !$omp target teams loop
+       1421, Generating "nvkernel_micro_mg_utils_sb2001v2_liq_autoconversion__F1L1421_40" GPU kernel
+             Generating NVIDIA GPU code
+         1427, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1421, Generating Multicore code
+         1427, Loop parallelized across threads
+   1421, Generating implicit map(tofrom:pgam(:),nprc1(:),au(:),qc(:),rho(:),qr(:),dnu$ac(:),nprc(:),nc(:)) 
+sb2001v2_accre_cld_water_rain:
+   1488, !$omp target teams loop
+       1488, Generating "nvkernel_micro_mg_utils_sb2001v2_accre_cld_water_rain__F1L1488_42" GPU kernel
+             Generating NVIDIA GPU code
+         1494, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1488, Generating Multicore code
+         1494, Loop parallelized across threads
+   1488, Generating implicit map(tofrom:pra(:),qc(:),npra(:),rho(:),qr(:),nc(:)) 
+ice_autoconversion:
+   1540, !$omp target teams loop
+       1540, Generating "nvkernel_micro_mg_utils_ice_autoconversion__F1L1540_44" GPU kernel
+             Generating NVIDIA GPU code
+         1546, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1540, Generating Multicore code
+         1546, Loop parallelized across threads
+   1540, Generating implicit map(tofrom:t(:),qiic(:),prci(:),n0i(:),lami(:),nprci(:)) 
+immersion_freezing:
+   1613, !$omp target teams loop
+       1613, Generating "nvkernel_micro_mg_utils_immersion_freezing__F1L1613_46" GPU kernel
+             Generating NVIDIA GPU code
+         1619, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1613, Generating Multicore code
+         1619, Loop parallelized across threads
+   1613, Generating implicit map(tofrom:dum(:)) 
+   1619, Memory set idiom, loop replaced by call to __c_mset8
+   1629, !$omp target teams loop
+       1605, Generating map(alloc:dum(:)) 
+       1629, Generating "nvkernel_micro_mg_utils_immersion_freezing__F1L1629_48" GPU kernel
+             Generating NVIDIA GPU code
+         1636, Loop parallelized across teams ! blockidx%x
+       1629, Generating Multicore code
+         1636, Loop parallelized across threads
+   1629, Generating implicit map(tofrom:pgam(:),t(:),qcic(:),nnuccc(:),ncic(:),mnuccc(:),dum(:),lamc(:)) 
+contact_freezing:
+   1718, !$omp target teams loop
+       1713, Generating map(alloc:ndfaer(:),nslip(:)) 
+       1718, Generating "nvkernel_micro_mg_utils_contact_freezing__F1L1718_50" GPU kernel
+             Generating NVIDIA GPU code
+         1724, Loop parallelized across teams ! blockidx%x
+         1739, Loop run sequentially 
+         1746, Loop run sequentially 
+       1718, Generating Multicore code
+         1724, Loop parallelized across threads
+   1718, Generating implicit map(tofrom:pgam(:),rndst(:,:),t(:),qcic(:),nslip(:),nnucct(:),relvar(:),ncic(:),mnucct(:),nacon(:,:),p(:),lamc(:),ndfaer(:)) 
+   1739, Loop is parallelizable
+   1746, dot_product reduction inlined
+         Loop is parallelizable
+snow_self_aggregation:
+   1792, !$omp target teams loop
+       1792, Generating "nvkernel_micro_mg_utils_snow_self_aggregation__F1L1792_52" GPU kernel
+             Generating NVIDIA GPU code
+         1798, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1792, Generating Multicore code
+         1798, Loop parallelized across threads
+   1792, Generating implicit map(tofrom:nsic(:),t(:),rho(:),asn(:),nsagg(:),qsic(:)) 
+accrete_cloud_water_snow:
+   1864, !$omp target teams loop
+       1864, Generating "nvkernel_micro_mg_utils_accrete_cloud_water_snow__F1L1864_54" GPU kernel
+             Generating NVIDIA GPU code
+         1870, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1864, Generating Multicore code
+         1870, Loop parallelized across threads
+   1864, Generating implicit map(tofrom:qcic(:),rho(:),psacws(:),npsacws(:),asn(:),uns(:),t(:),lamc(:),lams(:),qsic(:),mu(:),pgam(:),ncic(:),n0s(:)) 
+secondary_ice_production:
+   1921, !$omp target teams loop
+       1921, Generating "nvkernel_micro_mg_utils_secondary_ice_production__F1L1921_56" GPU kernel
+             Generating NVIDIA GPU code
+         1927, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+         1941, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1921, Generating Multicore code
+         1927, Loop parallelized across threads
+         1941, Loop parallelized across threads
+   1921, Generating implicit map(tofrom:t(:),psacws(:),msacwi(:),nsacwi(:)) 
+accrete_rain_snow:
+   1992, !$omp target teams loop
+       1992, Generating "nvkernel_micro_mg_utils_accrete_rain_snow__F1L1992_58" GPU kernel
+             Generating NVIDIA GPU code
+         1998, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       1992, Generating Multicore code
+         1998, Loop parallelized across threads
+   1992, Generating implicit map(tofrom:pracs(:),qric(:),rho(:),qsic(:),lams(:),n0r(:),lamr(:),npracs(:),t(:),umr(:),n0s(:),ums(:),uns(:),unr(:)) 
+heterogeneous_rain_freezing:
+   2042, !$omp target teams loop
+       2042, Generating "nvkernel_micro_mg_utils_heterogeneous_rain_freezing__F1L2042_60" GPU kernel
+             Generating NVIDIA GPU code
+         2048, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2042, Generating Multicore code
+         2048, Loop parallelized across threads
+   2042, Generating implicit map(tofrom:t(:),qric(:),nric(:),mnuccr(:),nnuccr(:),lamr(:)) 
+accrete_cloud_water_rain:
+   2099, !$omp target teams loop
+       2099, Generating "nvkernel_micro_mg_utils_accrete_cloud_water_rain__F1L2099_62" GPU kernel
+             Generating NVIDIA GPU code
+         2105, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2099, Generating Multicore code
+         2105, Loop parallelized across threads
+   2099, Generating implicit map(tofrom:pra_coef(:),accre_enhan(:)) 
+   2115, !$omp target teams loop
+       2115, Generating "nvkernel_micro_mg_utils_accrete_cloud_water_rain__F1L2115_64" GPU kernel
+             Generating NVIDIA GPU code
+         2121, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2115, Generating Multicore code
+         2121, Loop parallelized across threads
+   2115, Generating implicit map(tofrom:pra_coef(:)) 
+   2121, Memory set idiom, loop replaced by call to __c_mset8
+   2131, !$omp target teams loop
+       2092, Generating map(alloc:pra_coef(:)) 
+       2131, Generating "nvkernel_micro_mg_utils_accrete_cloud_water_rain__F1L2131_66" GPU kernel
+             Generating NVIDIA GPU code
+         2138, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2131, Generating Multicore code
+         2138, Loop parallelized across threads
+   2131, Generating implicit map(tofrom:qric(:),qcic(:),pra_coef(:),npra(:),pra(:),ncic(:)) 
+self_collection_rain:
+   2176, !$omp target teams loop
+       2176, Generating "nvkernel_micro_mg_utils_self_collection_rain__F1L2176_68" GPU kernel
+             Generating NVIDIA GPU code
+         2182, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2176, Generating Multicore code
+         2182, Loop parallelized across threads
+   2176, Generating implicit map(tofrom:nric(:),nragg(:),rho(:),qric(:)) 
+accrete_cloud_ice_snow:
+   2224, !$omp target teams loop
+       2224, Generating "nvkernel_micro_mg_utils_accrete_cloud_ice_snow__F1L2224_70" GPU kernel
+             Generating NVIDIA GPU code
+         2230, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2224, Generating Multicore code
+         2230, Loop parallelized across threads
+   2224, Generating implicit map(tofrom:qiic(:),prai(:),t(:),rho(:),qsic(:),lams(:),asn(:),nprai(:),niic(:),n0s(:)) 
+evaporate_sublimate_precip:
+   2308, !$omp target teams loop
+       2299, Generating map(alloc:dum(:)) 
+       2308, Generating "nvkernel_micro_mg_utils_evaporate_sublimate_precip__F1L2308_72" GPU kernel
+             Generating NVIDIA GPU code
+         2314, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+         2327, Loop parallelized across teams ! blockidx%x
+       2308, Generating Multicore code
+         2314, Loop parallelized across threads
+         2327, Loop parallelized across threads
+   2308, Generating implicit map(tofrom:q(:),qcic(:),asn(:),lams(:),pre(:),qiic(:),qric(:),precip_frac(:),qvi(:),t(:),sc(:),mu(:),qvl(:),dum(:),dv(:),am_evp_st(:),lcldm(:),rho(:),prds(:),qsic(:),n0r(:),lamr(:),arn(:),n0s(:)) 
+evaporate_sublimate_precip_graupel:
+   2462, !$omp target teams loop
+       2462, Generating "nvkernel_micro_mg_utils_evaporate_sublimate_precip_graupel__F1L2462_74" GPU kernel
+             Generating NVIDIA GPU code
+         2468, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2462, Generating Multicore code
+         2468, Loop parallelized across threads
+   2462, Generating implicit map(tofrom:lcldm(:),qcic(:),qiic(:),am_evp_st(:),dum(:)) 
+   2480, !$omp target teams loop
+       2453, Generating map(alloc:dum(:)) 
+       2480, Generating "nvkernel_micro_mg_utils_evaporate_sublimate_precip_graupel__F1L2480_76" GPU kernel
+             Generating NVIDIA GPU code
+         2483, Loop parallelized across teams ! blockidx%x
+       2480, Generating Multicore code
+         2483, Loop parallelized across threads
+   2480, Generating implicit map(tofrom:pre(:),asn(:),qgic(:),qric(:),q(:),agn(:),precip_frac(:),qvi(:),t(:),sc(:),n0g(:),qvl(:),dum(:),lamg(:),am_evp_st(:),lams(:),rho(:),prds(:),qsic(:),n0r(:),lamr(:),arn(:),prdg(:),mu(:),dv(:),n0s(:)) 
+bergeron_process_snow:
+   2600, !$omp target teams loop
+       2600, Generating "nvkernel_micro_mg_utils_bergeron_process_snow__F1L2600_78" GPU kernel
+             Generating NVIDIA GPU code
+         2606, Loop parallelized across teams ! blockidx%x
+       2600, Generating Multicore code
+         2606, Loop parallelized across threads
+   2600, Generating implicit map(tofrom:qcic(:),n0s(:),t(:),sc(:),qsic(:),mu(:),qvl(:),bergs(:),dv(:),lams(:),rho(:),asn(:),qvi(:)) 
+graupel_collecting_snow:
+   2654, !$omp target teams loop
+       2654, Generating "nvkernel_micro_mg_utils_graupel_collecting_snow__F1L2654_80" GPU kernel
+             Generating NVIDIA GPU code
+         2660, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2654, Generating Multicore code
+         2660, Loop parallelized across threads
+   2654, Generating implicit map(tofrom:qric(:),psacr(:),n0s(:),rho(:),ums(:),umr(:),qsic(:),lams(:),n0r(:),lamr(:)) 
+graupel_collecting_cld_water:
+   2710, !$omp target teams loop
+       2710, Generating "nvkernel_micro_mg_utils_graupel_collecting_cld_water__F1L2710_82" GPU kernel
+             Generating NVIDIA GPU code
+         2716, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2710, Generating Multicore code
+         2716, Loop parallelized across threads
+   2710, Generating implicit map(tofrom:qcic(:),psacwg(:),npsacwg(:),rho(:),qgic(:),lamg(:),agn(:),ncic(:),n0g(:)) 
+graupel_riming_liquid_snow:
+   2776, !$omp target teams loop
+       2776, Generating "nvkernel_micro_mg_utils_graupel_riming_liquid_snow__F1L2776_84" GPU kernel
+             Generating NVIDIA GPU code
+         2782, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2776, Generating Multicore code
+         2782, Loop parallelized across threads
+   2776, Generating implicit map(tofrom:pgsacw(:),qcic(:),psacws(:),nsic(:),lams(:),rho(:),qsic(:),asn(:),n0s(:),nscng(:)) 
+graupel_collecting_rain:
+   2853, !$omp target teams loop
+       2853, Generating "nvkernel_micro_mg_utils_graupel_collecting_rain__F1L2853_86" GPU kernel
+             Generating NVIDIA GPU code
+         2859, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2853, Generating Multicore code
+         2859, Loop parallelized across threads
+   2853, Generating implicit map(tofrom:qgic(:),pracg(:),npracg(:),umg(:),rho(:),qric(:),n0g(:),lamr(:),lamg(:),n0r(:),unr(:),ung(:),umr(:)) 
+graupel_rain_riming_snow:
+   2931, !$omp target teams loop
+       2931, Generating "nvkernel_micro_mg_utils_graupel_rain_riming_snow__F1L2931_88" GPU kernel
+             Generating NVIDIA GPU code
+         2937, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       2931, Generating Multicore code
+         2937, Loop parallelized across threads
+   2931, Generating implicit map(tofrom:pgracs(:),qsic(:),qric(:),psacr(:),lamr(:),nsic(:),lams(:),ngracs(:),npracs(:),nric(:),pracs(:)) 
+graupel_rime_splintering:
+   3008, !$omp target teams loop
+       3008, Generating "nvkernel_micro_mg_utils_graupel_rime_splintering__F1L3008_90" GPU kernel
+             Generating NVIDIA GPU code
+         3014, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       3008, Generating Multicore code
+         3014, Loop parallelized across threads
+   3008, Generating implicit map(tofrom:nmultg(:),qmultg(:),qgic(:),qcic(:),psacwg(:),qmultrg(:),pracg(:),nmultrg(:),t(:),qric(:)) 
+limiter_is_on:
+   3170, Generating device code for declare target routine
+         Generating NVIDIA GPU code
+kr_externs_in_micro_mg_utils:
+   3206, Generating update to(cpp_util,gamma_half_br_plus5,gamma_bs_plus3,gamma_2bs_plus2,tmelt_util,xxlv_util,xxls_util,rv_util,gamma_half_bs_plus5)
+kv_micro_mg_utils_mghydrometeorprops:
+   3425, all reduction inlined
+   3436, count reduction inlined
+   3444, sum reduction inlined
+   3445, sum reduction inlined
+   3469, count reduction inlined
+   3471, sum reduction inlined
+   3472, sum reduction inlined
+   3481, count reduction inlined
+   3483, sum reduction inlined
+   3484, sum reduction inlined
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -DDFACT=4608 -c -o wv_sat_methods.o wv_sat_methods.F90
+wv_sat_svp_to_qsat_vect:
+    126, !$omp target teams loop
+        126, Generating "nvkernel_wv_sat_methods_wv_sat_svp_to_qsat_vect__F1L126_2" GPU kernel
+             Generating NVIDIA GPU code
+          132, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        126, Generating Multicore code
+          132, Loop parallelized across threads
+    126, Generating implicit map(tofrom:es(:),qs(:),p(:)) 
+wv_sat_qsat_water_vect:
+    169, !$omp target teams loop
+        169, Generating "nvkernel_wv_sat_methods_wv_sat_qsat_water_vect__F1L169_4" GPU kernel
+             Generating NVIDIA GPU code
+          175, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        169, Generating Multicore code
+          175, Loop parallelized across threads
+    169, Generating implicit map(tofrom:p(:),es(:)) 
+wv_sat_qsat_ice_vect:
+    209, !$omp target teams loop
+        209, Generating "nvkernel_wv_sat_methods_wv_sat_qsat_ice_vect__F1L209_6" GPU kernel
+             Generating NVIDIA GPU code
+          216, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        209, Generating Multicore code
+          216, Loop parallelized across threads
+    209, Generating implicit map(tofrom:p(:),es(:)) 
+goffgratch_svp_water_vect:
+    307, !$omp target teams loop
+        307, Generating "nvkernel_wv_sat_methods_goffgratch_svp_water_vect__F1L307_8" GPU kernel
+             Generating NVIDIA GPU code
+          313, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        307, Generating Multicore code
+          313, Loop parallelized across threads
+    307, Generating implicit map(tofrom:t(:),es(:)) 
+goffgratch_svp_ice_vect:
+    338, !$omp target teams loop
+        338, Generating "nvkernel_wv_sat_methods_goffgratch_svp_ice_vect__F1L338_10" GPU kernel
+             Generating NVIDIA GPU code
+          344, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        338, Generating Multicore code
+          344, Loop parallelized across threads
+    338, Generating implicit map(tofrom:t(:),es(:)) 
+murphykoop_svp_water_vect:
+    371, !$omp target teams loop
+        371, Generating "nvkernel_wv_sat_methods_murphykoop_svp_water_vect__F1L371_12" GPU kernel
+             Generating NVIDIA GPU code
+          377, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        371, Generating Multicore code
+          377, Loop parallelized across threads
+    371, Generating implicit map(tofrom:t(:),es(:)) 
+murphykoop_svp_ice_vect:
+    401, !$omp target teams loop
+        401, Generating "nvkernel_wv_sat_methods_murphykoop_svp_ice_vect__F1L401_14" GPU kernel
+             Generating NVIDIA GPU code
+          407, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        401, Generating Multicore code
+          407, Loop parallelized across threads
+    401, Generating implicit map(tofrom:t(:),es(:)) 
+bolton_svp_water_vect:
+    439, !$omp target teams loop
+        439, Generating "nvkernel_wv_sat_methods_bolton_svp_water_vect__F1L439_16" GPU kernel
+             Generating NVIDIA GPU code
+          445, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+        439, Generating Multicore code
+          445, Loop parallelized across threads
+    439, Generating implicit map(tofrom:t(:),es(:)) 
+kr_externs_in_wv_sat_methods:
+    468, Generating update to(h2otrip,omeps,epsilo,tmelt_wv,tboil)
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -DDFACT=4608 -c -o micro_mg3_0.o micro_mg3_0.F90
+micro_mg_tend:
+    914, !$omp target teams loop
+        914, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L914_2" GPU kernel
+             Generating NVIDIA GPU code
+          922, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          923,   ! blockidx%x threadidx%x collapsed
+          951, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          952,   ! blockidx%x threadidx%x collapsed
+          993, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          994,   ! blockidx%x threadidx%x collapsed
+          976, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+          977,   ! blockidx%x threadidx%x collapsed
+        914, Generating Multicore code
+          922, Loop parallelized across threads
+          951, Loop parallelized across threads
+          993, Loop parallelized across threads
+          976, Loop parallelized across threads
+    914, Generating implicit map(tofrom:p(:,:),qc(:,:),mu(:,:),nc(:,:),qgr(:,:),qi(:,:),ngr(:,:),ni(:,:),qin(:,:),qr(:,:),nin(:,:),nr(:,:),qrn(:,:),qsfm(:,:),nrn(:,:),ns(:,:),qcn(:,:),qg(:,:),ncn(:,:),ng(:,:),icldm(:,:),icecldf(:,:),asn(:,:),qsatfac(:,:),cldm(:,:),lcldm(:,:),dv(:,:),qs(:,:),qsn(:,:),nsn(:,:),t(:,:),sc(:,:),cldn(:,:),liqcldf(:,:),rhof(:,:),rho(:,:),ajn(:,:),arn(:,:),acn(:,:),agn(:,:),ain(:,:)) 
+   1033, !$omp target teams loop
+       1033, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1033_4" GPU kernel
+             Generating NVIDIA GPU code
+         1040, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1041,   ! blockidx%x threadidx%x collapsed
+         1077, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1078,   ! blockidx%x threadidx%x collapsed
+         1152, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1153,   ! blockidx%x threadidx%x collapsed
+         1166, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1167,   ! blockidx%x threadidx%x collapsed
+         1232, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+         1241, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1242,   ! blockidx%x threadidx%x collapsed
+         1310, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1311,   ! blockidx%x threadidx%x collapsed
+         1343, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1344,   ! blockidx%x threadidx%x collapsed
+         1397, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1398,   ! blockidx%x threadidx%x collapsed
+         1441, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1442,   ! blockidx%x threadidx%x collapsed
+         1480, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1481,   ! blockidx%x threadidx%x collapsed
+         1528, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1529,   ! blockidx%x threadidx%x collapsed
+         1575, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1576,   ! blockidx%x threadidx%x collapsed
+         1367, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1368,   ! blockidx%x threadidx%x collapsed
+       1033, Generating Multicore code
+         1040, Loop parallelized across threads
+         1077, Loop parallelized across threads
+         1152, Loop parallelized across threads
+         1166, Loop parallelized across threads
+         1232, Loop parallelized across threads
+         1241, Loop parallelized across threads
+         1310, Loop parallelized across threads
+         1343, Loop parallelized across threads
+         1397, Loop parallelized across threads
+         1441, Loop parallelized across threads
+         1480, Loop parallelized across threads
+         1528, Loop parallelized across threads
+         1575, Loop parallelized across threads
+         1367, Loop parallelized across threads
+   1033, Generating implicit map(tofrom:sflx(:,:),effi(:,:),esi(:,:),qstend(:,:),qvi(:,:),qs(:,:),refl(:,:),psacwstot(:,:),ni(:,:),msacwitot(:,:),rflx(:,:),qcsedten(:,:),qisedten(:,:),qvlat(:,:),cldm(:,:),uns(:,:),vtrmi(:,:),vtrmc(:,:),qcrestot(:,:),qirestot(:,:),qrout2(:,:),qsout2(:,:),qgout2(:,:),praitot(:,:),prcitot(:,:),minstsm(:,:),mnuccrtot(:,:),mnudeptot(:,:),psacwgtot(:,:),areflz(:,:),bergstot(:,:),meltstot(:,:),mnuccttot(:,:),meltsdttot(:,:),lflx(:,:),gflx(:,:),qcrat(:,:),pratot(:,:),prain(:,:),qiic(:,:),mnuccritot(:,:),mnuccdtot(:,:),pracgtot(:,:),meltgtot(:,:),freqs(:,:),mnuccd(:,:),psacr(:,:),pracg(:,:),psacwg(:,:),pgsacw(:,:),pgracs(:,:),prdg(:,:),qmultg(:,:),qmultrg(:,:),npracg(:,:),nscng(:,:),ngracs(:,:),nmultg(:,:),nmultrg(:,:),npsacwg(:,:),prodsnow(:,:),pgsacwtot(:,:),psacrtot(:,:),pgracstot(:,:),pgamrad(:,:),prctot(:,:),qitend(:,:),qmultgtot(:,:),npccn(:,:),ns(:,:),ngout2(:,:),nitend(:,:),nmultgtot(:,:),npracgtot(:,:),rercld(:,:),sadsnow(:,:),lcldm(:,:),icldm(:,:),frzrdttot(:,:),qric(:,:),qsic(:,:),nric(:,:),nsic(:,:),qgic(:,:),ngic(:,:),qvres(:,:),relhum(:,:),qcsevap(:,:),nctend(:,:),prect(:),esl(:,:),acsrfl(:,:),pracstot(:,:),prer_evap(:,:),cmeitot(:,:),preci(:),iflx(:,:),lamcrad(:,:),t(:,:),qvl(:,:),qcsinksum_rate1ord(:,:),qisevap(:,:),qssedten(:,:),qrsedten(:,:),ncic(:,:),ninstsm(:,:),nrout2(:,:),nsout2(:,:),qgsedten(:,:),ngracstot(:,:),qc(:,:),qi(:,:),qsfm(:,:),qr(:,:),qg(:,:),ncal(:,:),niact(:,:),nscngtot(:,:),nr(:,:),ng(:,:),precip_frac(:,:),prdgtot(:,:),umr(:,:),unr(:,:),umg(:,:),ung(:,:),tlat(:,:),ums(:,:),qcic(:,:),dsout2(:,:),lamc(:,:),nstend(:,:),effc(:,:),effc_fn(:,:),rho(:,:),sadice(:,:),csrfl(:,:),qrout(:,:),nrout(:,:),deffi(:,:),qsout(:,:),nsout(:,:),drout2(:,:),dsout(:,:),qgout(:,:),ngout(:,:),frefl(:,:),freqg(:,:),freqr(:,:),reff_grau(:,:),reff_rain(:,:),rainrt(:,:),reff_snow(:,:),am_evp_st(:,:),arefl(:,:),fcsrfl(:,:),cmeout(:,:),evapsnow(:,:),ncai(:,:),nc(:,:),nevapr(:,:),q(:,:),naai(:,:),nnuccd(:,:),lamg(:,:),nmultrgtot(:,:),ngtend(:,:),homotot(:,:),niic(:,:),mnuccctot(:,:),qrtend(:,:),minstrf(:,:),ninstrf(:,:),nrtend(:,:),qmultrgtot(:,:),npsacwgtot(:,:),qctend(:,:),melttot(:,:),nimax(:,:),nfice(:,:),minstgm(:,:),ninstgm(:,:),qgtend(:,:),bergtot(:,:)) 
+   1586, !$omp target teams loop num_teams(1)
+       1586, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1586_6" GPU kernel
+             Generating NVIDIA GPU code
+         1594, Loop run sequentially 
+         1595, Loop run sequentially 
+         1609, Loop run sequentially 
+         1610, Loop run sequentially 
+       1586, Generating Multicore code
+   1586, Generating implicit map(tofrom:precip_frac(:,:),qg(:,:),qi(:,:),qs(:,:),qr(:,:),qc(:,:)) 
+   1594, Scalar last value needed after loop for i at line 3648
+   1596, Accelerator restriction: induction variable live-out from loop: i
+   1597, Accelerator restriction: induction variable live-out from loop: i
+   1599, Accelerator restriction: induction variable live-out from loop: i
+   1609, Scalar last value needed after loop for i at line 3648
+   1611, Accelerator restriction: induction variable live-out from loop: i
+   1612, Accelerator restriction: induction variable live-out from loop: i
+   1614, Accelerator restriction: induction variable live-out from loop: i
+   1642, !$omp target teams loop
+       1642, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1642_8" GPU kernel
+             Generating NVIDIA GPU code
+         1649, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1650,   ! blockidx%x threadidx%x collapsed
+       1642, Generating Multicore code
+         1649, Loop parallelized across threads
+   1642, Generating implicit map(tofrom:qric(:,:),qr(:,:),precip_frac(:,:),nric(:,:),nr(:,:)) 
+   1696, !$omp target teams loop
+       1696, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1696_10" GPU kernel
+             Generating NVIDIA GPU code
+         1703, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1704,   ! blockidx%x threadidx%x collapsed
+       1696, Generating Multicore code
+         1703, Loop parallelized across threads
+   1696, Generating implicit map(tofrom:nprci(:,:),tnd_qsnow(:,:),tnd_nsnow(:,:),cldm(:,:),prci(:,:)) 
+   1719, !$omp target teams loop
+       1719, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1719_12" GPU kernel
+             Generating NVIDIA GPU code
+         1727, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1728,   ! blockidx%x threadidx%x collapsed
+       1719, Generating Multicore code
+         1727, Loop parallelized across threads
+   1719, Generating implicit map(tofrom:qs(:,:),qsic(:,:),qgic(:,:),nsic(:,:),ns(:,:),ngic(:,:),qg(:,:),precip_frac(:,:),ng(:,:)) 
+   1775, !$omp target teams loop
+       1775, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1775_14" GPU kernel
+             Generating NVIDIA GPU code
+         1782, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1783,   ! blockidx%x threadidx%x collapsed
+       1775, Generating Multicore code
+         1782, Loop parallelized across threads
+   1775, Generating implicit map(tofrom:dum_2d(:,:),arn(:,:),unr(:,:),umr(:,:),lamr(:,:),rhof(:,:)) 
+   1805, !$omp target teams loop
+       1805, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1805_16" GPU kernel
+             Generating NVIDIA GPU code
+         1812, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1813,   ! blockidx%x threadidx%x collapsed
+       1805, Generating Multicore code
+         1812, Loop parallelized across threads
+   1805, Generating implicit map(tofrom:dum_2d(:,:),rhof(:,:),uns(:,:),ums(:,:),asn(:,:),lams(:,:)) 
+   1850, !$omp target teams loop
+       1850, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1850_18" GPU kernel
+             Generating NVIDIA GPU code
+         1857, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1858,   ! blockidx%x threadidx%x collapsed
+       1850, Generating Multicore code
+         1857, Loop parallelized across threads
+   1850, Generating implicit map(tofrom:dum_2d(:,:),agn(:,:),rhof(:,:),lamg(:,:),ung(:,:),umg(:,:)) 
+   1884, !$omp target teams loop
+       1884, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1884_20" GPU kernel
+             Generating NVIDIA GPU code
+         1892, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1893,   ! blockidx%x threadidx%x collapsed
+       1884, Generating Multicore code
+         1892, Loop parallelized across threads
+   1884, Generating implicit map(tofrom:nnudep(:,:),t(:,:),qcic(:,:),mnudep(:,:),nnuccc(:,:),lcldm(:,:),mnuccc(:,:),nnuccd(:,:)) 
+   1909, Possible copy in and copy out of rndst in call to contact_freezing
+         Possible copy in and copy out of nacon in call to contact_freezing
+   1917, !$omp target teams loop
+       1917, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1917_22" GPU kernel
+             Generating NVIDIA GPU code
+         1924, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1925,   ! blockidx%x threadidx%x collapsed
+       1917, Generating Multicore code
+         1924, Loop parallelized across threads
+   1917, Generating implicit map(tofrom:frzimm(:,:),nnudep(:,:),mnudep(:,:),rho(:,:),qcic(:,:),ncic(:,:),frzdep(:,:),mi0l(:,:),nnuccc(:,:),mnuccc(:,:),nnucct(:,:),frzcnt(:,:),mnucct(:,:)) 
+   1953, !$omp target teams loop
+       1953, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1953_24" GPU kernel
+             Generating NVIDIA GPU code
+         1959, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1960,   ! blockidx%x threadidx%x collapsed
+       1953, Generating Multicore code
+         1959, Loop parallelized across threads
+   1953, Generating implicit map(tofrom:mnudep(:,:),mnuccc(:,:),nnuccc(:,:),mnucct(:,:),nnudep(:,:),nnucct(:,:)) 
+   1985, !$omp target teams loop
+       1985, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L1985_26" GPU kernel
+             Generating NVIDIA GPU code
+         1991, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         1992,   ! blockidx%x threadidx%x collapsed
+       1985, Generating Multicore code
+         1991, Loop parallelized across threads
+   1985, Generating implicit map(tofrom:nsacwi(:,:),msacwi(:,:)) 
+   2021, !$omp target teams loop
+       2021, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2021_28" GPU kernel
+             Generating NVIDIA GPU code
+         2027, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2028,   ! blockidx%x threadidx%x collapsed
+       2021, Generating Multicore code
+         2027, Loop parallelized across threads
+   2021, Generating implicit map(tofrom:prai(:,:),nprai(:,:)) 
+   2042, !$omp target teams loop
+       2042, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2042_30" GPU kernel
+             Generating NVIDIA GPU code
+         2048, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2049,   ! blockidx%x threadidx%x collapsed
+       2042, Generating Multicore code
+         2048, Loop parallelized across threads
+   2042, Generating implicit map(tofrom:bergs(:,:)) 
+   2063, !$omp target teams loop
+       2063, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2063_32" GPU kernel
+             Generating NVIDIA GPU code
+         2069, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2070,   ! blockidx%x threadidx%x collapsed
+       2063, Generating Multicore code
+         2069, Loop parallelized across threads
+   2063, Generating implicit map(tofrom:berg(:,:),qi(:,:),nsubi(:,:),ice_sublim(:,:),nsubc(:,:),icldm(:,:),ni(:,:)) 
+   2127, !$omp target teams loop
+       2127, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2127_34" GPU kernel
+             Generating NVIDIA GPU code
+         2133, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2134,   ! blockidx%x threadidx%x collapsed
+       2127, Generating Multicore code
+         2133, Loop parallelized across threads
+   2127, Generating implicit map(tofrom:pre(:,:)) 
+   2145, !$omp target teams loop
+       2145, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2145_36" GPU kernel
+             Generating NVIDIA GPU code
+         2152, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2153,   ! blockidx%x threadidx%x collapsed
+         2198, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2199,   ! blockidx%x threadidx%x collapsed
+         2230, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2231,   ! blockidx%x threadidx%x collapsed
+         2269, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2270,   ! blockidx%x threadidx%x collapsed
+         2297, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2298,   ! blockidx%x threadidx%x collapsed
+         2314, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2315,   ! blockidx%x threadidx%x collapsed
+         2337, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2338,   ! blockidx%x threadidx%x collapsed
+         2362, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2363,   ! blockidx%x threadidx%x collapsed
+         2391, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2392,   ! blockidx%x threadidx%x collapsed
+         2425, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2426,   ! blockidx%x threadidx%x collapsed
+         2465, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2466,   ! blockidx%x threadidx%x collapsed
+         2485, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2486,   ! blockidx%x threadidx%x collapsed
+       2145, Generating Multicore code
+         2152, Loop parallelized across threads
+         2198, Loop parallelized across threads
+         2230, Loop parallelized across threads
+         2269, Loop parallelized across threads
+         2297, Loop parallelized across threads
+         2314, Loop parallelized across threads
+         2337, Loop parallelized across threads
+         2362, Loop parallelized across threads
+         2391, Loop parallelized across threads
+         2425, Loop parallelized across threads
+         2465, Loop parallelized across threads
+         2485, Loop parallelized across threads
+   2145, Generating implicit map(tofrom:prai(:,:),pgsacw(:,:),lcldm(:,:),mnuccri(:,:),mnudep(:,:),psacwg(:,:),berg(:,:),qi(:,:),psacr(:,:),pgracs(:,:),lamr(:,:),q(:,:),qc(:,:),vap_dep(:,:),ttmpa(:,:),mnuccc(:,:),psacws(:,:),qtmpai(:,:),qvi(:,:),nprc(:,:),nnudep(:,:),nmultrg(:,:),nnuccri(:,:),npsacwg(:,:),nscng(:,:),nprci(:,:),msacwi(:,:),mnuccr(:,:),nnuccr(:,:),icldm(:,:),mnuccd(:,:),nnuccd(:,:),prds(:,:),pracg(:,:),qmultg(:,:),pra(:,:),nsubs(:,:),pre(:,:),qmultrg(:,:),nsubi(:,:),npsacws(:,:),npracg(:,:),nr(:,:),npra(:,:),nc(:,:),nprai(:,:),mnucct(:,:),prc(:,:),pracs(:,:),ice_sublim(:,:),bergs(:,:),qg(:,:),nnucct(:,:),ns(:,:),ni(:,:),nprc1(:,:),npracs(:,:),nsubc(:,:),nmultg(:,:),nnuccc(:,:),ngracs(:,:),prdg(:,:),precip_frac(:,:),qr(:,:),nsubr(:,:),nsacwi(:,:),nsagg(:,:),nragg(:,:),prci(:,:),qcrat(:,:),qs(:,:),t(:,:)) 
+   2506, !$omp target teams loop
+       2506, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2506_38" GPU kernel
+             Generating NVIDIA GPU code
+         2513, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2514,   ! blockidx%x threadidx%x collapsed
+       2506, Generating Multicore code
+         2513, Loop parallelized across threads
+   2506, Generating implicit map(tofrom:prds(:,:),prdg(:,:),mnuccd(:,:),pre(:,:),dum_2d(:,:),q(:,:),qtmpai(:,:),dum1a(:,:),dum2a(:,:),t(:,:),qvnai(:,:),vap_dep(:,:),ttmpa(:,:),ice_sublim(:,:),dum3a(:,:),precip_frac(:,:)) 
+   2537, !$omp target teams loop
+       2537, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2537_40" GPU kernel
+             Generating NVIDIA GPU code
+         2544, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2545,   ! blockidx%x threadidx%x collapsed
+       2537, Generating Multicore code
+         2544, Loop parallelized across threads
+   2537, Generating implicit map(tofrom:prds(:,:),prdg(:,:),ice_sublim(:,:),pre(:,:),dum_2d(:,:),precip_frac(:,:),qvna(:,:),dum1a(:,:),qtmpai(:,:),ttmpa(:,:),qvnai(:,:)) 
+   2566, !$omp target teams loop
+       2566, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2566_42" GPU kernel
+             Generating NVIDIA GPU code
+         2573, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2574,   ! blockidx%x threadidx%x collapsed
+         2598, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2599,   ! blockidx%x threadidx%x collapsed
+         2653, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2654,   ! blockidx%x threadidx%x collapsed
+         2692, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2693,   ! blockidx%x threadidx%x collapsed
+         2717, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2718,   ! blockidx%x threadidx%x collapsed
+         2740, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2741,   ! blockidx%x threadidx%x collapsed
+         2790, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2791,   ! blockidx%x threadidx%x collapsed
+       2566, Generating Multicore code
+         2573, Loop parallelized across threads
+         2598, Loop parallelized across threads
+         2653, Loop parallelized across threads
+         2692, Loop parallelized across threads
+         2717, Loop parallelized across threads
+         2740, Loop parallelized across threads
+         2790, Loop parallelized across threads
+   2566, Generating implicit map(tofrom:prds(:,:),prdgtot(:,:),prctot(:,:),pre(:,:),evapsnow(:,:),qstend(:,:),qvna(:,:),dum3a(:,:),qvlat(:,:),tlat(:,:),dum1a(:,:),dum2a(:,:),cmeout(:,:),qtmpai(:,:),vap_dep(:,:),ttmpa(:,:),mnuccctot(:,:),mnuccttot(:,:),icldm(:,:),rho(:,:),berg(:,:),psacwgtot(:,:),lcldm(:,:),mnuccrtot(:,:),mnudeptot(:,:),psacrtot(:,:),qitend(:,:),pgracstot(:,:),mnuccdtot(:,:),pracgtot(:,:),mnuccr(:,:),pra(:,:),nsubs(:,:),qmultgtot(:,:),qcsinksum_rate1ord(:,:),pgsacwtot(:,:),pratot(:,:),qgtend(:,:),prc(:,:),pracstot(:,:),ice_sublim(:,:),qrout(:,:),qgout(:,:),prodsnow(:,:),qsout(:,:),cmeitot(:,:),bergtot(:,:),dum_2d(:,:),nctend(:,:),precip_frac(:,:),prai(:,:),prer_evap(:,:),qc(:,:),psacwstot(:,:),praitot(:,:),prcitot(:,:),mnuccc(:,:),mnudep(:,:),mnucct(:,:),msacwi(:,:),psacws(:,:),bergs(:,:),bergstot(:,:),prci(:,:),prain(:,:),mnuccd(:,:),pracs(:,:),mnuccritot(:,:),mnuccri(:,:),psacr(:,:),pracg(:,:),psacwg(:,:),pgsacw(:,:),pgracs(:,:),prdg(:,:),qmultg(:,:),qmultrg(:,:),npracg(:,:),npra(:,:),nscng(:,:),nsagg(:,:),ngracs(:,:),ngout(:,:),nmultg(:,:),nitend(:,:),nmultrg(:,:),nmultgtot(:,:),npsacwg(:,:),nprci(:,:),msacwitot(:,:),nmultrgtot(:,:),nnuccri(:,:),npsacwgtot(:,:),nstend(:,:),nnudep(:,:),nprc(:,:),nimax(:,:),nnuccc(:,:),nnucct(:,:),ns(:,:),nsubc(:,:),nprc1(:,:),npracs(:,:),nnuccr(:,:),nsout(:,:),nsubr(:,:),nsacwi(:,:),ngracstot(:,:),nnuccd(:,:),nrout(:,:),nprai(:,:),nsubi(:,:),npracgtot(:,:),nr(:,:),ngtend(:,:),ni(:,:),qr(:,:),qmultrgtot(:,:),nragg(:,:),npsacws(:,:),qvnai(:,:),qs(:,:),qrtend(:,:),nscngtot(:,:),nrtend(:,:),qg(:,:),qctend(:,:),ng(:,:),nevapr(:,:)) 
+   2741, Invariant if transformation
+   2825, !$omp target teams loop
+       2825, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2825_44" GPU kernel
+             Generating NVIDIA GPU code
+         2833, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2834,   ! blockidx%x threadidx%x collapsed
+         2874, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2875,   ! blockidx%x threadidx%x collapsed
+       2825, Generating Multicore code
+         2833, Loop parallelized across threads
+         2874, Loop parallelized across threads
+   2825, Generating implicit map(tofrom:lcldm(:,:),nc(:,:),ncn(:,:),nitend(:,:),qrtend(:,:),qs(:,:),qsn(:,:),nrtend(:,:),ns(:,:),nsn(:,:),qitend(:,:),qr(:,:),qrn(:,:),npccn(:,:),nr(:,:),nrn(:,:),qctend(:,:),qg(:,:),qgr(:,:),nevapr(:,:),ng(:,:),ngr(:,:),nctend(:,:),dums(:,:),nstend(:,:),precip_frac(:,:),dum_2d(:,:),prodsnow(:,:),qc(:,:),icldm(:,:),dumg(:,:),qgtend(:,:),qi(:,:),evapsnow(:,:),dumi(:,:),dumng(:,:),ngtend(:,:),ni(:,:),dumns(:,:),prain(:,:),dumni(:,:),dumr(:,:),dumnr(:,:),dumc(:,:),dumnc(:,:),rho(:,:),qstend(:,:)) 
+   2931, !$omp target teams loop
+       2931, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L2931_46" GPU kernel
+             Generating NVIDIA GPU code
+         2938, Loop parallelized across teams collapse(2) ! blockidx%x
+         2939,   ! blockidx%x collapsed
+         2969, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         2970,   ! blockidx%x threadidx%x collapsed
+       2931, Generating Multicore code
+         2938, Loop parallelized across threads
+         2969, Loop parallelized across threads
+   2931, Generating implicit map(tofrom:ajn(:,:),lami(:,:),rhof(:,:),fni(:,:),dumi(:,:),fi(:,:),pgam(:,:),dumc(:,:),vtrmi(:,:),vtrmc(:,:),acn(:,:),lamc(:,:),rho(:,:),fc(:,:),fnc(:,:),ain(:,:)) 
+   2970, Invariant if transformation
+   3026, !$omp target teams loop
+       3026, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3026_48" GPU kernel
+             Generating NVIDIA GPU code
+         3032, Loop parallelized across teams ! blockidx%x
+         3033, Loop parallelized across threads(128) ! threadidx%x
+         3112, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3113,   ! blockidx%x threadidx%x collapsed
+       3026, Generating Multicore code
+         3032, Loop parallelized across threads
+         3112, Loop parallelized across threads
+   3026, Generating implicit map(tofrom:lamg(:,:),ung(:,:),agn(:,:),rho(:,:),fng(:,:),qstend(:,:),umg(:,:),fns(:,:),lamr(:,:),umr(:,:),arn(:,:),fr(:,:),uns(:,:),unr(:,:),fnr(:,:),fs(:,:),rhof(:,:),dums(:,:),ums(:,:),fg(:,:),pdel(:,:),nstend(:,:),asn(:,:),pdel_inv(:,:),qc(:,:),dumi(:,:),lams(:,:),nc(:,:),dumg(:,:),qgtend(:,:),qi(:,:),dumng(:,:),ngtend(:,:),ni(:,:),dumns(:,:),qitend(:,:),qr(:,:),dumni(:,:),nitend(:,:),nr(:,:),dumr(:,:),qrtend(:,:),qs(:,:),dumnr(:,:),nrtend(:,:),ns(:,:),dumc(:,:),qctend(:,:),qg(:,:),dumnc(:,:),nctend(:,:),ng(:,:)) 
+   3033, Loop is parallelizable
+   3163, !$omp target teams loop
+       3163, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3163_50" GPU kernel
+             Generating NVIDIA GPU code
+         3171, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3172,   ! blockidx%x threadidx%x collapsed
+         3226, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3227,   ! blockidx%x threadidx%x collapsed
+         3267, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3268,   ! blockidx%x threadidx%x collapsed
+       3163, Generating Multicore code
+         3171, Loop parallelized across threads
+         3226, Loop parallelized across threads
+         3267, Loop parallelized across threads
+   3163, Generating implicit map(tofrom:precip_frac(:,:),qc(:,:),dumg(:,:),qgtend(:,:),qi(:,:),dumi(:,:),meltsdttot(:,:),nc(:,:),dumng(:,:),ngtend(:,:),ni(:,:),dumns(:,:),qitend(:,:),qr(:,:),dumni(:,:),nitend(:,:),nr(:,:),dumr(:,:),qrtend(:,:),qs(:,:),dumnr(:,:),nrtend(:,:),ns(:,:),dumc(:,:),qctend(:,:),qg(:,:),dumnc(:,:),nctend(:,:),ng(:,:),qstend(:,:),icldm(:,:),dums(:,:),nstend(:,:),rho(:,:),tlat(:,:),t(:,:),lcldm(:,:)) 
+   3227, Invariant if transformation
+   3268, Invariant if transformation
+   3311, !$omp target teams loop
+       3311, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3311_52" GPU kernel
+             Generating NVIDIA GPU code
+         3318, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3319,   ! blockidx%x threadidx%x collapsed
+       3311, Generating Multicore code
+         3318, Loop parallelized across threads
+   3311, Generating implicit map(tofrom:qstend(:,:),tlat(:,:),t(:,:),dumnr(:,:),qitend(:,:),nitend(:,:),frzrdttot(:,:),nstend(:,:),lamr(:,:),qrtend(:,:),nrtend(:,:),qgtend(:,:),ngtend(:,:),dumr(:,:)) 
+   3366, !$omp target teams loop
+       3366, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3366_54" GPU kernel
+             Generating NVIDIA GPU code
+         3372, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3373,   ! blockidx%x threadidx%x collapsed
+         3413, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3414,   ! blockidx%x threadidx%x collapsed
+         3452, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3453,   ! blockidx%x threadidx%x collapsed
+       3366, Generating Multicore code
+         3372, Loop parallelized across threads
+         3413, Loop parallelized across threads
+         3452, Loop parallelized across threads
+   3366, Generating implicit map(tofrom:qvlat(:,:),t(:,:),dumc(:,:),qc(:,:),homotot(:,:),nc(:,:),qi(:,:),qctend(:,:),ni(:,:),dumnc(:,:),nctend(:,:),dum_2d(:,:),dumni(:,:),q(:,:),dumi(:,:),melttot(:,:),nitend(:,:),qitend(:,:),ttmpa(:,:),tlat(:,:)) 
+   3467, !$omp target teams loop
+       3467, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3467_56" GPU kernel
+             Generating NVIDIA GPU code
+         3474, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3475,   ! blockidx%x threadidx%x collapsed
+       3467, Generating Multicore code
+         3474, Loop parallelized across threads
+   3467, Generating implicit map(tofrom:cmeout(:,:),qvlat(:,:),ttmpa(:,:),tlat(:,:),qcrestot(:,:),dum_2d(:,:),qirestot(:,:),qctend(:,:),qitend(:,:),qvna(:,:),qvres(:,:)) 
+   3518, !$omp target teams loop
+       3518, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3518_58" GPU kernel
+             Generating NVIDIA GPU code
+         3526, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3527,   ! blockidx%x threadidx%x collapsed
+       3518, Generating Multicore code
+         3526, Loop parallelized across threads
+   3518, Generating implicit map(tofrom:precip_frac(:,:),qc(:,:),icldm(:,:),dumg(:,:),qgtend(:,:),qi(:,:),dums(:,:),dumi(:,:),lcldm(:,:),nc(:,:),dumng(:,:),ngtend(:,:),ni(:,:),dumns(:,:),qitend(:,:),qr(:,:),nstend(:,:),dumni(:,:),nitend(:,:),nr(:,:),dumr(:,:),qrtend(:,:),qs(:,:),dumnr(:,:),nrtend(:,:),ns(:,:),dumc(:,:),qctend(:,:),qg(:,:),dumnc(:,:),nctend(:,:),ng(:,:),rho(:,:),qstend(:,:)) 
+   3584, !$omp target teams loop
+       3584, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3584_60" GPU kernel
+             Generating NVIDIA GPU code
+         3590, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3591,   ! blockidx%x threadidx%x collapsed
+       3584, Generating Multicore code
+         3590, Loop parallelized across threads
+   3584, Generating implicit map(tofrom:dumni(:,:),dum_2d(:,:)) 
+   3603, !$omp target teams loop
+       3603, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3603_62" GPU kernel
+   3603, Generating implicit map(tofrom:dum_2d(:,:),dumi(:,:),deffi(:,:),ni(:,:),effi(:,:),lami(:,:),dumni0a2d(:,:),icldm(:,:),sadice(:,:),rho(:,:),dumni(:,:),nitend(:,:)) 
+   3634, !$omp target teams
+       3603, Generating NVIDIA GPU code
+         3610, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3611,   ! blockidx%x threadidx%x collapsed
+       3603, Generating Multicore code
+         3610, Loop parallelized across threads
+       3634, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3634_64" GPU kernel
+   3634, Generating implicit map(tofrom:deffi(:,:),ni(:,:),sadice(:,:),rho(:,:),effi(:,:),re_ice(:,:)) 
+   3655, !$omp target teams loop
+       3655, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3655_66" GPU kernel
+             Generating NVIDIA GPU code
+         3663, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3664,   ! blockidx%x threadidx%x collapsed
+       3655, Generating Multicore code
+         3663, Loop parallelized across threads
+   3655, Generating implicit map(tofrom:dumnc(:,:),dum_2d(:,:)) 
+   3676, !$omp target teams loop
+       3676, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3676_68" GPU kernel
+             Generating NVIDIA GPU code
+         3683, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3684,   ! blockidx%x threadidx%x collapsed
+       3676, Generating Multicore code
+         3683, Loop parallelized across threads
+   3676, Generating implicit map(tofrom:dum_2d(:,:),nc(:,:),rho(:,:),pgamrad(:,:),lamcrad(:,:),lcldm(:,:),dumc(:,:),dumnc(:,:),nctend(:,:),effc(:,:),lamc(:,:),pgam(:,:)) 
+   3684, Invariant if transformation
+   3722, !$omp target teams loop
+       3722, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3722_70" GPU kernel
+             Generating NVIDIA GPU code
+         3729, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3730,   ! blockidx%x threadidx%x collapsed
+         3749, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3750,   ! blockidx%x threadidx%x collapsed
+       3722, Generating Multicore code
+         3729, Loop parallelized across threads
+         3749, Loop parallelized across threads
+   3722, Generating implicit map(tofrom:dum_2d(:,:),effc(:,:),lamcrad(:,:),effc_fn(:,:),dumnr(:,:),lamc(:,:),pgamrad(:,:),pgam(:,:),dumc(:,:)) 
+   3762, !$omp target teams loop
+       3762, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3762_72" GPU kernel
+             Generating NVIDIA GPU code
+         3769, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3770,   ! blockidx%x threadidx%x collapsed
+         3788, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3789,   ! blockidx%x threadidx%x collapsed
+       3762, Generating Multicore code
+         3769, Loop parallelized across threads
+         3788, Loop parallelized across threads
+   3762, Generating implicit map(tofrom:dumns(:,:),dum_2d(:,:),nr(:,:),precip_frac(:,:),nrtend(:,:),dumr(:,:),dumnr(:,:)) 
+   3801, !$omp target teams loop
+       3801, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3801_74" GPU kernel
+             Generating NVIDIA GPU code
+         3808, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3809,   ! blockidx%x threadidx%x collapsed
+         3830, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3831,   ! blockidx%x threadidx%x collapsed
+       3801, Generating Multicore code
+         3808, Loop parallelized across threads
+         3830, Loop parallelized across threads
+   3801, Generating implicit map(tofrom:dumns0a2d(:,:),dumng(:,:),ns(:,:),nstend(:,:),lams(:,:),sadsnow(:,:),rho(:,:),dums(:,:),dumns(:,:),precip_frac(:,:),dum_2d(:,:)) 
+   3848, !$omp target teams loop
+       3848, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3848_76" GPU kernel
+             Generating NVIDIA GPU code
+         3855, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3856,   ! blockidx%x threadidx%x collapsed
+         3870, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3871,   ! blockidx%x threadidx%x collapsed
+         3891, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3892,   ! blockidx%x threadidx%x collapsed
+         3912, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3913,   ! blockidx%x threadidx%x collapsed
+       3848, Generating Multicore code
+         3855, Loop parallelized across threads
+         3870, Loop parallelized across threads
+         3891, Loop parallelized across threads
+         3912, Loop parallelized across threads
+   3848, Generating implicit map(tofrom:dum_2d(:,:),dumg(:,:),ng(:,:),nstend(:,:),nctend(:,:),precip_frac(:,:),qc(:,:),nc(:,:),dumng(:,:),qgtend(:,:),qi(:,:),ni(:,:),ngtend(:,:),qitend(:,:),qr(:,:),nrout(:,:),nitend(:,:),qrtend(:,:),qstend(:,:),qs(:,:),ns(:,:),nrtend(:,:),qctend(:,:),qg(:,:),nr(:,:)) 
+   3871, Invariant if transformation
+   3927, !$omp target teams loop
+       3927, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3927_78" GPU kernel
+             Generating NVIDIA GPU code
+         3934, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3935,   ! blockidx%x threadidx%x collapsed
+         3957, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3958,   ! blockidx%x threadidx%x collapsed
+       3927, Generating Multicore code
+         3934, Loop parallelized across threads
+         3957, Loop parallelized across threads
+   3927, Generating implicit map(tofrom:precip_frac(:,:),freqr(:,:),qrout(:,:),nsout(:,:),nrout(:,:),drout2(:,:),reff_rain(:,:),qrout2(:,:),nrout2(:,:)) 
+   3972, !$omp target teams loop
+       3972, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L3972_80" GPU kernel
+             Generating NVIDIA GPU code
+         3979, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         3980,   ! blockidx%x threadidx%x collapsed
+         4004, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         4005,   ! blockidx%x threadidx%x collapsed
+       3972, Generating Multicore code
+         3979, Loop parallelized across threads
+         4004, Loop parallelized across threads
+   3972, Generating implicit map(tofrom:precip_frac(:,:),ngout(:,:),qsout(:,:),nsout2(:,:),nsout(:,:),dsout2(:,:),dsout(:,:),reff_snow(:,:),qsout2(:,:),freqs(:,:)) 
+   4022, !$omp target teams loop
+       4022, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L4022_82" GPU kernel
+             Generating NVIDIA GPU code
+         4029, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         4030,   ! blockidx%x threadidx%x collapsed
+       4022, Generating Multicore code
+         4029, Loop parallelized across threads
+   4022, Generating implicit map(tofrom:dgout2(:,:)) 
+   4041, !$omp target teams loop
+        890, Generating map(alloc:psacws(:,:),qgic(:,:),n0s(:,:),ngracs(:,:),qmultrg(:,:),qric(:,:),npsacws(:,:),nric(:,:),qcic(:,:),ncic(:,:),relhum(:,:),dums(:,:),msacwi(:,:),rhof(:,:),rho(:,:),pre(:,:),bergs(:,:),ice_sublim(:,:),lams(:,:),qs(:,:),qc(:,:),qi(:,:),qsfm(:,:),qr(:,:),qg(:,:),nc(:,:),niact(:,:),nscng(:,:),nragg(:,:),ng(:,:),niic(:,:),lamg(:,:),n0g(:,:),icldm(:,:),pdel_inv(:,:),lamr(:,:),n0r(:,:),lami(:,:),n0i(:,:),lamc(:,:),mu(:,:),minstrf(:,:),ninstrf(:,:),mi0l(:,:),nimax(:,:),minstgm(:,:),ninstgm(:,:),vap_dep(:,:),uns(:,:),fs(:,:),nnuccc(:,:),mnuccc(:,:),minstsm(:,:),nmultrg(:,:),mnuccri(:,:),nnuccri(:,:),mnucct(:,:),nnucct(:,:),mnudep(:,:),ns(:,:),prai(:,:),nprai(:,:),nprc(:,:),nsacwi(:,:),nr(:,:),psacwg(:,:),npsacwg(:,:),pracg(:,:),npracg(:,:),mnuccd(:,:),nnuccd(:,:),mnuccr(:,:),nnuccr(:,:),pgsacw(:,:),nnudep(:,:),prc(:,:),nprc1(:,:),pracs(:,:),npracs(:,:),prds(:,:),prdg(:,:),nsubc(:,:),nsic(:,:),nsubr(:,:),nsubi(:,:),asn(:,:),berg(:,:),npra(:,:),nsagg(:,:),ngic(:,:),ninstsm(:,:),nmultg(:,:),nprci(:,:),precip_frac(:,:),pra(:,:),psacr(:,:),pgracs(:,:),pgam(:,:),prci(:,:),qiic(:,:),qmultg(:,:),unr(:,:),ung(:,:),ttmpa(:,:),ajn(:,:),arn(:,:),acn(:,:),agn(:,:),ain(:,:),lcldm(:,:),esi(:,:),dv(:,:),esl(:,:),qvi(:,:),qtmpai(:,:),qvl(:,:),qvna(:,:),rainrt(:,:),falouts(:),fi(:,:),fg(:,:),fng(:,:),fc(:,:),fnc(:,:),fns(:,:),fni(:,:),fr(:,:),fnr(:,:),esna(:,:),falouti(:),faloutc(:),faloutnc(:),faloutns(:),faloutni(:),faloutr(:),faloutnr(:),qvnai(:,:),cldm(:,:),dum1a(:,:),dum2a(:,:),dumni(:,:),dumns(:,:),sc(:,:),qsic(:,:),dum_2d(:,:),dumi(:,:),dumg(:,:),dumng(:,:),dumns0a2d(:,:),dumni0a2d(:,:),dumr(:,:),dumnr(:,:),dumc(:,:),dumnc(:,:),dum3a(:,:),nsubs(:,:),ni(:,:)) 
+       4041, Generating "nvkernel_micro_mg3_0_micro_mg_tend__F1L4041_84" GPU kernel
+             Generating NVIDIA GPU code
+         4048, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         4049,   ! blockidx%x threadidx%x collapsed
+         4077, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         4078,   ! blockidx%x threadidx%x collapsed
+         4151, Loop parallelized across teams, threads(128) collapse(2) ! blockidx%x threadidx%x
+         4152,   ! blockidx%x threadidx%x collapsed
+       4041, Generating Multicore code
+         4048, Loop parallelized across threads
+         4077, Loop parallelized across threads
+         4151, Loop parallelized across threads
+   4041, Generating implicit map(tofrom:qc(:,:),nfice(:,:),qgout(:,:),ngout2(:,:),ngout(:,:),frefl(:,:),csrfl(:,:),dgout(:,:),rainrt(:,:),precip_frac(:,:),lcldm(:,:),nc(:,:),icldm(:,:),rho(:,:),refl(:,:),qgout2(:,:),freqg(:,:),qrout(:,:),reff_grau(:,:),qsout(:,:),arefl(:,:),acsrfl(:,:),fcsrfl(:,:),areflz(:,:),dumi(:,:),dgout2(:,:),qi(:,:),dum_2d(:,:),nctend(:,:)) 
+calc_rercld:
+   4200, !$omp target teams loop
+       4200, Generating "nvkernel_micro_mg3_0_calc_rercld__F1L4200_87" GPU kernel
+             Generating NVIDIA GPU code
+         4208, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       4200, Generating Multicore code
+         4208, Loop parallelized across threads
+   4200, Generating implicit map(tofrom:pgam(:),pgamp1(:)) 
+   4219, !$omp target teams loop
+       4196, Generating map(alloc:pgamp1(:),tmp(:)) 
+       4219, Generating "nvkernel_micro_mg3_0_calc_rercld__F1L4219_89" GPU kernel
+             Generating NVIDIA GPU code
+         4226, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+       4219, Generating Multicore code
+         4226, Loop parallelized across threads
+   4219, Generating implicit map(tofrom:lamc(:),lamr(:),n0r(:),tmp(:),rercld(:),qric(:),qcic(:),ncic(:)) 
+sedimentation:
+   4297, !$omp target teams loop
+       4293, Generating map(alloc:faloutnx(:,:),faloutx(:,:),dum1(:,:)) 
+       4297, Generating "nvkernel_micro_mg3_0_sedimentation__F1L4297_91" GPU kernel
+             Generating NVIDIA GPU code
+         4303, Loop parallelized across teams, threads(128) ! blockidx%x threadidx%x
+         4304, Loop run sequentially 
+         4311, Loop run sequentially 
+         4325, Loop run sequentially 
+         4329, Loop run sequentially 
+         4340, Loop run sequentially 
+         4334, Loop run sequentially 
+         4316, Loop run sequentially 
+       4297, Generating Multicore code
+         4303, Loop parallelized across threads
+   4297, Generating implicit map(tofrom:fnx(:,:),nxtend(:,:),faloutx(:,:),tlat(:,:),faloutnx(:,:),dumx(:,:),dumnx(:,:),dum1(:,:),qxsevap(:,:),fx(:,:),qvlat(:,:),qxsedten(:,:),prect(:),qxtend(:,:),xcldm(:,:),preci(:),pdel_inv(:,:)) 
+         Generating implicit map(to:xxlx) 
+         Generating implicit map(tofrom:xflx(:,:)) 
+   4303, Invariant if transformation
+   4304, maxval reduction inlined
+         Loop is parallelizable
+   4311, Loop is parallelizable
+   4316, Loop is parallelizable
+   4329, Loop is parallelizable
+   4334, Loop is parallelizable
+   4340, Loop is parallelizable
+         Invariant if transformation
+kr_externs_in_micro_mg3_0:
+   4447, Generating update to(do_hail,rainfrze,ifs_sed,gamma_bg_plus1,g,gamma_bj_plus1,gamma_bi_plus4,gamma_bi_plus1,gamma_bg_plus4,gamma_bs_plus1,gamma_br_plus4,gamma_br_plus1,gamma_bj_plus4,xxls,xxlv_squared,xxlv,rainfreeze_ifs,rv,icenuc_use_meyers,remove_supersat,do_cldice,do_graupel,tmelt,dcs,micro_mg_berg_eff_factor,xlf,use_hetfrz_classnuc,xxls_squared,snowmelt,rhosu,precip_fall_corr,evap_sed_off,cpp,nsnst,icenuct,r,do_sb_physics,icenuc_rh_off,evap_rhthrsh_ifs,gamma_bs_plus4,evap_scl_ifs,nscons,nrcons,ngcons,nicons,nccons,nrnst,ninst,ncnst,ngnst,microp_uniform)
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -DDFACT=4608 -c -o micro_mg_cam.o micro_mg_cam.F90
+micro_mg_cam_tend_pack:
+    716, sum reduction inlined
+    723, sum reduction inlined
+    730, sum reduction inlined
+    737, sum reduction inlined
+    744, sum reduction inlined
+    751, sum reduction inlined
+    758, sum reduction inlined
+    765, sum reduction inlined
+    772, sum reduction inlined
+    779, sum reduction inlined
+    786, sum reduction inlined
+    793, sum reduction inlined
+    800, sum reduction inlined
+    807, sum reduction inlined
+    814, sum reduction inlined
+    821, sum reduction inlined
+    828, sum reduction inlined
+    835, sum reduction inlined
+    842, sum reduction inlined
+    849, sum reduction inlined
+    856, sum reduction inlined
+    863, sum reduction inlined
+    870, sum reduction inlined
+    877, sum reduction inlined
+    884, sum reduction inlined
+    891, sum reduction inlined
+    898, sum reduction inlined
+    905, sum reduction inlined
+    912, sum reduction inlined
+    919, sum reduction inlined
+    926, sum reduction inlined
+    933, sum reduction inlined
+    940, sum reduction inlined
+    947, sum reduction inlined
+    954, sum reduction inlined
+    961, sum reduction inlined
+    968, sum reduction inlined
+    975, sum reduction inlined
+    982, sum reduction inlined
+    989, sum reduction inlined
+    996, sum reduction inlined
+   1003, sum reduction inlined
+   1010, sum reduction inlined
+   1017, sum reduction inlined
+   1024, sum reduction inlined
+   1031, sum reduction inlined
+   1038, sum reduction inlined
+   1045, sum reduction inlined
+   1052, sum reduction inlined
+   1059, sum reduction inlined
+   1066, sum reduction inlined
+   1073, sum reduction inlined
+   1080, sum reduction inlined
+   1087, sum reduction inlined
+   1094, sum reduction inlined
+   1101, sum reduction inlined
+   1108, sum reduction inlined
+   1115, sum reduction inlined
+   1122, sum reduction inlined
+   1129, sum reduction inlined
+   1136, sum reduction inlined
+   1143, sum reduction inlined
+   1150, sum reduction inlined
+   1157, sum reduction inlined
+   1164, sum reduction inlined
+   1171, sum reduction inlined
+   1178, sum reduction inlined
+   1185, sum reduction inlined
+   1192, sum reduction inlined
+   1199, sum reduction inlined
+   1206, sum reduction inlined
+   1213, sum reduction inlined
+   1220, sum reduction inlined
+   1227, sum reduction inlined
+   1234, sum reduction inlined
+   1241, sum reduction inlined
+   1248, sum reduction inlined
+   1255, sum reduction inlined
+   1262, sum reduction inlined
+   1269, sum reduction inlined
+   1276, sum reduction inlined
+   1283, sum reduction inlined
+   1290, sum reduction inlined
+   1297, sum reduction inlined
+   1304, sum reduction inlined
+   1311, sum reduction inlined
+   1318, sum reduction inlined
+   1325, sum reduction inlined
+   1332, sum reduction inlined
+   1339, sum reduction inlined
+   1346, sum reduction inlined
+   1353, sum reduction inlined
+   1360, sum reduction inlined
+   1367, sum reduction inlined
+   1374, sum reduction inlined
+   1381, sum reduction inlined
+   1388, sum reduction inlined
+   1395, sum reduction inlined
+   1402, sum reduction inlined
+   1409, sum reduction inlined
+   1416, sum reduction inlined
+   1423, sum reduction inlined
+   1430, sum reduction inlined
+   1437, sum reduction inlined
+   1444, sum reduction inlined
+   1451, sum reduction inlined
+   1458, sum reduction inlined
+   1465, sum reduction inlined
+   1472, sum reduction inlined
+   1479, sum reduction inlined
+   1486, sum reduction inlined
+   1493, sum reduction inlined
+   1500, sum reduction inlined
+   1507, sum reduction inlined
+   1514, sum reduction inlined
+   1521, sum reduction inlined
+   1528, sum reduction inlined
+   1535, sum reduction inlined
+   1542, sum reduction inlined
+   1549, sum reduction inlined
+   1556, sum reduction inlined
+   1672, Generating map(from:packed_sflx(:,:),packed_psacws(:,:)) 
+         Generating map(to:packed_q(:,:)) 
+         Generating map(from:packed_qgtend(:,:)) 
+         Generating map(to:packed_nacon(:,:,:)) 
+         Generating map(from:packed_ngtend(:,:),packed_qmultrg(:,:),packed_qrtend(:,:),packed_npsacwg(:,:),packed_nrtend(:,:),packed_qctend(:,:),packed_nfice(:,:),packed_rel(:,:)) 
+         Generating map(to:mg_snow_props) 
+         Generating map(from:packed_nstend(:,:)) 
+         Generating map(to:packed_p(:,:)) 
+         Generating map(from:packed_cflx(:,:),packed_lambdac(:,:),packed_homo(:,:)) 
+         Generating map(to:packed_qs(:,:)) 
+         Generating map(from:packed_mu(:,:),packed_nmultrg(:,:),packed_rflx(:,:)) 
+         Generating map(to:packed_naai(:,:),packed_tnd_nsnow(:,:)) 
+         Generating map(from:packed_tlat(:,:),packed_rate1ord_cw2pr_st(:,:)) 
+         Generating map(to:packed_frzdep(:,:)) 
+         Generating map(from:packed_freqs(:,:)) 
+         Generating map(to:packed_frzcnt(:,:),mg_ice_props,mg_hail_props,mg_liq_props) 
+         Generating map(from:dsout2_dum(:,:)) 
+         Generating map(to:mg_graupel_props,mg_rain_props) 
+         Generating map(from:packed_qvres(:,:)) 
+         Generating map(to:packed_t(:,:)) 
+         Generating map(from:packed_qstend(:,:),packed_qcsevap(:,:),packed_qisevap(:,:),packed_ncal(:,:)) 
+         Generating map(to:packed_ni(:,:)) 
+         Generating map(from:packed_qrsedten(:,:),packed_qssedten(:,:),packed_nrout2(:,:),packed_nsout2(:,:),packed_qgsedten(:,:),packed_ngracs(:,:),packed_rei(:,:),reff_snow_dum(:,:),packed_refl(:,:)) 
+         Generating map(to:packed_rndst(:,:,:)) 
+         Generating map(from:packed_sadice(:,:),packed_preci(:),packed_prdg(:,:),packed_nctend(:,:),packed_dgout2(:,:),packed_acsrfl(:,:),packed_prai(:,:),packed_prer_evap(:,:),packed_cmei(:,:),packed_csrfl(:,:),packed_msacwi(:,:),packed_iflx(:,:)) 
+         Generating map(to:packed_qsatfac(:,:)) 
+         Generating map(from:packed_dei(:,:)) 
+         Generating map(to:packed_icecldf(:,:)) 
+         Generating map(from:packed_frzrdt(:,:),packed_rercld(:,:),packed_sadsnow(:,:),packed_bergs(:,:)) 
+         Generating map(to:packed_qr(:,:)) 
+         Generating map(from:reff_grau_dum(:,:),reff_rain_dum(:,:),packed_vtrmi(:,:),packed_qcsedten(:,:),packed_qisedten(:,:),packed_qvlat(:,:)) 
+         Generating map(to:packed_cldn(:,:)) 
+         Generating map(from:packed_ums(:,:),packed_vtrmc(:,:),packed_umg(:,:),packed_umr(:,:)) 
+         Generating map(to:packed_tnd_qsnow(:,:)) 
+         Generating map(from:packed_qgout2(:,:),packed_qcres(:,:),packed_qires(:,:),packed_qrout2(:,:),packed_qsout2(:,:),packed_pgsacw(:,:),packed_prain(:,:),packed_mnuccc(:,:),packed_meltstot(:,:),packed_mnucct(:,:),packed_mnuccri(:,:),packed_mnudeptot(:,:),packed_psacwg(:,:),packed_berg(:,:),packed_areflz(:,:)) 
+         Generating map(to:packed_liqcldf(:,:)) 
+         Generating map(from:packed_meltsdt(:,:),packed_melt(:,:),packed_gflx(:,:),packed_qcrat(:,:),packed_prc(:,:),packed_pracs(:,:)) 
+         Generating map(to:packed_qi(:,:)) 
+         Generating map(from:packed_mnuccd(:,:),packed_mnuccr(:,:),packed_pracg(:,:),packed_meltgtot(:,:)) 
+         Generating map(to:packed_frzimm(:,:)) 
+         Generating map(from:packed_pra(:,:),packed_psacr(:,:),packed_pgracs(:,:)) 
+         Generating map(to:packed_pdel(:,:)) 
+         Generating map(from:packed_prci(:,:),packed_qitend(:,:),packed_qmultg(:,:),packed_prodsnow(:,:)) 
+         Generating map(to:packed_npccn(:,:),packed_ns(:,:)) 
+         Generating map(from:packed_ngout2(:,:),packed_nitend(:,:),packed_nmultg(:,:),packed_npracg(:,:)) 
+         Generating map(to:packed_nr(:,:)) 
+         Generating map(from:packed_nscng(:,:)) 
+         Generating map(to:packed_re_ice(:,:)) 
+         Generating map(from:packed_am_evp_st(:,:),packed_arefl(:,:),packed_fcsrfl(:,:),packed_cmeout(:,:)) 
+         Generating map(to:packed_accre_enhan(:,:)) 
+         Generating map(from:packed_evapsnow(:,:)) 
+         Generating map(to:packed_relvar(:,:),packed_nc(:,:)) 
+         Generating map(from:packed_ncai(:,:),packed_qrout(:,:),packed_qsout(:,:),packed_nrout(:,:),packed_nsout(:,:),drout_dum(:,:),packed_freqr(:,:),packed_freqg(:,:),packed_nevapr(:,:)) 
+         Generating map(to:packed_qc(:,:),packed_qg(:,:)) 
+         Generating map(from:packed_des(:,:)) 
+         Generating map(to:packed_ng(:,:)) 
+         Generating map(from:packed_qgout(:,:),packed_ngout(:,:),packed_dgout(:,:),packed_frefl(:,:),packed_prect(:),rel_fn_dum(:,:)) 
+   2006, Generating map(from:packed_sflx(:,:),packed_psacws(:,:)) 
+         Generating map(to:packed_q(:,:)) 
+         Generating map(from:packed_qgtend(:,:)) 
+         Generating map(to:packed_nacon(:,:,:)) 
+         Generating map(from:packed_ngtend(:,:),packed_qmultrg(:,:),packed_qrtend(:,:),packed_npsacwg(:,:),packed_nrtend(:,:),packed_qctend(:,:),packed_nfice(:,:),packed_rel(:,:)) 
+         Generating map(to:mg_snow_props) 
+         Generating map(from:packed_nstend(:,:)) 
+         Generating map(to:packed_p(:,:)) 
+         Generating map(from:packed_cflx(:,:),packed_lambdac(:,:),packed_homo(:,:)) 
+         Generating map(to:packed_qs(:,:)) 
+         Generating map(from:packed_mu(:,:),packed_nmultrg(:,:),packed_rflx(:,:)) 
+         Generating map(to:packed_naai(:,:),packed_tnd_nsnow(:,:)) 
+         Generating map(from:packed_tlat(:,:),packed_rate1ord_cw2pr_st(:,:)) 
+         Generating map(to:packed_frzdep(:,:)) 
+         Generating map(from:packed_freqs(:,:)) 
+         Generating map(to:packed_frzcnt(:,:),mg_ice_props,mg_hail_props,mg_liq_props) 
+         Generating map(from:dsout2_dum(:,:)) 
+         Generating map(to:mg_graupel_props,mg_rain_props) 
+         Generating map(from:packed_qvres(:,:)) 
+         Generating map(to:packed_t(:,:)) 
+         Generating map(from:packed_qstend(:,:),packed_qcsevap(:,:),packed_qisevap(:,:),packed_ncal(:,:)) 
+         Generating map(to:packed_ni(:,:)) 
+         Generating map(from:packed_qrsedten(:,:),packed_qssedten(:,:),packed_nrout2(:,:),packed_nsout2(:,:),packed_qgsedten(:,:),packed_ngracs(:,:),packed_rei(:,:),rel_fn_dum(:,:),reff_snow_dum(:,:),packed_refl(:,:)) 
+         Generating map(to:packed_rndst(:,:,:)) 
+         Generating map(from:packed_sadice(:,:),packed_preci(:),packed_prdg(:,:),packed_nctend(:,:),packed_dgout2(:,:),packed_acsrfl(:,:),packed_prai(:,:),packed_prer_evap(:,:),packed_cmei(:,:),packed_csrfl(:,:),packed_msacwi(:,:),packed_iflx(:,:)) 
+         Generating map(to:packed_qsatfac(:,:)) 
+         Generating map(from:packed_dei(:,:)) 
+         Generating map(to:packed_icecldf(:,:)) 
+         Generating map(from:packed_frzrdt(:,:),packed_rercld(:,:),packed_sadsnow(:,:),packed_bergs(:,:)) 
+         Generating map(to:packed_qr(:,:)) 
+         Generating map(from:reff_grau_dum(:,:),reff_rain_dum(:,:),packed_vtrmi(:,:),packed_qcsedten(:,:),packed_qisedten(:,:),packed_qvlat(:,:)) 
+         Generating map(to:packed_cldn(:,:)) 
+         Generating map(from:packed_ums(:,:),packed_vtrmc(:,:),packed_umg(:,:),packed_umr(:,:)) 
+         Generating map(to:packed_tnd_qsnow(:,:)) 
+         Generating map(from:packed_qgout2(:,:),packed_qcres(:,:),packed_qires(:,:),packed_qrout2(:,:),packed_qsout2(:,:),packed_pgsacw(:,:),packed_prain(:,:),packed_mnuccc(:,:),packed_meltstot(:,:),packed_mnucct(:,:),packed_mnuccri(:,:),packed_mnudeptot(:,:),packed_psacwg(:,:),packed_berg(:,:),packed_areflz(:,:)) 
+         Generating map(to:packed_liqcldf(:,:)) 
+         Generating map(from:packed_meltsdt(:,:),packed_melt(:,:),packed_gflx(:,:),packed_qcrat(:,:),packed_prc(:,:),packed_pracs(:,:)) 
+         Generating map(to:packed_qi(:,:)) 
+         Generating map(from:packed_mnuccd(:,:),packed_mnuccr(:,:),packed_pracg(:,:),packed_meltgtot(:,:)) 
+         Generating map(to:packed_frzimm(:,:)) 
+         Generating map(from:packed_pra(:,:),packed_psacr(:,:),packed_pgracs(:,:)) 
+         Generating map(to:packed_pdel(:,:)) 
+         Generating map(from:packed_prci(:,:),packed_qitend(:,:),packed_qmultg(:,:),packed_prodsnow(:,:)) 
+         Generating map(to:packed_npccn(:,:),packed_ns(:,:)) 
+         Generating map(from:packed_ngout2(:,:),packed_nitend(:,:),packed_nmultg(:,:),packed_npracg(:,:)) 
+         Generating map(to:packed_nr(:,:)) 
+         Generating map(from:packed_nscng(:,:)) 
+         Generating map(to:packed_re_ice(:,:)) 
+         Generating map(from:packed_am_evp_st(:,:),packed_arefl(:,:),packed_fcsrfl(:,:),packed_cmeout(:,:)) 
+         Generating map(to:packed_accre_enhan(:,:)) 
+         Generating map(from:packed_evapsnow(:,:)) 
+         Generating map(to:packed_relvar(:,:),packed_nc(:,:)) 
+         Generating map(from:packed_ncai(:,:),packed_qrout(:,:),packed_qsout(:,:),packed_nrout(:,:),packed_nsout(:,:),drout_dum(:,:),packed_freqr(:,:),packed_freqg(:,:),packed_nevapr(:,:)) 
+         Generating map(to:packed_qc(:,:),packed_qg(:,:)) 
+         Generating map(from:packed_des(:,:)) 
+         Generating map(to:packed_ng(:,:)) 
+         Generating map(from:packed_qgout(:,:),packed_ngout(:,:),packed_dgout(:,:),packed_frefl(:,:),packed_prect(:)) 
+kr_micro_mg_cam_tend_pack_real__r8_dim2:
+   2317, sum reduction inlined
+   2319, Memory copy idiom, loop replaced by call to __c_mcopy8
+   2322, sum reduction inlined
+kr_micro_mg_cam_tend_pack_real__r8_dim3:
+   2359, Memory copy idiom, loop replaced by call to __c_mcopy8
+   2361, sum reduction inlined
+   2363, sum reduction inlined
+kv_micro_mg_cam_tend_pack_real__r8_dim2:
+   2384, all reduction inlined
+   2396, Memory set idiom, loop replaced by call to __c_mset4
+   2403, sum reduction inlined
+   2404, sum reduction inlined
+   2426, count reduction inlined
+   2427, sum reduction inlined
+   2428, sum reduction inlined
+   2437, count reduction inlined
+   2438, sum reduction inlined
+   2439, sum reduction inlined
+   2448, count reduction inlined
+   2449, sum reduction inlined
+   2450, sum reduction inlined
+kv_micro_mg_cam_tend_pack_real__r8_dim1:
+   2475, all reduction inlined
+   2487, Memory set idiom, loop replaced by call to __c_mset4
+   2494, sum reduction inlined
+   2495, sum reduction inlined
+   2517, count reduction inlined
+   2518, sum reduction inlined
+   2519, sum reduction inlined
+   2528, count reduction inlined
+   2529, sum reduction inlined
+   2530, sum reduction inlined
+   2539, count reduction inlined
+   2540, sum reduction inlined
+   2541, sum reduction inlined
+read1darray:
+   2642, sum reduction inlined
+   2644, Memory copy idiom, loop replaced by call to __c_mcopy8
+read2darray:
+   2666, sum reduction inlined
+   2668, Memory copy idiom, loop replaced by call to __c_mcopy8
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -DDFACT=4608 -DPCOLS=16 -DSTATEFILE='"./input_casper_intel19/mpirank36_pcols16/kgen_statefile.lst"' -c -o kernel_driver.o kernel_driver.F90
+mpif90           -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU -D_MPI -o kernel.exe micro_mg_cam.o micro_mg3_0.o micro_pumas_utils.o wv_sat_methods.o shr_spfn_mod.o shr_kind_mod.o shr_const_mod.o kernel_driver.o kgen_utils.o  
+sed "s/PCOLS/16/g" kgen_statefile.template >& log
+sed "s/NTASKS/36/g" log >& kgen_statefile.lst
+rm -f log
+mv kgen_statefile.lst ./input_casper_intel19/mpirank36_pcols16/ 
+WARNING: OpenMPI or MPICH tracing relies on NVTX. NVTX tracing has been automatically enabled.
+Collecting data...
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           14  of           480  elements are different.
+ Average - kernel     94303.48154145725     
+ Average - reference     94303.48154151057     
+ RMS of difference is    1.2145842490948314E-006
+ Normalized RMS of difference is    4.9893586764680746E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            53
+ Number of non-identical variables within tolerance:            68
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2
+ 
+ mg3_tend: DFACT*mgncol:    69120 Time per call (usec):         Inf
+ 
+****************************************************
+    kernel execution summary: mg3_tend
+****************************************************
+ total_columns:         69120
+    Total number of verification cases  :     1
+    Number of verification-passed cases :     0
+ 
+    kernel: mg3_tend: FAILED verification
+ 
+    number of processes  1
+ 
+    Average call time (usec):        Inf
+    Minimum call time (usec):  0.180+309
+    Maximum call time (usec):        Inf
+ 
+    number of columns:  69120
+    Average columns per sec :         0.00
+****************************************************
+Processing events...
+Saving temporary "/glade/scratch/sunjian/nsys-report-9250-14f0-4a44-592c.qdstrm" file to disk...
+
+Creating final output files...
+Processing [0%                                                                ]Processing [2%                                                                ]Processing [4%                                                                ]Processing [====12%                                                           ]Processing [========18%                                                       ]Processing [===========22%                                                    ]Processing [=============25%                                                  ]Processing [==============26%                                                 ]Processing [================30%                                               ]Processing [==================33%                                             ]Processing [====================36%                                           ]Processing [======================39%                                         ]Processing [========================42%                                       ]Processing [===========================46%                                    ]Processing [=============================49%                                  ]Processing [===============================52%                                ]Processing [=================================55%                              ]Processing [===================================58%                            ]Processing [=====================================61%                          ]Processing [=======================================64%                        ]Processing [=========================================67%                      ]Processing [=========================================68%                      ]Processing [==========================================69%                     ]Processing [===========================================70%                    ]Processing [===========================================71%                    ]Processing [============================================72%                   ]Processing [=============================================73%                  ]Processing [=============================================74%                  ]Processing [===============================================76%                ]Processing [===============================================77%                ]Processing [=================================================80%              ]Processing [==================================================81%             ]Processing [===================================================83%            ]Processing [====================================================84%           ]Processing [=====================================================85%          ]Processing [=====================================================86%          ]Processing [======================================================87%         ]Processing [=======================================================88%        ]Processing [==============================================================100%]
+Saved report file to "/glade/scratch/sunjian/nsys-report-9250-14f0-4a44-592c.qdrep"
+Report file moved to "/glade/scratch/sunjian/temp/OpenMP_Offload/PUMAS_OPENMP/openacc_dfact4608.qdrep"
+
+rm -f kernel.exe *.mod micro_mg_cam.o micro_mg3_0.o micro_pumas_utils.o wv_sat_methods.o shr_spfn_mod.o shr_kind_mod.o shr_const_mod.o kernel_driver.o kgen_utils.o *.optrpt *cub *ptx

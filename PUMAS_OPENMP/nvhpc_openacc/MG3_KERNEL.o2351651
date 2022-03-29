@@ -1,0 +1,1178 @@
+Warning: Failed writing log files to directory [/var/log/nvidia-mps]. No logs will be available.
+MPS control daemon started
+rm -f kernel.exe *.mod micro_mg_cam.o micro_mg3_0.o micro_pumas_utils.o wv_sat_methods.o shr_spfn_mod.o shr_kind_mod.o shr_const_mod.o kernel_driver.o kgen_utils.o *.optrpt *cub *ptx
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -c -o kgen_utils.o kgen_utils.f90
+kgen_perturb_real4_dim1:
+    175, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real4_dim2:
+    195, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real4_dim3:
+    217, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real8_dim1:
+    241, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real8_dim2:
+    261, Memory set idiom, loop replaced by call to __c_mset4
+kgen_perturb_real8_dim3:
+    283, Memory set idiom, loop replaced by call to __c_mset4
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -c -o shr_kind_mod.o shr_kind_mod.F90
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -c -o shr_const_mod.o shr_const_mod.F90
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -DDFACT=4608 -c -o shr_spfn_mod.o shr_spfn_mod.F90
+shr_spfn_gamma_r8:
+     98, Generating acc routine seq
+         Generating NVIDIA GPU code
+shr_spfn_gamma_nonintrinsic_r8:
+    247, Generating acc routine seq
+         Generating NVIDIA GPU code
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -DDFACT=4608 -c -o micro_pumas_utils.o micro_pumas_utils.F90
+rising_factorial_r8:
+    299, Generating acc routine seq
+         Generating NVIDIA GPU code
+rising_factorial_r8_vec:
+    318, Generating NVIDIA GPU code
+        326, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    318, Generating implicit copy(x(:)) [if not already present]
+         Generating implicit copyout(res(:vlen)) [if not already present]
+rising_factorial_integer:
+    340, Generating acc routine seq
+         Generating NVIDIA GPU code
+rising_factorial_integer_vec:
+    371, Generating create(factor(:)) [if not already present]
+    376, Generating NVIDIA GPU code
+        384, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+        394, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+        406, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+        416, !$acc loop seq
+        421, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    376, Generating implicit copyin(x(:vlen)) [if not already present]
+         Generating implicit copy(res(:vlen)) [if not already present]
+    421, Loop is parallelizable
+calc_ab_line:
+    439, Generating acc routine seq
+         Generating NVIDIA GPU code
+calc_ab_vect:
+    467, Generating NVIDIA GPU code
+        475, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    467, Generating implicit copyout(ab(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen),qv(:vlen)) [if not already present]
+size_dist_param_liq_line:
+    487, Generating acc routine seq
+         Generating NVIDIA GPU code
+size_dist_param_liq_2d:
+    556, Generating create(shapec(:,:),lbnd(:,:),pgamp1(:,:),tmp(:,:),ubnd(:,:)) [if not already present]
+    561, Generating NVIDIA GPU code
+        569, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        570,   ! blockidx%x threadidx%x collapsed
+    561, Generating implicit copy(pgam(:dim1,:dim2)) [if not already present]
+         Generating implicit copyin(rho(:dim1,:dim2),qcic(:dim1,:dim2),ncic(:dim1,:dim2)) [if not already present]
+    594, Generating NVIDIA GPU code
+        603, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        604,   ! blockidx%x threadidx%x collapsed
+    594, Generating implicit copyin(qcic(:dim1,:dim2),props) [if not already present]
+    623, Generating NVIDIA GPU code
+        632, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        633,   ! blockidx%x threadidx%x collapsed
+    623, Generating implicit copy(lamc(:dim1,:dim2),pgam(:dim1,:dim2)) [if not already present]
+         Generating implicit copyin(qcic(:dim1,:dim2)) [if not already present]
+size_dist_param_liq_vect:
+    671, Generating create(shapec(:),lbnd(:),pgamp1(:),tmp(:),ubnd(:)) [if not already present]
+    676, Generating NVIDIA GPU code
+        684, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    676, Generating implicit copyin(ncic(:vlen),rho(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(pgam(:vlen)) [if not already present]
+    707, Generating NVIDIA GPU code
+        716, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    707, Generating implicit copyin(qcic(:vlen),props) [if not already present]
+    734, Generating NVIDIA GPU code
+        743, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    734, Generating implicit copy(pgam(:vlen)) [if not already present]
+         Generating implicit copyin(qcic(:vlen)) [if not already present]
+         Generating implicit copy(lamc(:vlen)) [if not already present]
+size_dist_param_basic_line:
+    764, Generating acc routine seq
+         Generating NVIDIA GPU code
+size_dist_param_basic_vect:
+    825, Generating NVIDIA GPU code
+        833, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+        864, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    825, Generating implicit copy(lam(:vlen),nic(:vlen)) [if not already present]
+         Generating implicit copyin(qic(:vlen)) [if not already present]
+         Generating implicit copy(n0(:)) [if not already present]
+    833, Invariant if transformation
+size_dist_param_basic_2d:
+    895, Generating NVIDIA GPU code
+        903, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        904,   ! blockidx%x threadidx%x collapsed
+        936, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        937,   ! blockidx%x threadidx%x collapsed
+    895, Generating implicit copy(lam(:dim1,:dim2),n0(:,:),nic(:dim1,:dim2)) [if not already present]
+         Generating implicit copyin(qic(:dim1,:dim2)) [if not already present]
+    904, Invariant if transformation
+size_dist_param_basic_vect2:
+    968, Generating NVIDIA GPU code
+        976, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       1009, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    968, Generating implicit copyin(lbnd(:vlen)) [if not already present]
+         Generating implicit copy(nic(:vlen),n0(:)) [if not already present]
+         Generating implicit copyin(qic(:vlen)) [if not already present]
+         Generating implicit copy(lam(:vlen)) [if not already present]
+         Generating implicit copyin(ubnd(:vlen),shapec(:vlen)) [if not already present]
+    976, Invariant if transformation
+avg_diameter_vec:
+   1033, Generating NVIDIA GPU code
+       1041, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1033, Generating implicit copyin(q(:vlen),rho_air(:vlen),n(:vlen)) [if not already present]
+         Generating implicit copyout(avg_diameter(:vlen)) [if not already present]
+var_coef_r8:
+   1051, Generating acc routine seq
+         Generating NVIDIA GPU code
+var_coef_r8_vect:
+   1078, Generating create(tmpa(:)) [if not already present]
+   1084, Generating NVIDIA GPU code
+       1092, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1084, Generating implicit copyout(res(:vlen)) [if not already present]
+         Generating implicit copyin(relvar(:vlen)) [if not already present]
+var_coef_integer:
+   1106, Generating acc routine seq
+         Generating NVIDIA GPU code
+var_coef_integer_vect:
+   1133, Generating create(tmp(:)) [if not already present]
+   1139, Generating NVIDIA GPU code
+       1147, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1139, Generating implicit copyout(res(:vlen)) [if not already present]
+         Generating implicit copyin(relvar(:vlen)) [if not already present]
+ice_deposition_sublimation:
+   1201, Generating create(niic(:),n0i(:),ab(:),lami(:),qiic(:)) [if not already present]
+   1212, Generating NVIDIA GPU code
+       1220, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1212, Generating implicit copyin(icldm(:vlen),ni(:vlen),qi(:vlen)) [if not already present]
+   1236, Generating NVIDIA GPU code
+       1244, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1236, Generating implicit copyin(icldm(:vlen)) [if not already present]
+         Generating implicit copy(berg(:vlen)) [if not already present]
+         Generating implicit copyin(qvl(:vlen),qi(:vlen),qv(:vlen)) [if not already present]
+         Generating implicit copy(vap_dep(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen)) [if not already present]
+         Generating implicit copy(ice_sublim(:vlen)) [if not already present]
+         Generating implicit copyin(rho(:vlen),dv(:vlen),qvi(:vlen)) [if not already present]
+kk2000_liq_autoconversion:
+   1314, Generating create(prc_coef(:)) [if not already present]
+   1324, Generating NVIDIA GPU code
+       1332, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1332, Memory set idiom, loop replaced by call to __c_mset8
+   1340, Generating NVIDIA GPU code
+       1349, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1340, Generating implicit copy(nprc(:vlen)) [if not already present]
+         Generating implicit copyin(ncic(:vlen)) [if not already present]
+         Generating implicit copy(nprc1(:vlen)) [if not already present]
+         Generating implicit copyin(rho(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(prc(:vlen)) [if not already present]
+sb2001v2_liq_autoconversion:
+   1419, Generating NVIDIA GPU code
+       1427, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1419, Generating implicit copyin(nc(:vlen)) [if not already present]
+         Generating implicit copy(nprc(:vlen)) [if not already present]
+         Generating implicit copyin(dnu$ac(:),rho(:vlen),qr(:vlen),qc(:vlen)) [if not already present]
+         Generating implicit copy(au(:vlen),nprc1(:vlen)) [if not already present]
+         Generating implicit copyin(pgam(:vlen)) [if not already present]
+sb2001v2_accre_cld_water_rain:
+   1486, Generating NVIDIA GPU code
+       1494, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1486, Generating implicit copyin(nc(:vlen)) [if not already present]
+         Generating implicit copy(npra(:vlen)) [if not already present]
+         Generating implicit copyin(rho(:vlen),qr(:vlen),qc(:vlen)) [if not already present]
+         Generating implicit copy(pra(:vlen)) [if not already present]
+ice_autoconversion:
+   1538, Generating NVIDIA GPU code
+       1546, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1538, Generating implicit copy(nprci(:vlen)) [if not already present]
+         Generating implicit copyin(n0i(:vlen),lami(:vlen),t(:vlen),qiic(:vlen)) [if not already present]
+         Generating implicit copy(prci(:vlen)) [if not already present]
+immersion_freezing:
+   1603, Generating create(dum(:)) [if not already present]
+   1611, Generating NVIDIA GPU code
+       1619, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1619, Memory set idiom, loop replaced by call to __c_mset8
+   1627, Generating NVIDIA GPU code
+       1636, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1627, Generating implicit copyin(lamc(:vlen),ncic(:vlen)) [if not already present]
+         Generating implicit copy(mnuccc(:vlen),nnuccc(:vlen)) [if not already present]
+         Generating implicit copyin(pgam(:vlen),t(:vlen),qcic(:vlen)) [if not already present]
+contact_freezing:
+   1711, Generating create(ndfaer(:),nslip(:)) [if not already present]
+   1716, Generating NVIDIA GPU code
+       1724, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       1739, !$acc loop seq
+       1746, !$acc loop seq
+   1716, Generating implicit copyin(ncic(:vlen),lamc(:vlen),p(:vlen),nacon(:vlen,:)) [if not already present]
+         Generating implicit copy(mnucct(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen),rndst(:vlen,:mdust),pgam(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(nnucct(:vlen),relvar(:)) [if not already present]
+   1739, Loop is parallelizable
+   1746, dot_product reduction inlined
+         Loop is parallelizable
+snow_self_aggregation:
+   1790, Generating NVIDIA GPU code
+       1798, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1790, Generating implicit copyin(asn(:vlen),qsic(:vlen)) [if not already present]
+         Generating implicit copy(nsagg(:vlen)) [if not already present]
+         Generating implicit copyin(nsic(:vlen),t(:vlen),rho(:vlen)) [if not already present]
+accrete_cloud_water_snow:
+   1862, Generating NVIDIA GPU code
+       1870, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1862, Generating implicit copyin(ncic(:vlen),n0s(:vlen),pgam(:vlen),qsic(:vlen),mu(:vlen),lams(:vlen),uns(:vlen),t(:vlen),lamc(:vlen),asn(:vlen)) [if not already present]
+         Generating implicit copy(npsacws(:vlen)) [if not already present]
+         Generating implicit copyin(rho(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(psacws(:vlen)) [if not already present]
+secondary_ice_production:
+   1919, Generating NVIDIA GPU code
+       1927, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       1941, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1919, Generating implicit copyout(msacwi(:vlen)) [if not already present]
+         Generating implicit copy(nsacwi(:vlen),psacws(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen)) [if not already present]
+accrete_rain_snow:
+   1990, Generating NVIDIA GPU code
+       1998, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   1990, Generating implicit copyin(n0s(:vlen),unr(:vlen),uns(:vlen),ums(:vlen)) [if not already present]
+         Generating implicit copy(npracs(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen),umr(:vlen),lamr(:vlen),qsic(:vlen),lams(:vlen),n0r(:vlen),qric(:vlen)) [if not already present]
+         Generating implicit copy(pracs(:vlen)) [if not already present]
+         Generating implicit copyin(rho(:vlen)) [if not already present]
+heterogeneous_rain_freezing:
+   2040, Generating NVIDIA GPU code
+       2048, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2040, Generating implicit copyin(lamr(:vlen)) [if not already present]
+         Generating implicit copy(mnuccr(:vlen),nnuccr(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen),qric(:vlen),nric(:vlen)) [if not already present]
+accrete_cloud_water_rain:
+   2090, Generating create(pra_coef(:)) [if not already present]
+   2097, Generating implicit copyin(accre_enhan(:vlen)) [if not already present]
+         Generating NVIDIA GPU code
+       2105, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2113, Generating NVIDIA GPU code
+       2121, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2121, Memory set idiom, loop replaced by call to __c_mset8
+   2129, Generating NVIDIA GPU code
+       2138, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2129, Generating implicit copyin(ncic(:vlen)) [if not already present]
+         Generating implicit copy(npra(:vlen)) [if not already present]
+         Generating implicit copyin(qric(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(pra(:vlen)) [if not already present]
+self_collection_rain:
+   2174, Generating NVIDIA GPU code
+       2182, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2174, Generating implicit copy(nragg(:vlen)) [if not already present]
+         Generating implicit copyin(qric(:vlen),rho(:vlen),nric(:vlen)) [if not already present]
+accrete_cloud_ice_snow:
+   2222, Generating NVIDIA GPU code
+       2230, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2222, Generating implicit copyin(niic(:vlen),n0s(:vlen)) [if not already present]
+         Generating implicit copy(nprai(:vlen)) [if not already present]
+         Generating implicit copyin(asn(:vlen),qsic(:vlen),lams(:vlen)) [if not already present]
+         Generating implicit copy(prai(:vlen)) [if not already present]
+         Generating implicit copyin(qiic(:vlen),t(:vlen),rho(:vlen)) [if not already present]
+evaporate_sublimate_precip:
+   2297, Generating create(dum(:)) [if not already present]
+   2306, Generating NVIDIA GPU code
+       2314, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       2327, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2306, Generating implicit copyin(n0s(:vlen),n0r(:vlen),lamr(:vlen),arn(:vlen),qsic(:vlen),qric(:vlen)) [if not already present]
+         Generating implicit copy(pre(:vlen)) [if not already present]
+         Generating implicit copyin(qiic(:vlen),precip_frac(:vlen)) [if not already present]
+         Generating implicit copy(qvi(:),t(:)) [if not already present]
+         Generating implicit copyin(sc(:vlen),rho(:vlen)) [if not already present]
+         Generating implicit copyout(am_evp_st(:vlen)) [if not already present]
+         Generating implicit copy(qvl(:)) [if not already present]
+         Generating implicit copyin(lcldm(:vlen),dv(:vlen),asn(:vlen),mu(:vlen)) [if not already present]
+         Generating implicit copy(prds(:vlen)) [if not already present]
+         Generating implicit copyin(qcic(:vlen),q(:vlen),lams(:vlen)) [if not already present]
+evaporate_sublimate_precip_graupel:
+   2451, Generating create(dum(:)) [if not already present]
+   2460, Generating NVIDIA GPU code
+       2468, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       2483, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2460, Generating implicit copyin(n0s(:vlen),mu(:vlen),dv(:vlen)) [if not already present]
+         Generating implicit copy(prdg(:vlen)) [if not already present]
+         Generating implicit copyin(n0r(:vlen),lamr(:vlen),arn(:vlen),qsic(:vlen),qcic(:vlen),qiic(:vlen)) [if not already present]
+         Generating implicit copy(pre(:vlen)) [if not already present]
+         Generating implicit copyin(qric(:vlen),precip_frac(:vlen)) [if not already present]
+         Generating implicit copy(qvi(:)) [if not already present]
+         Generating implicit copyin(sc(:vlen)) [if not already present]
+         Generating implicit copy(t(:)) [if not already present]
+         Generating implicit copyin(rho(:vlen)) [if not already present]
+         Generating implicit copyout(am_evp_st(:vlen)) [if not already present]
+         Generating implicit copy(qvl(:)) [if not already present]
+         Generating implicit copyin(lcldm(:vlen),lamg(:vlen),asn(:vlen),n0g(:vlen)) [if not already present]
+         Generating implicit copy(prds(:vlen)) [if not already present]
+         Generating implicit copyin(agn(:vlen),qgic(:vlen),q(:vlen),lams(:vlen)) [if not already present]
+bergeron_process_snow:
+   2598, Generating NVIDIA GPU code
+       2606, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2598, Generating implicit copyin(asn(:vlen)) [if not already present]
+         Generating implicit copy(qvi(:)) [if not already present]
+         Generating implicit copyin(mu(:vlen)) [if not already present]
+         Generating implicit copy(bergs(:vlen)) [if not already present]
+         Generating implicit copyin(dv(:vlen),lams(:vlen),qvl(:vlen),rho(:vlen)) [if not already present]
+         Generating implicit copy(t(:)) [if not already present]
+         Generating implicit copyin(sc(:vlen),qsic(:vlen),n0s(:vlen),qcic(:vlen)) [if not already present]
+graupel_collecting_snow:
+   2652, Generating NVIDIA GPU code
+       2660, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2652, Generating implicit copyin(n0s(:vlen),rho(:vlen),ums(:vlen),umr(:vlen),qsic(:vlen),lams(:vlen),n0r(:vlen),lamr(:vlen),qric(:vlen)) [if not already present]
+         Generating implicit copy(psacr(:vlen)) [if not already present]
+graupel_collecting_cld_water:
+   2708, Generating NVIDIA GPU code
+       2716, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2708, Generating implicit copyin(ncic(:vlen),n0g(:vlen)) [if not already present]
+         Generating implicit copy(npsacwg(:vlen)) [if not already present]
+         Generating implicit copyin(agn(:vlen),qgic(:vlen),rho(:vlen),lamg(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(psacwg(:vlen)) [if not already present]
+graupel_riming_liquid_snow:
+   2774, Generating NVIDIA GPU code
+       2782, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2774, Generating implicit copy(nscng(:vlen)) [if not already present]
+         Generating implicit copyin(n0s(:vlen),nsic(:vlen),rho(:vlen),qsic(:vlen),asn(:vlen),lams(:vlen),qcic(:vlen)) [if not already present]
+         Generating implicit copy(pgsacw(:vlen),psacws(:vlen)) [if not already present]
+graupel_collecting_rain:
+   2851, Generating NVIDIA GPU code
+       2859, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2851, Generating implicit copyin(n0r(:vlen),umr(:vlen),unr(:vlen),ung(:vlen)) [if not already present]
+         Generating implicit copy(npracg(:vlen)) [if not already present]
+         Generating implicit copyin(umg(:vlen),rho(:vlen),qric(:vlen),n0g(:vlen),lamr(:vlen),lamg(:vlen),qgic(:vlen)) [if not already present]
+         Generating implicit copy(pracg(:vlen)) [if not already present]
+graupel_rain_riming_snow:
+   2929, Generating NVIDIA GPU code
+       2937, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   2929, Generating implicit copy(pracs(:vlen)) [if not already present]
+         Generating implicit copyin(nric(:vlen)) [if not already present]
+         Generating implicit copy(npracs(:vlen)) [if not already present]
+         Generating implicit copyin(lams(:vlen)) [if not already present]
+         Generating implicit copy(ngracs(:vlen)) [if not already present]
+         Generating implicit copyin(nsic(:vlen),lamr(:vlen),qsic(:vlen),qric(:vlen)) [if not already present]
+         Generating implicit copy(pgracs(:vlen),psacr(:vlen)) [if not already present]
+graupel_rime_splintering:
+   3006, Generating NVIDIA GPU code
+       3014, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   3006, Generating implicit copyin(qcic(:vlen),qgic(:vlen)) [if not already present]
+         Generating implicit copy(qmultg(:vlen),nmultg(:vlen),nmultrg(:vlen),pracg(:vlen)) [if not already present]
+         Generating implicit copyin(t(:vlen),qric(:vlen)) [if not already present]
+         Generating implicit copy(psacwg(:vlen),qmultrg(:vlen)) [if not already present]
+limiter_is_on:
+   3170, Generating acc routine seq
+         Generating NVIDIA GPU code
+kv_micro_mg_utils_mghydrometeorprops:
+   3425, all reduction inlined
+   3436, count reduction inlined
+   3444, sum reduction inlined
+   3445, sum reduction inlined
+   3469, count reduction inlined
+   3471, sum reduction inlined
+   3472, sum reduction inlined
+   3481, count reduction inlined
+   3483, sum reduction inlined
+   3484, sum reduction inlined
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -DDFACT=4608 -c -o wv_sat_methods.o wv_sat_methods.F90
+wv_sat_svp_to_qsat_vect:
+    124, Generating NVIDIA GPU code
+        132, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    124, Generating implicit copy(qs(:vlen)) [if not already present]
+         Generating implicit copyin(p(:vlen),es(:vlen)) [if not already present]
+wv_sat_qsat_water_vect:
+    167, Generating NVIDIA GPU code
+        175, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    167, Generating implicit copyin(p(:vlen)) [if not already present]
+         Generating implicit copy(es(:vlen)) [if not already present]
+wv_sat_qsat_ice_vect:
+    207, Generating NVIDIA GPU code
+        216, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    207, Generating implicit copyin(p(:vlen)) [if not already present]
+         Generating implicit copy(es(:vlen)) [if not already present]
+goffgratch_svp_water_vect:
+    305, Generating NVIDIA GPU code
+        313, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    305, Generating implicit copyin(t(:vlen)) [if not already present]
+         Generating implicit copyout(es(:vlen)) [if not already present]
+goffgratch_svp_ice_vect:
+    336, Generating NVIDIA GPU code
+        344, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    336, Generating implicit copyin(t(:vlen)) [if not already present]
+         Generating implicit copyout(es(:vlen)) [if not already present]
+murphykoop_svp_water_vect:
+    369, Generating NVIDIA GPU code
+        377, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    369, Generating implicit copyin(t(:vlen)) [if not already present]
+         Generating implicit copyout(es(:vlen)) [if not already present]
+murphykoop_svp_ice_vect:
+    399, Generating NVIDIA GPU code
+        407, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    399, Generating implicit copyin(t(:vlen)) [if not already present]
+         Generating implicit copyout(es(:vlen)) [if not already present]
+bolton_svp_water_vect:
+    437, Generating NVIDIA GPU code
+        445, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+    437, Generating implicit copyin(t(:vlen)) [if not already present]
+         Generating implicit copyout(es(:vlen)) [if not already present]
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -DDFACT=4608 -c -o micro_mg3_0.o micro_mg3_0.F90
+micro_mg_tend:
+    870, Generating create(psacws(:,:),qgic(:,:),n0s(:,:),ngracs(:,:),qmultrg(:,:),qric(:,:),npsacws(:,:),nric(:,:),qcic(:,:),ncic(:,:),relhum(:,:),dums(:,:),msacwi(:,:),rhof(:,:),rho(:,:),pre(:,:),bergs(:,:),ice_sublim(:,:),lams(:,:),qs(:,:),qc(:,:),qi(:,:),qsfm(:,:),qr(:,:),qg(:,:),nc(:,:),niact(:,:),nscng(:,:),nragg(:,:),ng(:,:),niic(:,:),lamg(:,:),n0g(:,:),icldm(:,:),pdel_inv(:,:),lamr(:,:),n0r(:,:),lami(:,:),n0i(:,:),lamc(:,:),mu(:,:),minstrf(:,:),ninstrf(:,:),mi0l(:,:),nimax(:,:),minstgm(:,:),ninstgm(:,:),uns(:,:),fs(:,:),nnuccc(:,:),mnuccc(:,:),minstsm(:,:),nmultrg(:,:),mnuccri(:,:),nnuccri(:,:),mnucct(:,:),nnucct(:,:),mnudep(:,:),ns(:,:),prai(:,:),nprai(:,:),nprc(:,:),nsacwi(:,:),nr(:,:),psacwg(:,:),npsacwg(:,:),pracg(:,:),npracg(:,:),mnuccd(:,:),nnuccd(:,:),mnuccr(:,:),nnuccr(:,:),pgsacw(:,:),nnudep(:,:),prc(:,:),nprc1(:,:),pracs(:,:),npracs(:,:),prds(:,:),prdg(:,:),nsubc(:,:),nsic(:,:),nsubr(:,:),nsubi(:,:),asn(:,:),berg(:,:),npra(:,:),nsagg(:,:),ngic(:,:),ninstsm(:,:),nmultg(:,:),nprci(:,:),precip_frac(:,:),pra(:,:),psacr(:,:),pgracs(:,:),pgam(:,:),prci(:,:),qiic(:,:),qmultg(:,:),unr(:,:),ung(:,:),ttmpa(:,:),ajn(:,:),arn(:,:),acn(:,:),agn(:,:),ain(:,:),lcldm(:,:),esi(:,:),dv(:,:),esl(:,:),qvi(:,:),qtmpai(:,:),qvl(:,:),qvna(:,:),rainrt(:,:),falouts(:),fi(:,:),fg(:,:),fng(:,:),fc(:,:),fnc(:,:),fns(:,:),fni(:,:),fr(:,:),fnr(:,:),esna(:,:),falouti(:),faloutc(:),faloutnc(:),faloutns(:),faloutni(:),faloutr(:),faloutnr(:),qvnai(:,:),cldm(:,:),dum1a(:,:),dum2a(:,:),dumni(:,:),dumns(:,:),sc(:,:),qsic(:,:),dum_2d(:,:),dumi(:,:),dumg(:,:),dumng(:,:),dumns0a2d(:,:),dumni0a2d(:,:),dumr(:,:),dumnr(:,:),dumc(:,:),dumnc(:,:),dum3a(:,:),nsubs(:,:),ni(:,:),vap_dep(:,:)) [if not already present]
+    912, Generating NVIDIA GPU code
+        922, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        923,   ! blockidx%x threadidx%x collapsed
+        951, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        952,   ! blockidx%x threadidx%x collapsed
+        976, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        977,   ! blockidx%x threadidx%x collapsed
+        993, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+        994,   ! blockidx%x threadidx%x collapsed
+    912, Generating implicit copyin(nsn(:mgncol,:nlev),t(:mgncol,:nlev),qsn(:mgncol,:nlev),qrn(:mgncol,:nlev),cldn(:mgncol,:nlev),icecldf(:mgncol,:nlev),p(:mgncol,:nlev),liqcldf(:mgncol,:nlev),qgr(:mgncol,:nlev),ngr(:mgncol,:nlev),qin(:mgncol,:nlev),nin(:mgncol,:nlev),qsatfac(:mgncol,:nlev),nrn(:mgncol,:nlev),qcn(:mgncol,:nlev),ncn(:mgncol,:nlev)) [if not already present]
+   1031, Generating NVIDIA GPU code
+       1040, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1041,   ! blockidx%x threadidx%x collapsed
+       1077, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1078,   ! blockidx%x threadidx%x collapsed
+       1152, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1153,   ! blockidx%x threadidx%x collapsed
+       1166, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1167,   ! blockidx%x threadidx%x collapsed
+       1232, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       1241, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1242,   ! blockidx%x threadidx%x collapsed
+       1310, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1311,   ! blockidx%x threadidx%x collapsed
+       1343, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1344,   ! blockidx%x threadidx%x collapsed
+       1367, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1368,   ! blockidx%x threadidx%x collapsed
+       1397, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1398,   ! blockidx%x threadidx%x collapsed
+       1441, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1442,   ! blockidx%x threadidx%x collapsed
+       1480, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1481,   ! blockidx%x threadidx%x collapsed
+       1528, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1529,   ! blockidx%x threadidx%x collapsed
+       1575, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1576,   ! blockidx%x threadidx%x collapsed
+   1031, Generating implicit copy(msacwitot(:mgncol,:nlev),sflx(:mgncol,:nlev+1),psacwstot(:mgncol,:nlev),npracgtot(:mgncol,:nlev),nmultgtot(:mgncol,:nlev),nitend(:mgncol,:nlev),ngout2(:mgncol,:nlev),nrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(npccn(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qmultgtot(:mgncol,:nlev),qitend(:mgncol,:nlev),prctot(:mgncol,:nlev),pgamrad(:mgncol,:nlev),pgracstot(:mgncol,:nlev),psacrtot(:mgncol,:nlev),pgsacwtot(:mgncol,:nlev),prodsnow(:mgncol,:nlev),mnuccctot(:mgncol,:nlev),freqs(:mgncol,:nlev),meltgtot(:mgncol,:nlev),pracgtot(:mgncol,:nlev),mnuccdtot(:mgncol,:nlev),mnuccritot(:mgncol,:nlev),qgtend(:mgncol,:nlev),prain(:mgncol,:nlev),pratot(:mgncol,:nlev),qcrat(:mgncol,:nlev),gflx(:mgncol,:nlev+1),lflx(:mgncol,:nlev+1),meltsdttot(:mgncol,:nlev),mnuccttot(:mgncol,:nlev),meltstot(:mgncol,:nlev),bergstot(:mgncol,:nlev),areflz(:mgncol,:nlev),psacwgtot(:mgncol,:nlev),mnudeptot(:mgncol,:nlev),mnuccrtot(:mgncol,:nlev),melttot(:mgncol,:nlev),prcitot(:mgncol,:nlev),praitot(:mgncol,:nlev),qgout2(:mgncol,:nlev),qsout2(:mgncol,:nlev),qrout2(:mgncol,:nlev),qirestot(:mgncol,:nlev),qcrestot(:mgncol,:nlev),vtrmi(:mgncol,:nlev),vtrmc(:mgncol,:nlev),ums(:mgncol,:nlev),bergtot(:mgncol,:nlev),qvlat(:mgncol,:nlev),qisedten(:mgncol,:nlev),qcsedten(:mgncol,:nlev),frzrdttot(:mgncol,:nlev),homotot(:mgncol,:nlev),lamcrad(:mgncol,:nlev),sadsnow(:mgncol,:nlev),rercld(:mgncol,:nlev),ngracstot(:mgncol,:nlev),qgsedten(:mgncol,:nlev),nsout2(:mgncol,:nlev),nrout2(:mgncol,:nlev),ngtend(:mgncol,:nlev),ncal(:mgncol,:nlev),qrsedten(:mgncol,:nlev),qssedten(:mgncol,:nlev),qisevap(:mgncol,:nlev),qcsinksum_rate1ord(:mgncol,:nlev),qstend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(t(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(cmeitot(:mgncol,:nlev),prer_evap(:mgncol,:nlev),pracstot(:mgncol,:nlev),acsrfl(:mgncol,:nlev),effi(:mgncol,:nlev),prect(:mgncol),nctend(:mgncol,:nlev),qcsevap(:mgncol,:nlev),refl(:mgncol,:nlev),nfice(:mgncol,:nlev),qctend(:mgncol,:nlev),nscngtot(:mgncol,:nlev),npsacwgtot(:mgncol,:nlev),qrtend(:mgncol,:nlev),qmultrgtot(:mgncol,:nlev),preci(:mgncol),prdgtot(:mgncol,:nlev),nevapr(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(naai(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(ncai(:mgncol,:nlev),evapsnow(:mgncol,:nlev),cmeout(:mgncol,:nlev),fcsrfl(:mgncol,:nlev),arefl(:mgncol,:nlev),am_evp_st(:mgncol,:nlev),reff_snow(:mgncol,:nlev),qvres(:mgncol,:nlev),reff_rain(:mgncol,:nlev),reff_grau(:mgncol,:nlev),freqr(:mgncol,:nlev),freqg(:mgncol,:nlev),frefl(:mgncol,:nlev),ngout(:mgncol,:nlev),qgout(:mgncol,:nlev),dsout(:mgncol,:nlev),drout2(:mgncol,:nlev),nsout(:mgncol,:nlev),qsout(:mgncol,:nlev),deffi(:mgncol,:nlev),nrout(:mgncol,:nlev),qrout(:mgncol,:nlev),csrfl(:mgncol,:nlev),sadice(:mgncol,:nlev),rflx(:mgncol,:nlev+1),effc_fn(:mgncol,:nlev),effc(:mgncol,:nlev),nstend(:mgncol,:nlev),iflx(:mgncol,:nlev+1),dsout2(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(q(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(tlat(:mgncol,:nlev),umg(:mgncol,:nlev),umr(:mgncol,:nlev),nmultrgtot(:mgncol,:nlev)) [if not already present]
+   1576, Memory copy idiom, loop replaced by call to __c_mcopy8
+   1584, Generating NVIDIA GPU code
+       1594, !$acc loop seq
+       1595, !$acc loop vector(128) ! threadidx%x
+       1609, !$acc loop seq
+       1610, !$acc loop vector(128) ! threadidx%x
+   1594, Loop carried dependence of precip_frac prevents parallelization
+         Loop carried backward dependence of precip_frac prevents vectorization
+   1595, Loop is parallelizable
+   1609, Loop carried dependence of precip_frac prevents parallelization
+         Loop carried backward dependence of precip_frac prevents vectorization
+   1610, Loop is parallelizable
+   1640, Generating NVIDIA GPU code
+       1649, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1650,   ! blockidx%x threadidx%x collapsed
+   1694, Generating implicit copyin(tnd_qsnow(:mgncol,:nlev),tnd_nsnow(:mgncol,:nlev)) [if not already present]
+         Generating NVIDIA GPU code
+       1703, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1704,   ! blockidx%x threadidx%x collapsed
+   1717, Generating NVIDIA GPU code
+       1727, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1728,   ! blockidx%x threadidx%x collapsed
+   1773, Generating NVIDIA GPU code
+       1782, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1783,   ! blockidx%x threadidx%x collapsed
+   1773, Generating implicit copy(umr(:mgncol,:nlev)) [if not already present]
+   1803, Generating NVIDIA GPU code
+       1812, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1813,   ! blockidx%x threadidx%x collapsed
+   1803, Generating implicit copy(ums(:mgncol,:nlev)) [if not already present]
+   1848, Generating NVIDIA GPU code
+       1857, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1858,   ! blockidx%x threadidx%x collapsed
+   1848, Generating implicit copy(umg(:mgncol,:nlev)) [if not already present]
+   1882, Generating NVIDIA GPU code
+       1892, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1893,   ! blockidx%x threadidx%x collapsed
+   1882, Generating implicit copyin(t(:mgncol,:nlev)) [if not already present]
+   1909, Possible copy in and copy out of rndst in call to contact_freezing
+         Possible copy in and copy out of nacon in call to contact_freezing
+   1915, Generating implicit copyin(frzimm(:mgncol,:nlev),frzdep(:mgncol,:nlev),frzcnt(:mgncol,:nlev)) [if not already present]
+         Generating NVIDIA GPU code
+       1924, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1925,   ! blockidx%x threadidx%x collapsed
+   1951, Generating NVIDIA GPU code
+       1959, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1960,   ! blockidx%x threadidx%x collapsed
+   1983, Generating NVIDIA GPU code
+       1991, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       1992,   ! blockidx%x threadidx%x collapsed
+   2019, Generating NVIDIA GPU code
+       2027, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2028,   ! blockidx%x threadidx%x collapsed
+   2040, Generating NVIDIA GPU code
+       2048, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2049,   ! blockidx%x threadidx%x collapsed
+   2061, Generating NVIDIA GPU code
+       2069, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2070,   ! blockidx%x threadidx%x collapsed
+   2125, Generating NVIDIA GPU code
+       2133, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2134,   ! blockidx%x threadidx%x collapsed
+   2143, Generating NVIDIA GPU code
+       2152, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2153,   ! blockidx%x threadidx%x collapsed
+       2198, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2199,   ! blockidx%x threadidx%x collapsed
+       2230, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2231,   ! blockidx%x threadidx%x collapsed
+       2269, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2270,   ! blockidx%x threadidx%x collapsed
+       2297, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2298,   ! blockidx%x threadidx%x collapsed
+       2314, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2315,   ! blockidx%x threadidx%x collapsed
+       2337, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2338,   ! blockidx%x threadidx%x collapsed
+       2362, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2363,   ! blockidx%x threadidx%x collapsed
+       2391, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2392,   ! blockidx%x threadidx%x collapsed
+       2425, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2426,   ! blockidx%x threadidx%x collapsed
+       2465, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2466,   ! blockidx%x threadidx%x collapsed
+       2485, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2486,   ! blockidx%x threadidx%x collapsed
+   2143, Generating implicit copyin(t(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qcrat(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(q(:mgncol,:nlev)) [if not already present]
+   2504, Generating implicit copyin(t(:mgncol,:nlev),q(:mgncol,:nlev)) [if not already present]
+         Generating NVIDIA GPU code
+       2513, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2514,   ! blockidx%x threadidx%x collapsed
+   2535, Generating NVIDIA GPU code
+       2544, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2545,   ! blockidx%x threadidx%x collapsed
+   2564, Generating NVIDIA GPU code
+       2573, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2574,   ! blockidx%x threadidx%x collapsed
+       2598, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2599,   ! blockidx%x threadidx%x collapsed
+       2653, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2654,   ! blockidx%x threadidx%x collapsed
+       2692, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2693,   ! blockidx%x threadidx%x collapsed
+       2717, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2718,   ! blockidx%x threadidx%x collapsed
+       2740, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2741,   ! blockidx%x threadidx%x collapsed
+       2790, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2791,   ! blockidx%x threadidx%x collapsed
+   2564, Generating implicit copyout(qmultrgtot(:mgncol,:nlev),npsacwgtot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(nscngtot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qctend(:mgncol,:nlev),nevapr(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(nrout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(ngtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(msacwitot(:mgncol,:nlev),nsout(:mgncol,:nlev),ngracstot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(prodsnow(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(pgsacwtot(:mgncol,:nlev),psacrtot(:mgncol,:nlev),pgracstot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nstend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(prctot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qitend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(qmultgtot(:mgncol,:nlev),nmultrgtot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(ngout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nitend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(nmultgtot(:mgncol,:nlev),npracgtot(:mgncol,:nlev),praitot(:mgncol,:nlev),prcitot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(evapsnow(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(mnuccttot(:mgncol,:nlev),mnuccrtot(:mgncol,:nlev),mnudeptot(:mgncol,:nlev),psacwgtot(:mgncol,:nlev),bergstot(:mgncol,:nlev),pratot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(prain(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(mnuccctot(:mgncol,:nlev),pracgtot(:mgncol,:nlev),mnuccritot(:mgncol,:nlev),mnuccdtot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(prer_evap(:mgncol,:nlev),cmeitot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(bergtot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(cmeout(:mgncol,:nlev),nctend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(prdgtot(:mgncol,:nlev),pracstot(:mgncol,:nlev),psacwstot(:mgncol,:nlev),qsout(:mgncol,:nlev),qgout(:mgncol,:nlev),qcsinksum_rate1ord(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(tlat(:mgncol,:nlev),qvlat(:mgncol,:nlev),qstend(:mgncol,:nlev),qgtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(qrout(:mgncol,:nlev)) [if not already present]
+   2741, Invariant if transformation
+   2823, Generating NVIDIA GPU code
+       2833, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2834,   ! blockidx%x threadidx%x collapsed
+       2874, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2875,   ! blockidx%x threadidx%x collapsed
+   2823, Generating implicit copy(ngtend(:mgncol,:nlev),qgtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(prodsnow(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nstend(:mgncol,:nlev),prain(:mgncol,:nlev),nctend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(ngr(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nevapr(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qgr(:mgncol,:nlev),qctend(:mgncol,:nlev),nrn(:mgncol,:nlev),npccn(:mgncol,:nlev),qrn(:mgncol,:nlev),qitend(:mgncol,:nlev),nsn(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nrtend(:mgncol,:nlev),qstend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qsn(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(ncn(:mgncol,:nlev),nitend(:mgncol,:nlev),evapsnow(:mgncol,:nlev)) [if not already present]
+   2929, Generating NVIDIA GPU code
+       2938, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2939,   ! blockidx%x threadidx%x collapsed
+       2969, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       2970,   ! blockidx%x threadidx%x collapsed
+   2929, Generating implicit copy(vtrmi(:mgncol,:nlev),vtrmc(:mgncol,:nlev)) [if not already present]
+   2970, Invariant if transformation
+   3024, Generating NVIDIA GPU code
+       3032, !$acc loop seq
+       3033, !$acc loop vector(128) ! threadidx%x
+       3112, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3113,   ! blockidx%x threadidx%x collapsed
+   3024, Generating implicit copyin(nctend(:mgncol,:nlev),qctend(:mgncol,:nlev),nrtend(:mgncol,:nlev),qrtend(:mgncol,:nlev),nitend(:mgncol,:nlev),qitend(:mgncol,:nlev),ngtend(:mgncol,:nlev),qgtend(:mgncol,:nlev),pdel(:mgncol,:nlev),nstend(:mgncol,:nlev),qstend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(ums(:mgncol,:nlev),umr(:mgncol,:nlev),umg(:mgncol,:nlev)) [if not already present]
+   3032, Loop carried dependence of fnr,fr prevents parallelization
+         Loop carried backward dependence of fr,fnr prevents vectorization
+         Loop carried dependence of fs,fns prevents parallelization
+         Loop carried backward dependence of fs,fns prevents vectorization
+         Loop carried dependence of fg,fng prevents parallelization
+         Loop carried backward dependence of fg,fng prevents vectorization
+   3033, Loop is parallelizable
+   3161, Generating NVIDIA GPU code
+       3171, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3172,   ! blockidx%x threadidx%x collapsed
+       3226, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3227,   ! blockidx%x threadidx%x collapsed
+       3267, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3268,   ! blockidx%x threadidx%x collapsed
+   3161, Generating implicit copy(tlat(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(t(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qstend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(nctend(:mgncol,:nlev),qctend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nrtend(:mgncol,:nlev),qrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(nitend(:mgncol,:nlev),qitend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(ngtend(:mgncol,:nlev),meltsdttot(:mgncol,:nlev),qgtend(:mgncol,:nlev),nstend(:mgncol,:nlev)) [if not already present]
+   3227, Invariant if transformation
+   3268, Invariant if transformation
+   3309, Generating NVIDIA GPU code
+       3318, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3319,   ! blockidx%x threadidx%x collapsed
+   3309, Generating implicit copy(qgtend(:mgncol,:nlev),ngtend(:mgncol,:nlev),frzrdttot(:mgncol,:nlev),nstend(:mgncol,:nlev),nitend(:mgncol,:nlev),qitend(:mgncol,:nlev),nrtend(:mgncol,:nlev),qrtend(:mgncol,:nlev),qstend(:mgncol,:nlev),tlat(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(t(:mgncol,:nlev)) [if not already present]
+   3364, Generating NVIDIA GPU code
+       3372, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3373,   ! blockidx%x threadidx%x collapsed
+       3413, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3414,   ! blockidx%x threadidx%x collapsed
+       3452, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3453,   ! blockidx%x threadidx%x collapsed
+   3364, Generating implicit copy(nitend(:mgncol,:nlev),qitend(:mgncol,:nlev),nctend(:mgncol,:nlev),qctend(:mgncol,:nlev),melttot(:mgncol,:nlev),homotot(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(q(:mgncol,:nlev),qvlat(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(tlat(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(t(:mgncol,:nlev)) [if not already present]
+   3465, Generating NVIDIA GPU code
+       3474, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3475,   ! blockidx%x threadidx%x collapsed
+   3465, Generating implicit copy(qcrestot(:mgncol,:nlev),cmeout(:mgncol,:nlev),qirestot(:mgncol,:nlev),qctend(:mgncol,:nlev),qitend(:mgncol,:nlev),qvlat(:mgncol,:nlev),tlat(:mgncol,:nlev),qvres(:mgncol,:nlev)) [if not already present]
+   3475, Invariant if transformation
+   3516, Generating implicit copyin(nstend(:mgncol,:nlev),qgtend(:mgncol,:nlev),ngtend(:mgncol,:nlev),qitend(:mgncol,:nlev),nitend(:mgncol,:nlev),qstend(:mgncol,:nlev),qrtend(:mgncol,:nlev),nrtend(:mgncol,:nlev),qctend(:mgncol,:nlev),nctend(:mgncol,:nlev)) [if not already present]
+         Generating NVIDIA GPU code
+       3526, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3527,   ! blockidx%x threadidx%x collapsed
+   3582, Generating NVIDIA GPU code
+       3590, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3591,   ! blockidx%x threadidx%x collapsed
+   3591, Memory copy idiom, loop replaced by call to __c_mcopy8
+   3601, Generating NVIDIA GPU code
+       3610, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3611,   ! blockidx%x threadidx%x collapsed
+   3601, Generating implicit copy(effi(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(deffi(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(sadice(:mgncol,:nlev),nitend(:mgncol,:nlev)) [if not already present]
+   3632, Generating NVIDIA GPU code
+       3637, !$acc loop seq
+       3638, !$acc loop vector(128) ! threadidx%x
+   3632, Generating implicit copyout(sadice(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(re_ice(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(deffi(:mgncol,:nlev),effi(:mgncol,:nlev)) [if not already present]
+   3637, Loop is parallelizable
+   3638, Loop is parallelizable
+   3653, Generating NVIDIA GPU code
+       3663, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3664,   ! blockidx%x threadidx%x collapsed
+   3664, Memory copy idiom, loop replaced by call to __c_mcopy8
+   3674, Generating NVIDIA GPU code
+       3683, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3684,   ! blockidx%x threadidx%x collapsed
+   3674, Generating implicit copy(lamcrad(:mgncol,:nlev),effc(:mgncol,:nlev),pgamrad(:mgncol,:nlev),nctend(:mgncol,:nlev)) [if not already present]
+   3684, Invariant if transformation
+   3720, Generating NVIDIA GPU code
+       3729, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3730,   ! blockidx%x threadidx%x collapsed
+       3749, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3750,   ! blockidx%x threadidx%x collapsed
+   3720, Generating implicit copy(effc_fn(:mgncol,:nlev),pgamrad(:mgncol,:nlev),lamcrad(:mgncol,:nlev),effc(:mgncol,:nlev)) [if not already present]
+   3750, Memory copy idiom, loop replaced by call to __c_mcopy8
+   3760, Generating NVIDIA GPU code
+       3769, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3770,   ! blockidx%x threadidx%x collapsed
+       3788, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3789,   ! blockidx%x threadidx%x collapsed
+   3760, Generating implicit copy(nrtend(:mgncol,:nlev)) [if not already present]
+   3789, Memory copy idiom, loop replaced by call to __c_mcopy8
+   3799, Generating NVIDIA GPU code
+       3808, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3809,   ! blockidx%x threadidx%x collapsed
+       3830, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3831,   ! blockidx%x threadidx%x collapsed
+   3799, Generating implicit copy(sadsnow(:mgncol,:nlev),nstend(:mgncol,:nlev)) [if not already present]
+   3831, Memory copy idiom, loop replaced by call to __c_mcopy8
+   3846, Generating NVIDIA GPU code
+       3855, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3856,   ! blockidx%x threadidx%x collapsed
+       3870, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3871,   ! blockidx%x threadidx%x collapsed
+       3891, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3892,   ! blockidx%x threadidx%x collapsed
+       3912, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3913,   ! blockidx%x threadidx%x collapsed
+   3846, Generating implicit copy(nitend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qctend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qitend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(ngtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qgtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nstend(:mgncol,:nlev),nrout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qstend(:mgncol,:nlev),qrtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(nctend(:mgncol,:nlev)) [if not already present]
+   3871, Invariant if transformation
+   3925, Generating NVIDIA GPU code
+       3934, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3935,   ! blockidx%x threadidx%x collapsed
+       3957, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3958,   ! blockidx%x threadidx%x collapsed
+   3925, Generating implicit copy(nrout2(:mgncol,:nlev),freqr(:mgncol,:nlev),nsout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qrout(:mgncol,:nlev),nrout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(drout2(:mgncol,:nlev),reff_rain(:mgncol,:nlev),qrout2(:mgncol,:nlev)) [if not already present]
+   3970, Generating NVIDIA GPU code
+       3979, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       3980,   ! blockidx%x threadidx%x collapsed
+       4004, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       4005,   ! blockidx%x threadidx%x collapsed
+   3970, Generating implicit copy(freqs(:mgncol,:nlev),ngout(:mgncol,:nlev),nsout2(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qsout(:mgncol,:nlev),nsout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(dsout2(:mgncol,:nlev),dsout(:mgncol,:nlev),reff_snow(:mgncol,:nlev),qsout2(:mgncol,:nlev)) [if not already present]
+   4020, Generating NVIDIA GPU code
+       4029, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       4030,   ! blockidx%x threadidx%x collapsed
+   4020, Generating implicit copyout(dgout2(:mgncol,:nlev)) [if not already present]
+   4030, Memory zero idiom, loop replaced by call to __c_mzero8
+   4039, Generating NVIDIA GPU code
+       4048, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       4049,   ! blockidx%x threadidx%x collapsed
+       4077, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       4078,   ! blockidx%x threadidx%x collapsed
+       4151, !$acc loop gang, vector(128) collapse(2) ! blockidx%x threadidx%x
+       4152,   ! blockidx%x threadidx%x collapsed
+   4039, Generating implicit copyin(nctend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qgout2(:mgncol,:nlev),dgout2(:mgncol,:nlev),fcsrfl(:mgncol,:nlev),acsrfl(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qrout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(freqg(:mgncol,:nlev),refl(:mgncol,:nlev),reff_grau(:mgncol,:nlev),arefl(:mgncol,:nlev),areflz(:mgncol,:nlev),nfice(:mgncol,:nlev),ngout2(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qgout(:mgncol,:nlev),ngout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(frefl(:mgncol,:nlev),dgout(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyout(csrfl(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(qsout(:mgncol,:nlev)) [if not already present]
+calc_rercld:
+   4194, Generating create(pgamp1(:),tmp(:)) [if not already present]
+   4198, Generating NVIDIA GPU code
+       4208, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   4198, Generating implicit copyin(pgam(:vlen)) [if not already present]
+   4217, Generating NVIDIA GPU code
+       4226, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+   4217, Generating implicit copyin(n0r(:vlen),lamr(:vlen),lamc(:vlen)) [if not already present]
+         Generating implicit copy(rercld(:vlen)) [if not already present]
+         Generating implicit copyin(qric(:vlen),qcic(:vlen),ncic(:vlen)) [if not already present]
+sedimentation:
+   4291, Generating create(faloutnx(:,:),dum1(:,:),faloutx(:,:)) [if not already present]
+   4295, Generating NVIDIA GPU code
+       4303, !$acc loop gang, vector(128) ! blockidx%x threadidx%x
+       4304, !$acc loop seq
+       4311, !$acc loop seq
+       4316, !$acc loop seq
+       4325, !$acc loop seq
+       4329, !$acc loop seq
+       4334, !$acc loop seq
+       4340, !$acc loop seq
+   4295, Generating implicit copy(tlat(:,:),nxtend(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(fnx(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(dumx(:mgncol,:nlev),preci(:)) [if not already present]
+         Generating implicit copyin(xcldm(:,:)) [if not already present]
+         Generating implicit copy(prect(:mgncol),qxsedten(:mgncol,:nlev),qxtend(:mgncol,:nlev),xflx(:mgncol,2:nlev+1)) [if not already present]
+         Generating implicit copyin(xxlx) [if not already present]
+         Generating implicit copy(qxsevap(:,:)) [if not already present]
+         Generating implicit copyin(fx(:mgncol,:nlev)) [if not already present]
+         Generating implicit copy(qvlat(:,:),dumnx(:mgncol,:nlev)) [if not already present]
+         Generating implicit copyin(pdel_inv(:mgncol,:nlev)) [if not already present]
+   4303, Invariant if transformation
+   4304, maxval reduction inlined
+         Loop is parallelizable
+   4311, Loop is parallelizable
+   4316, Loop is parallelizable
+   4325, Loop carried dependence of dumx,faloutx prevents parallelization
+         Loop carried backward dependence of faloutx prevents vectorization
+         Loop carried dependence of dumnx,faloutnx prevents parallelization
+         Loop carried backward dependence of faloutnx prevents vectorization
+         Loop carried dependence of qxtend prevents parallelization
+         Loop carried backward dependence of qxtend prevents vectorization
+         Loop carried dependence of nxtend prevents parallelization
+         Loop carried backward dependence of nxtend prevents vectorization
+         Loop carried dependence of qxsedten prevents parallelization
+         Loop carried backward dependence of qxsedten,dumx,dumnx prevents vectorization
+         Loop carried dependence of qxsevap prevents parallelization
+         Loop carried backward dependence of qxsevap prevents vectorization
+         Loop carried dependence of qvlat prevents parallelization
+         Loop carried backward dependence of qvlat prevents vectorization
+         Loop carried dependence of tlat prevents parallelization
+         Loop carried backward dependence of tlat prevents vectorization
+         Loop carried dependence of xflx prevents parallelization
+         Loop carried backward dependence of xflx prevents vectorization
+   4329, Loop is parallelizable
+   4334, Loop is parallelizable
+   4340, Loop is parallelizable
+         Invariant if transformation
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -DDFACT=4608 -c -o micro_mg_cam.o micro_mg_cam.F90
+micro_mg_cam_tend_pack:
+    716, sum reduction inlined
+    723, sum reduction inlined
+    730, sum reduction inlined
+    737, sum reduction inlined
+    744, sum reduction inlined
+    751, sum reduction inlined
+    758, sum reduction inlined
+    765, sum reduction inlined
+    772, sum reduction inlined
+    779, sum reduction inlined
+    786, sum reduction inlined
+    793, sum reduction inlined
+    800, sum reduction inlined
+    807, sum reduction inlined
+    814, sum reduction inlined
+    821, sum reduction inlined
+    828, sum reduction inlined
+    835, sum reduction inlined
+    842, sum reduction inlined
+    849, sum reduction inlined
+    856, sum reduction inlined
+    863, sum reduction inlined
+    870, sum reduction inlined
+    877, sum reduction inlined
+    884, sum reduction inlined
+    891, sum reduction inlined
+    898, sum reduction inlined
+    905, sum reduction inlined
+    912, sum reduction inlined
+    919, sum reduction inlined
+    926, sum reduction inlined
+    933, sum reduction inlined
+    940, sum reduction inlined
+    947, sum reduction inlined
+    954, sum reduction inlined
+    961, sum reduction inlined
+    968, sum reduction inlined
+    975, sum reduction inlined
+    982, sum reduction inlined
+    989, sum reduction inlined
+    996, sum reduction inlined
+   1003, sum reduction inlined
+   1010, sum reduction inlined
+   1017, sum reduction inlined
+   1024, sum reduction inlined
+   1031, sum reduction inlined
+   1038, sum reduction inlined
+   1045, sum reduction inlined
+   1052, sum reduction inlined
+   1059, sum reduction inlined
+   1066, sum reduction inlined
+   1073, sum reduction inlined
+   1080, sum reduction inlined
+   1087, sum reduction inlined
+   1094, sum reduction inlined
+   1101, sum reduction inlined
+   1108, sum reduction inlined
+   1115, sum reduction inlined
+   1122, sum reduction inlined
+   1129, sum reduction inlined
+   1136, sum reduction inlined
+   1143, sum reduction inlined
+   1150, sum reduction inlined
+   1157, sum reduction inlined
+   1164, sum reduction inlined
+   1171, sum reduction inlined
+   1178, sum reduction inlined
+   1185, sum reduction inlined
+   1192, sum reduction inlined
+   1199, sum reduction inlined
+   1206, sum reduction inlined
+   1213, sum reduction inlined
+   1220, sum reduction inlined
+   1227, sum reduction inlined
+   1234, sum reduction inlined
+   1241, sum reduction inlined
+   1248, sum reduction inlined
+   1255, sum reduction inlined
+   1262, sum reduction inlined
+   1269, sum reduction inlined
+   1276, sum reduction inlined
+   1283, sum reduction inlined
+   1290, sum reduction inlined
+   1297, sum reduction inlined
+   1304, sum reduction inlined
+   1311, sum reduction inlined
+   1318, sum reduction inlined
+   1325, sum reduction inlined
+   1332, sum reduction inlined
+   1339, sum reduction inlined
+   1346, sum reduction inlined
+   1353, sum reduction inlined
+   1360, sum reduction inlined
+   1367, sum reduction inlined
+   1374, sum reduction inlined
+   1381, sum reduction inlined
+   1388, sum reduction inlined
+   1395, sum reduction inlined
+   1402, sum reduction inlined
+   1409, sum reduction inlined
+   1416, sum reduction inlined
+   1423, sum reduction inlined
+   1430, sum reduction inlined
+   1437, sum reduction inlined
+   1444, sum reduction inlined
+   1451, sum reduction inlined
+   1458, sum reduction inlined
+   1465, sum reduction inlined
+   1472, sum reduction inlined
+   1479, sum reduction inlined
+   1486, sum reduction inlined
+   1493, sum reduction inlined
+   1500, sum reduction inlined
+   1507, sum reduction inlined
+   1514, sum reduction inlined
+   1521, sum reduction inlined
+   1528, sum reduction inlined
+   1535, sum reduction inlined
+   1542, sum reduction inlined
+   1549, sum reduction inlined
+   1556, sum reduction inlined
+   1634, Generating copyout(packed_sflx(:,:),packed_psacws(:,:)) [if not already present]
+         Generating copyin(packed_q(:,:)) [if not already present]
+         Generating copyout(packed_qgtend(:,:)) [if not already present]
+         Generating copyin(packed_nacon(:,:,:)) [if not already present]
+         Generating copyout(packed_ngtend(:,:),packed_qmultrg(:,:),packed_qrtend(:,:),packed_npsacwg(:,:),packed_nrtend(:,:),packed_qctend(:,:),packed_nfice(:,:),packed_rel(:,:)) [if not already present]
+         Generating copyin(mg_snow_props) [if not already present]
+         Generating copyout(packed_nstend(:,:)) [if not already present]
+         Generating copyin(packed_p(:,:)) [if not already present]
+         Generating copyout(packed_cflx(:,:),packed_lambdac(:,:),packed_homo(:,:)) [if not already present]
+         Generating copyin(packed_qs(:,:)) [if not already present]
+         Generating copyout(packed_mu(:,:),packed_nmultrg(:,:),packed_rflx(:,:)) [if not already present]
+         Generating copyin(packed_naai(:,:),packed_tnd_nsnow(:,:)) [if not already present]
+         Generating copyout(packed_tlat(:,:),packed_rate1ord_cw2pr_st(:,:)) [if not already present]
+         Generating copyin(packed_frzdep(:,:)) [if not already present]
+         Generating copyout(packed_freqs(:,:)) [if not already present]
+         Generating copyin(packed_frzcnt(:,:),mg_ice_props,mg_hail_props,mg_liq_props) [if not already present]
+         Generating copyout(dsout2_dum(:,:)) [if not already present]
+         Generating copyin(mg_graupel_props,mg_rain_props) [if not already present]
+         Generating copyout(packed_qvres(:,:)) [if not already present]
+         Generating copyin(packed_t(:,:)) [if not already present]
+         Generating copyout(packed_qstend(:,:),packed_qcsevap(:,:),packed_qisevap(:,:),packed_ncal(:,:)) [if not already present]
+         Generating copyin(packed_ni(:,:)) [if not already present]
+         Generating copyout(packed_qrsedten(:,:),packed_qssedten(:,:),packed_nrout2(:,:),packed_nsout2(:,:),packed_qgsedten(:,:),packed_ngracs(:,:),packed_rei(:,:),reff_snow_dum(:,:),packed_refl(:,:)) [if not already present]
+         Generating copyin(packed_rndst(:,:,:)) [if not already present]
+         Generating copyout(packed_sadice(:,:),packed_preci(:),packed_prdg(:,:),packed_nctend(:,:),packed_dgout2(:,:),packed_acsrfl(:,:),packed_prai(:,:),packed_prer_evap(:,:),packed_cmei(:,:),packed_csrfl(:,:),packed_msacwi(:,:),packed_iflx(:,:)) [if not already present]
+         Generating copyin(packed_qsatfac(:,:)) [if not already present]
+         Generating copyout(packed_dei(:,:)) [if not already present]
+         Generating copyin(packed_icecldf(:,:)) [if not already present]
+         Generating copyout(packed_frzrdt(:,:),packed_rercld(:,:),packed_sadsnow(:,:),packed_bergs(:,:)) [if not already present]
+         Generating copyin(packed_qr(:,:)) [if not already present]
+         Generating copyout(reff_grau_dum(:,:),reff_rain_dum(:,:),packed_vtrmi(:,:),packed_qcsedten(:,:),packed_qisedten(:,:),packed_qvlat(:,:)) [if not already present]
+         Generating copyin(packed_cldn(:,:)) [if not already present]
+         Generating copyout(packed_ums(:,:),packed_vtrmc(:,:),packed_umg(:,:),packed_umr(:,:)) [if not already present]
+         Generating copyin(packed_tnd_qsnow(:,:)) [if not already present]
+         Generating copyout(packed_qgout2(:,:),packed_qcres(:,:),packed_qires(:,:),packed_qrout2(:,:),packed_qsout2(:,:),packed_pgsacw(:,:),packed_prain(:,:),packed_mnuccc(:,:),packed_meltstot(:,:),packed_mnucct(:,:),packed_mnuccri(:,:),packed_mnudeptot(:,:),packed_psacwg(:,:),packed_berg(:,:),packed_areflz(:,:)) [if not already present]
+         Generating copyin(packed_liqcldf(:,:)) [if not already present]
+         Generating copyout(packed_meltsdt(:,:),packed_melt(:,:),packed_gflx(:,:),packed_qcrat(:,:),packed_prc(:,:),packed_pracs(:,:)) [if not already present]
+         Generating copyin(packed_qi(:,:)) [if not already present]
+         Generating copyout(packed_mnuccd(:,:),packed_mnuccr(:,:),packed_pracg(:,:),packed_meltgtot(:,:)) [if not already present]
+         Generating copyin(packed_frzimm(:,:)) [if not already present]
+         Generating copyout(packed_pra(:,:),packed_psacr(:,:),packed_pgracs(:,:)) [if not already present]
+         Generating copyin(packed_pdel(:,:)) [if not already present]
+         Generating copyout(packed_prci(:,:),packed_qitend(:,:),packed_qmultg(:,:),packed_prodsnow(:,:)) [if not already present]
+         Generating copyin(packed_npccn(:,:),packed_ns(:,:)) [if not already present]
+         Generating copyout(packed_ngout2(:,:),packed_nitend(:,:),packed_nmultg(:,:),packed_npracg(:,:)) [if not already present]
+         Generating copyin(packed_nr(:,:)) [if not already present]
+         Generating copyout(packed_nscng(:,:)) [if not already present]
+         Generating copyin(packed_re_ice(:,:)) [if not already present]
+         Generating copyout(packed_am_evp_st(:,:),packed_arefl(:,:),packed_fcsrfl(:,:),packed_cmeout(:,:)) [if not already present]
+         Generating copyin(packed_accre_enhan(:,:)) [if not already present]
+         Generating copyout(packed_evapsnow(:,:)) [if not already present]
+         Generating copyin(packed_relvar(:,:),packed_nc(:,:)) [if not already present]
+         Generating copyout(packed_ncai(:,:),packed_qrout(:,:),packed_qsout(:,:),packed_nrout(:,:),packed_nsout(:,:),drout_dum(:,:),packed_freqr(:,:),packed_freqg(:,:),packed_nevapr(:,:)) [if not already present]
+         Generating copyin(packed_qc(:,:),packed_qg(:,:)) [if not already present]
+         Generating copyout(packed_des(:,:)) [if not already present]
+         Generating copyin(packed_ng(:,:)) [if not already present]
+         Generating copyout(packed_qgout(:,:),packed_ngout(:,:),packed_dgout(:,:),packed_frefl(:,:),packed_prect(:),rel_fn_dum(:,:)) [if not already present]
+   1968, Generating copyout(packed_sflx(:,:),packed_psacws(:,:)) [if not already present]
+         Generating copyin(packed_q(:,:)) [if not already present]
+         Generating copyout(packed_qgtend(:,:)) [if not already present]
+         Generating copyin(packed_nacon(:,:,:)) [if not already present]
+         Generating copyout(packed_ngtend(:,:),packed_qmultrg(:,:),packed_qrtend(:,:),packed_npsacwg(:,:),packed_nrtend(:,:),packed_qctend(:,:),packed_nfice(:,:),packed_rel(:,:)) [if not already present]
+         Generating copyin(mg_snow_props) [if not already present]
+         Generating copyout(packed_nstend(:,:)) [if not already present]
+         Generating copyin(packed_p(:,:)) [if not already present]
+         Generating copyout(packed_cflx(:,:),packed_lambdac(:,:),packed_homo(:,:)) [if not already present]
+         Generating copyin(packed_qs(:,:)) [if not already present]
+         Generating copyout(packed_mu(:,:),packed_nmultrg(:,:),packed_rflx(:,:)) [if not already present]
+         Generating copyin(packed_naai(:,:),packed_tnd_nsnow(:,:)) [if not already present]
+         Generating copyout(packed_tlat(:,:),packed_rate1ord_cw2pr_st(:,:)) [if not already present]
+         Generating copyin(packed_frzdep(:,:)) [if not already present]
+         Generating copyout(packed_freqs(:,:)) [if not already present]
+         Generating copyin(packed_frzcnt(:,:),mg_ice_props,mg_hail_props,mg_liq_props) [if not already present]
+         Generating copyout(dsout2_dum(:,:)) [if not already present]
+         Generating copyin(mg_graupel_props,mg_rain_props) [if not already present]
+         Generating copyout(packed_qvres(:,:)) [if not already present]
+         Generating copyin(packed_t(:,:)) [if not already present]
+         Generating copyout(packed_qstend(:,:),packed_qcsevap(:,:),packed_qisevap(:,:),packed_ncal(:,:)) [if not already present]
+         Generating copyin(packed_ni(:,:)) [if not already present]
+         Generating copyout(packed_qrsedten(:,:),packed_qssedten(:,:),packed_nrout2(:,:),packed_nsout2(:,:),packed_qgsedten(:,:),packed_ngracs(:,:),packed_rei(:,:),rel_fn_dum(:,:),reff_snow_dum(:,:),packed_refl(:,:)) [if not already present]
+         Generating copyin(packed_rndst(:,:,:)) [if not already present]
+         Generating copyout(packed_sadice(:,:),packed_preci(:),packed_prdg(:,:),packed_nctend(:,:),packed_dgout2(:,:),packed_acsrfl(:,:),packed_prai(:,:),packed_prer_evap(:,:),packed_cmei(:,:),packed_csrfl(:,:),packed_msacwi(:,:),packed_iflx(:,:)) [if not already present]
+         Generating copyin(packed_qsatfac(:,:)) [if not already present]
+         Generating copyout(packed_dei(:,:)) [if not already present]
+         Generating copyin(packed_icecldf(:,:)) [if not already present]
+         Generating copyout(packed_frzrdt(:,:),packed_rercld(:,:),packed_sadsnow(:,:),packed_bergs(:,:)) [if not already present]
+         Generating copyin(packed_qr(:,:)) [if not already present]
+         Generating copyout(reff_grau_dum(:,:),reff_rain_dum(:,:),packed_vtrmi(:,:),packed_qcsedten(:,:),packed_qisedten(:,:),packed_qvlat(:,:)) [if not already present]
+         Generating copyin(packed_cldn(:,:)) [if not already present]
+         Generating copyout(packed_ums(:,:),packed_vtrmc(:,:),packed_umg(:,:),packed_umr(:,:)) [if not already present]
+         Generating copyin(packed_tnd_qsnow(:,:)) [if not already present]
+         Generating copyout(packed_qgout2(:,:),packed_qcres(:,:),packed_qires(:,:),packed_qrout2(:,:),packed_qsout2(:,:),packed_pgsacw(:,:),packed_prain(:,:),packed_mnuccc(:,:),packed_meltstot(:,:),packed_mnucct(:,:),packed_mnuccri(:,:),packed_mnudeptot(:,:),packed_psacwg(:,:),packed_berg(:,:),packed_areflz(:,:)) [if not already present]
+         Generating copyin(packed_liqcldf(:,:)) [if not already present]
+         Generating copyout(packed_meltsdt(:,:),packed_melt(:,:),packed_gflx(:,:),packed_qcrat(:,:),packed_prc(:,:),packed_pracs(:,:)) [if not already present]
+         Generating copyin(packed_qi(:,:)) [if not already present]
+         Generating copyout(packed_mnuccd(:,:),packed_mnuccr(:,:),packed_pracg(:,:),packed_meltgtot(:,:)) [if not already present]
+         Generating copyin(packed_frzimm(:,:)) [if not already present]
+         Generating copyout(packed_pra(:,:),packed_psacr(:,:),packed_pgracs(:,:)) [if not already present]
+         Generating copyin(packed_pdel(:,:)) [if not already present]
+         Generating copyout(packed_prci(:,:),packed_qitend(:,:),packed_qmultg(:,:),packed_prodsnow(:,:)) [if not already present]
+         Generating copyin(packed_npccn(:,:),packed_ns(:,:)) [if not already present]
+         Generating copyout(packed_ngout2(:,:),packed_nitend(:,:),packed_nmultg(:,:),packed_npracg(:,:)) [if not already present]
+         Generating copyin(packed_nr(:,:)) [if not already present]
+         Generating copyout(packed_nscng(:,:)) [if not already present]
+         Generating copyin(packed_re_ice(:,:)) [if not already present]
+         Generating copyout(packed_am_evp_st(:,:),packed_arefl(:,:),packed_fcsrfl(:,:),packed_cmeout(:,:)) [if not already present]
+         Generating copyin(packed_accre_enhan(:,:)) [if not already present]
+         Generating copyout(packed_evapsnow(:,:)) [if not already present]
+         Generating copyin(packed_relvar(:,:),packed_nc(:,:)) [if not already present]
+         Generating copyout(packed_ncai(:,:),packed_qrout(:,:),packed_qsout(:,:),packed_nrout(:,:),packed_nsout(:,:),drout_dum(:,:),packed_freqr(:,:),packed_freqg(:,:),packed_nevapr(:,:)) [if not already present]
+         Generating copyin(packed_qc(:,:),packed_qg(:,:)) [if not already present]
+         Generating copyout(packed_des(:,:)) [if not already present]
+         Generating copyin(packed_ng(:,:)) [if not already present]
+         Generating copyout(packed_qgout(:,:),packed_ngout(:,:),packed_dgout(:,:),packed_frefl(:,:),packed_prect(:)) [if not already present]
+kr_micro_mg_cam_tend_pack_real__r8_dim2:
+   2317, sum reduction inlined
+   2319, Memory copy idiom, loop replaced by call to __c_mcopy8
+   2322, sum reduction inlined
+kr_micro_mg_cam_tend_pack_real__r8_dim3:
+   2359, Memory copy idiom, loop replaced by call to __c_mcopy8
+   2361, sum reduction inlined
+   2363, sum reduction inlined
+kv_micro_mg_cam_tend_pack_real__r8_dim2:
+   2384, all reduction inlined
+   2396, Memory set idiom, loop replaced by call to __c_mset4
+   2403, sum reduction inlined
+   2404, sum reduction inlined
+   2426, count reduction inlined
+   2427, sum reduction inlined
+   2428, sum reduction inlined
+   2437, count reduction inlined
+   2438, sum reduction inlined
+   2439, sum reduction inlined
+   2448, count reduction inlined
+   2449, sum reduction inlined
+   2450, sum reduction inlined
+kv_micro_mg_cam_tend_pack_real__r8_dim1:
+   2475, all reduction inlined
+   2487, Memory set idiom, loop replaced by call to __c_mset4
+   2494, sum reduction inlined
+   2495, sum reduction inlined
+   2517, count reduction inlined
+   2518, sum reduction inlined
+   2519, sum reduction inlined
+   2528, count reduction inlined
+   2529, sum reduction inlined
+   2530, sum reduction inlined
+   2539, count reduction inlined
+   2540, sum reduction inlined
+   2541, sum reduction inlined
+read1darray:
+   2642, sum reduction inlined
+   2644, Memory copy idiom, loop replaced by call to __c_mcopy8
+read2darray:
+   2666, sum reduction inlined
+   2668, Memory copy idiom, loop replaced by call to __c_mcopy8
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -DDFACT=4608 -DPCOLS=16 -DSTATEFILE='"./input_casper_intel19/mpirank36_pcols16/kgen_statefile.lst"' -c -o kernel_driver.o kernel_driver.F90
+mpif90           -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__ -D_MPI -o kernel.exe micro_mg_cam.o micro_mg3_0.o micro_pumas_utils.o wv_sat_methods.o shr_spfn_mod.o shr_kind_mod.o shr_const_mod.o kernel_driver.o kgen_utils.o  
+sed "s/PCOLS/16/g" kgen_statefile.template >& log
+sed "s/NTASKS/36/g" log >& kgen_statefile.lst
+rm -f log
+mv kgen_statefile.lst ./input_casper_intel19/mpirank36_pcols16/ 
+WARNING: OpenMPI or MPICH tracing relies on NVTX. NVTX tracing has been automatically enabled.
+Collecting data...
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2' *****************
+ # of GPUs:             1
+ GPU id:             0
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           14  of           480  elements are different.
+ Average - kernel     94303.48154145725     
+ Average - reference     94303.48154151057     
+ RMS of difference is    1.2145842490948314E-006
+ Normalized RMS of difference is    4.9893586764680746E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            53
+ Number of non-identical variables within tolerance:            68
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2
+ 
+ mg3_tend: DFACT*mgncol:    69120 Time per call (usec):         Inf
+ 
+****************************************************
+    kernel execution summary: mg3_tend
+****************************************************
+ total_columns:         69120
+    Total number of verification cases  :     1
+    Number of verification-passed cases :     0
+ 
+    kernel: mg3_tend: FAILED verification
+ 
+    number of processes  1
+ 
+    Average call time (usec):        Inf
+    Minimum call time (usec):  0.180+309
+    Maximum call time (usec):        Inf
+ 
+    number of columns:  69120
+    Average columns per sec :         0.00
+****************************************************
+Processing events...
+Saving temporary "/glade/scratch/sunjian/nsys-report-1aca-1a52-c99a-2c90.qdstrm" file to disk...
+
+Creating final output files...
+Processing [0%                                                                ]Processing [====11%                                                           ]Processing [===========22%                                                    ]Processing [====================================60%                           ]Processing [=============================================73%                  ]Processing [=====================================================86%          ]Processing [=============25%                                                  ]Processing [==========20%                                                     ]Processing [=======16%                                                        ]Processing [======14%                                                         ]Processing [====11%                                                           ]Processing [===10%                                                            ]Processing [===9%                                                             ]Processing [===8%                                                             ]Processing [==7%                                                              ]Processing [=6%                                                               ]Processing [===8%                                                             ]Processing [====11%                                                           ]Processing [=====13%                                                          ]Processing [=======16%                                                        ]Processing [=========19%                                                      ]Processing [==============27%                                                 ]Processing [================30%                                               ]Processing [==================33%                                             ]Processing [====================36%                                           ]Processing [======================39%                                         ]Processing [========================41%                                       ]Processing [==========================44%                                     ]Processing [============================47%                                   ]Processing [==============================50%                                 ]Processing [================================54%                               ]Processing [=================================56%                              ]Processing [===================================58%                            ]Processing [=====================================61%                          ]Processing [======================================63%                         ]Processing [=======================================64%                        ]Processing [=======================================65%                        ]Processing [========================================66%                       ]Processing [=========================================67%                      ]Processing [=========================================68%                      ]Processing [==========================================69%                     ]Processing [===========================================70%                    ]Processing [===========================================71%                    ]Processing [============================================72%                   ]Processing [=============================================73%                  ]Processing [=============================================74%                  ]Processing [===============================================77%                ]Processing [=================================================79%              ]Processing [===================================================82%            ]Processing [====================================================84%           ]Processing [======================================================87%         ]Processing [=======================================================88%        ]Processing [=======================================================89%        ]Processing [========================================================90%       ]Processing [==============================================================100%]
+Saved report file to "/glade/scratch/sunjian/nsys-report-1aca-1a52-c99a-2c90.qdrep"
+Report file moved to "/glade/scratch/sunjian/temp/OpenMP_Offload/PUMAS_OPENMP/openacc_dfact4608.qdrep"
+
+rm -f kernel.exe *.mod micro_mg_cam.o micro_mg3_0.o micro_pumas_utils.o wv_sat_methods.o shr_spfn_mod.o shr_kind_mod.o shr_const_mod.o kernel_driver.o kgen_utils.o *.optrpt *cub *ptx
