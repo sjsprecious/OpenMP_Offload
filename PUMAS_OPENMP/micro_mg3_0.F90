@@ -1583,16 +1583,20 @@ subroutine micro_mg_tend ( &
 #endif // defined(OPENMP_GPU)
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
-!$omp target teams num_teams(1)
+!$omp target teams
 #endif // defined(OPENMP_GPU)
 
   if (precip_frac_method == MG_PRECIP_FRAC_INCLOUD) then
-     !$acc loop seq
+     !$acc loop gang vector 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
-     do k=2,nlev
-        do i=1,mgncol
+     do i=1,mgncol
+        !$acc loop seq 
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+        do k=2,nlev
            if (qc(i,k) < qsmall .and. qi(i,k) < qsmall) then
               precip_frac(i,k) = precip_frac(i,k-1)
            end if
@@ -1602,12 +1606,16 @@ subroutine micro_mg_tend ( &
      ! calculate precip fraction based on maximum overlap assumption
      ! if rain or snow mix ratios are smaller than threshold,
      ! then leave precip_frac as cloud fraction at current level
-     !$acc loop seq
+     !$acc loop gang vector
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
-     do k=2,nlev
-        do i=1,mgncol
+     do i=1,mgncol
+        !$acc loop seq
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+        do k=2,nlev
            if (qr(i,k-1) >= qsmall .or. qs(i,k-1) >= qsmall .or. qg(i,k-1) >= qsmall) then
               precip_frac(i,k)=max(precip_frac(i,k-1),precip_frac(i,k))
            end if
@@ -3025,12 +3033,16 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)
-  !$acc loop seq
+  !$acc loop gang vector
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
-  do k=1,nlev  
-     do i=1,mgncol
+  do i=1,mgncol
+     !$acc loop seq
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+     do k=1,nlev  
         if (lamr(i,k).ge.qsmall) then
            qtmp = lamr(i,k)**br
            ! 'final' values of number and mass weighted mean fallspeed for rain (m/s)
