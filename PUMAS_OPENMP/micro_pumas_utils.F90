@@ -366,12 +366,7 @@ subroutine rising_factorial_integer_vec(x, n, res,vlen)
   real(r8), intent(out) :: res(vlen)
 
   integer  :: i,j
-  real(r8) :: factor(vlen)
-
-  !$acc data create  (factor)
-#if defined(OPENMP_GPU)
-!$omp target data map(alloc:factor)
-#endif // defined(OPENMP_GPU)
+  real(r8) :: factor
 
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
@@ -383,54 +378,32 @@ subroutine rising_factorial_integer_vec(x, n, res,vlen)
 #endif // defined(OPENMP_GPU)
   do i=1,vlen
      res(i)    = 1._r8
-     factor(i) = x(i)
-  end do
+     factor    = x(i)
 
-  if (n == 3) then
-    !$acc loop gang vector
+     if (n == 3) then
+        res(i)    = res(i) * factor
+        factor    = factor + 1._r8
+        res(i)    = res(i) * factor
+        factor    = factor + 1._r8
+        res(i)    = res(i) * factor
+     else if (n == 2) then
+        res(i)    = res(i) * factor
+        factor    = factor + 1._r8
+        res(i)    = res(i) * factor
+     else
+        !$acc loop seq
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
-    do i=1,vlen
-       res(i)    = res(i) * factor(i)
-       factor(i) = factor(i) + 1._r8
-       res(i)    = res(i) * factor(i)
-       factor(i) = factor(i) + 1._r8
-       res(i)    = res(i) * factor(i)
-    end do
-  elseif (n == 2) then
-    !$acc loop gang vector
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
-    do i=1,vlen
-       res(i)    = res(i) * factor(i)
-       factor(i) = factor(i) + 1._r8
-       res(i)    = res(i) * factor(i)
-    end do
-  else
-    !$acc loop seq
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) 
-#endif // defined(OPENMP_GPU)
-    do j = 1, n
-       !$acc loop vector
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) 
-#endif // defined(OPENMP_GPU)
-       do i = 1, vlen
-          res(i)    = res(i) * factor(i)
-          factor(i) = factor(i) + 1._r8
-       end do
-    end do
-  end if
+        do j = 1, n
+           res(i) = res(i) * factor
+           factor = factor + 1._r8
+        end do
+     end if
+  end do
   !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
-#endif // defined(OPENMP_GPU)
-  !$acc end data
-#if defined(OPENMP_GPU)
-!$omp end target data
 #endif // defined(OPENMP_GPU)
 
 end subroutine rising_factorial_integer_vec
