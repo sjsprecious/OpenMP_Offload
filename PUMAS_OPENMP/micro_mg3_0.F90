@@ -1564,7 +1564,7 @@ subroutine micro_mg_tend ( &
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
 
-  !$acc parallel vector_length(32)
+  !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)
@@ -2957,7 +2957,7 @@ subroutine micro_mg_tend ( &
      call size_dist_param_basic(mg_graupel_props, dumg, dumng, lamg, mgncol, nlev)
   end if
   
-  !$acc parallel vector_length(32)
+  !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)
@@ -4090,7 +4090,7 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
    real(r8), intent(inout), optional :: qvlat(mgncol,nlev)
    real(r8), intent(inout), optional :: preci(mgncol)
    integer  :: i,k,n,nstep
-   real(r8) :: faltndx,faltndnx,rnstep,faltndqxe
+   real(r8) :: faltndx,faltndnx,rnstep,faltndqxe,tmp
    real(r8) :: dum1(mgncol,nlev),faloutx(mgncol,0:nlev),faloutnx(mgncol,0:nlev)
    logical  :: present_tlat,present_qvlat, present_xcldm,present_qxsevap, present_preci
 
@@ -4099,25 +4099,33 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
    present_xcldm   = present(xcldm)
    present_qxsevap = present(qxsevap)
    present_preci   = present(preci)
+   tmp             = 0._r8
+
    ! loop over sedimentation sub-time step to ensure stability
    !==============================================================
    !$acc data create  (faloutx,faloutnx,dum1)
 #if defined(OPENMP_GPU)
 !$omp target data map(alloc:faloutx,faloutnx,dum1)
 #endif // defined(OPENMP_GPU)
-   !$acc parallel vector_length(32)
+   !$acc parallel vector_length(VLENS) reduction(max:tmp)
 #if defined(OPENMP_GPU)
-!$omp target teams
+!$omp target teams reduction(max:tmp)
 #endif // defined(OPENMP_GPU)
-   !$acc loop gang
+   !$acc loop gang reduction(max:tmp)
 #if defined(OPENMP_GPU)
-!$omp loop bind(teams)
+!$omp loop bind(teams) reduction(max:tmp)
 #endif // defined(OPENMP_GPU)
    do i = 1,mgncol
-      nstep   = 1 + int( max( maxval( fx(i,:)*pdel_inv(i,:) ), &
-                              maxval( fnx(i,:)*pdel_inv(i,:) ) ) &
-                              * deltat )
-      rnstep  = 1._r8/real(nstep)
+      !$acc loop vector reduction(max:tmp)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) reduction(max:tmp)
+#endif // defined(OPENMP_GPU)
+      do k = 1,nlev
+         tmp = max(tmp, fx(i,k)*pdel_inv(i,k), fnx(i,k)*pdel_inv(i,k))
+      end do
+
+      nstep  = 1 + int(tmp * deltat)
+      rnstep = 1._r8/real(nstep)
 
       dum1(i,1) = 0._r8
       if (present_xcldm) then
@@ -4138,7 +4146,7 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
             dum1(i,k) = 1._r8
          end do
       end if
-    
+
       !$acc loop seq
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams)
