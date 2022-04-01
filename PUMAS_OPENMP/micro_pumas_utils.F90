@@ -368,7 +368,7 @@ subroutine rising_factorial_integer_vec(x, n, res,vlen)
   integer  :: i,j
   real(r8) :: factor
 
-  !$acc parallel vector_length(VLENS)
+  !$acc parallel vector_length(32)
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)

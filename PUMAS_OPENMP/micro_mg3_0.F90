@@ -1564,7 +1564,7 @@ subroutine micro_mg_tend ( &
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
 
-  !$acc parallel vector_length(VLENS)
+  !$acc parallel vector_length(32)
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)
@@ -2957,7 +2957,7 @@ subroutine micro_mg_tend ( &
      call size_dist_param_basic(mg_graupel_props, dumg, dumng, lamg, mgncol, nlev)
   end if
   
-  !$acc parallel vector_length(VLENS)
+  !$acc parallel vector_length(32)
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)
@@ -4105,7 +4105,7 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
 #if defined(OPENMP_GPU)
 !$omp target data map(alloc:faloutx,faloutnx,dum1)
 #endif // defined(OPENMP_GPU)
-   !$acc parallel vector_length(VLENS)
+   !$acc parallel vector_length(32)
 #if defined(OPENMP_GPU)
 !$omp target teams
 #endif // defined(OPENMP_GPU)
