@@ -4111,15 +4111,11 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
 #if defined(OPENMP_GPU)
 !$omp target teams reduction(max:tmp)
 #endif // defined(OPENMP_GPU)
-   !$acc loop gang reduction(max:tmp)
+   !$acc loop gang vector reduction(max:tmp)
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) reduction(max:tmp)
 #endif // defined(OPENMP_GPU)
    do i = 1,mgncol
-      !$acc loop vector reduction(max:tmp)
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) reduction(max:tmp)
-#endif // defined(OPENMP_GPU)
       do k = 1,nlev
          tmp = max(tmp, fx(i,k)*pdel_inv(i,k), fnx(i,k)*pdel_inv(i,k))
       end do
@@ -4129,19 +4125,11 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
 
       dum1(i,1) = 0._r8
       if (present_xcldm) then
-         !$acc loop vector 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
          do k = 2,nlev
             dum1(i,k) = xcldm(i,k)/xcldm(i,k-1)
             dum1(i,k) = min(dum1(i,k),1._r8)
          end do
       else
-         !$acc loop vector 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
          do k=2,nlev
             dum1(i,k) = 1._r8
          end do
@@ -4155,29 +4143,17 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
          faloutx(i,0)  = 0._r8
          faloutnx(i,0) = 0._r8
          if (do_cldice) then
-         !$acc loop vector 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
             do k=1,nlev
                faloutx(i,k)  = fx(i,k)  * dumx(i,k)
                faloutnx(i,k) = fnx(i,k) * dumnx(i,k)
             end do
          else
-         !$acc loop vector 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
             do k=1,nlev
                faloutx(i,k)  = 0._r8
                faloutnx(i,k) = 0._r8
             end do
          end if
 
-         !$acc loop vector 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
          do k = 1,nlev
             ! for cloud liquid and ice, if cloud fraction increases with height
             ! then add flux from above to both vapor and cloud water of current level
