@@ -219,6 +219,10 @@ real(r8), parameter :: droplet_mass_40um = 4._r8/3._r8*pi*rhow*(40.e-6_r8)**3
 
 !ice lookup table values for ice-rain collision/collection
 
+! reciprocal of some constants 
+real(r8), parameter :: onesixth = 1._r8 / 6._r8
+real(r8), parameter :: onethird = 1._r8 / 3._r8
+real(r8), parameter :: r298 = 1._r8 / 298._r8
 
 !=========================================================
 ! Constants set in initialization
@@ -228,6 +232,7 @@ real(r8), parameter :: droplet_mass_40um = 4._r8/3._r8*pi*rhow*(40.e-6_r8)**3
 
 real(r8) :: rv_util          ! water vapor gas constant
 real(r8) :: cpp_util         ! specific heat of dry air
+real(r8) :: rcpp_util        ! reciprocal of cpp_util
 real(r8) :: tmelt_util       ! freezing point of water (K)
 
 real(r8) :: ra        ! dry air gas constant
@@ -241,12 +246,12 @@ real(r8) :: gamma_bs_plus3
 real(r8) :: gamma_half_br_plus5
 real(r8) :: gamma_half_bs_plus5
 real(r8) :: gamma_2bs_plus2
-!$acc declare copyin (rv_util,cpp_util,tmelt_util,xxlv_util,xxls_util,gamma_bs_plus3,   &
-!$acc                 gamma_half_br_plus5,gamma_half_bs_plus5, &
+!$acc declare copyin (rv_util,cpp_util,rcpp_util,tmelt_util,xxlv_util,xxls_util, &
+!$acc                 gamma_bs_plus3,gamma_half_br_plus5,gamma_half_bs_plus5, &
 !$acc                 gamma_2bs_plus2)
 #if defined(OPENMP_GPU)
-!$omp declare target (rv_util,cpp_util,tmelt_util,xxlv_util,xxls_util,gamma_bs_plus3,&
-!$omp gamma_half_br_plus5,gamma_half_bs_plus5,gamma_2bs_plus2)
+!$omp declare target (rv_util,cpp_util,rcpp_util,tmelt_util,xxlv_util,xxls_util, &
+!$omp                 gamma_bs_plus3,gamma_half_br_plus5,gamma_half_bs_plus5,gamma_2bs_plus2)
 #endif // defined(OPENMP_GPU)
 !=========================================================
 ! Utilities that are cheaper if the compiler knows that
@@ -422,7 +427,7 @@ subroutine calc_ab_line(t, qv, xxl, ab)
   real(r8) :: dqsdt
 
   dqsdt = xxl*qv / (rv_util * t**2)
-  ab = 1._r8 + dqsdt*xxl/cpp_util
+  ab = 1._r8 + dqsdt*xxl*rcpp_util
 
 end subroutine calc_ab_line
 ! Calculate correction due to latent heat for evaporation/sublimation
@@ -434,6 +439,7 @@ subroutine calc_ab_vect(t, qv, xxl, ab, vlen)
   real(r8), intent(in) :: xxl         ! Latent heat
 
   real(r8), intent(out) :: ab(vlen)
+  
   real(r8) :: dqsdt
   integer :: i
 
@@ -447,7 +453,7 @@ subroutine calc_ab_vect(t, qv, xxl, ab, vlen)
 #endif // defined(OPENMP_GPU)
   do i=1,vlen
      dqsdt = xxl*qv(i) / (rv_util * t(i)**2)
-     ab(i) = 1._r8 + dqsdt*xxl/cpp_util
+     ab(i) = 1._r8 + dqsdt*xxl*rcpp_util
   end do
   !$acc end parallel
 #if defined(OPENMP_GPU)
@@ -488,15 +494,15 @@ subroutine size_dist_param_liq_line(props, qcic, ncic, rho, pgam, lamc)
 
      if (props_loc%eff_dim == 3._r8) then
         call rising_factorial(pgam+1._r8, 3, tmp)
-        props_loc%shape_coef = pi / 6._r8 * props_loc%rho * tmp
+        props_loc%shape_coef = pi * onesixth * props_loc%rho * tmp
      else
         call rising_factorial(pgam+1._r8, props_loc%eff_dim, tmp)
-        props_loc%shape_coef = pi / 6._r8 * props_loc%rho * tmp
+        props_loc%shape_coef = pi * onesixth * props_loc%rho * tmp
      end if
      ! Limit to between 2 and 50 microns mean size.
 
-     props_loc%lambda_bounds(1) = (pgam+1._r8)*1._r8/50.e-6_r8
-     props_loc%lambda_bounds(2) = (pgam+1._r8)*1._r8/2.e-6_r8
+     props_loc%lambda_bounds(1) = (pgam+1._r8)*2.e4_r8
+     props_loc%lambda_bounds(2) = (pgam+1._r8)*5.e5_r8
 
      call size_dist_param_basic(props_loc, qcic, ncic, lamc)
   else
@@ -576,10 +582,10 @@ subroutine size_dist_param_liq_2D(props, qcic, ncic, rho, pgam, lamc, dim1, dim2
   do k = 1, dim2
      do i = 1, dim1
         if (qcic(i,k) > qsmall) then
-           shapeC(i,k) = pi / 6._r8 * props%rho * tmp(i,k)
+           shapeC(i,k) = pi * onesixth * props%rho * tmp(i,k)
            ! Limit to between 2 and 50 microns mean size.
-           lbnd(i,k)   = pgamp1(i,k)*1._r8/50.e-6_r8
-           ubnd(i,k)   = pgamp1(i,k)*1._r8/2.e-6_r8
+           lbnd(i,k)   = pgamp1(i,k)*2.e4_r8
+           ubnd(i,k)   = pgamp1(i,k)*5.e5_r8
         else
            shapeC(i,k) = 0._r8
            lbnd(i,k) = 0._r8
@@ -688,10 +694,10 @@ subroutine size_dist_param_liq_vect(props, qcic, ncic, rho, pgam, lamc, vlen)
 
   do i = 1, vlen 
      if (qcic(i) > qsmall) then
-        shapeC(i) = pi / 6._r8 * props%rho * tmp(i)
+        shapeC(i) = pi * onesixth * props%rho * tmp(i)
         ! Limit to between 2 and 50 microns mean size.
-        lbnd(i)   = pgamp1(i)*1._r8/50.e-6_r8
-        ubnd(i)   = pgamp1(i)*1._r8/2.e-6_r8
+        lbnd(i)   = pgamp1(i)*2.e4_r8
+        ubnd(i)   = pgamp1(i)*5.e5_r8
      else
         shapeC(i) = 0._r8
         lbnd(i) = 0._r8
@@ -1012,7 +1018,7 @@ subroutine avg_diameter_vec (q, n, rho_air, rho_sub, avg_diameter, vlen)
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
    do i=1,vlen
-      avg_diameter(i) = (q(i)*rho_air(i)/(pi * rho_sub * n(i)))**(1._r8/3._r8)
+      avg_diameter(i) = (q(i)*rho_air(i)/(pi * rho_sub * n(i)))**onethird
    end do
    !$acc end parallel
 #if defined(OPENMP_GPU)
@@ -1386,6 +1392,8 @@ subroutine sb2001v2_liq_autoconversion(pgam,qc,nc,qr,rho,relvar,au,nprc,nprc1,vl
 
   real(r8), parameter :: kc = 9.44e9_r8
   real(r8), parameter :: kr = 5.78e3_r8
+  real(r8), parameter :: const1 = 2._r8/2.6e-7_r8*1000._r8
+  real(r8), parameter :: const2 = 1._r8/droplet_mass_40um
   real(r8) :: dum, dum1, nu
   integer  :: dumi, i
 
@@ -1408,11 +1416,11 @@ subroutine sb2001v2_liq_autoconversion(pgam,qc,nc,qr,rho,relvar,au,nprc,nprc1,vl
 
        au(i) = kc/(20._r8*2.6e-7_r8)* &
          (nu+2._r8)*(nu+4._r8)/(nu+1._r8)**2._r8* &
-         (rho(i)*qc(i)/1000._r8)**4._r8/(rho(i)*nc(i)/1.e6_r8)**2._r8* &
+         (rho(i)*qc(i)*1.e-3_r8)**4._r8/(rho(i)*nc(i)*1.e-6_r8)**2._r8* &
          (1._r8+dum1/(1._r8-dum)**2)*1000._r8 / rho(i)
 
-       nprc1(i) = au(i)*2._r8/2.6e-7_r8*1000._r8
-       nprc(i)  = au(i)/droplet_mass_40um
+       nprc1(i) = au(i)*const1
+       nprc(i)  = au(i)*const2
      else
        au(i)    = 0._r8
        nprc1(i) = 0._r8
@@ -1522,7 +1530,7 @@ subroutine ice_autoconversion(t, qiic, lami, n0i, dcs, prci, nprci, vlen)
         ! Rate of ice particle conversion (number).
 
         nprci(i) = n0i(i)/(lami(i)*ac_time)*exp(-d_rat)
-        m_ip = (rhoi*pi/6._r8) / lami(i)**3
+        m_ip = (rhoi*pi*onesixth) / lami(i)**3
         ! Rate of mass conversion.
         ! Note that this is:
         ! m n (d^3 + 3 d^2 + 6 d + 6)
@@ -1610,12 +1618,12 @@ subroutine immersion_freezing(microp_uniform, t, pgam, lamc, &
      if (qcic(i) >= qsmall .and. t(i) < 269.15_r8) then
         call rising_factorial(pgam(i)+1._r8, 3, tmp)
         nnuccc(i) = &
-             pi/6._r8*ncic(i)*tmp* &
+             pi*onesixth*ncic(i)*tmp* &
              bimm*(exp(aimm*(tmelt_util - t(i)))-1._r8)/lamc(i)**3
 
         call rising_factorial(pgam(i)+4._r8, 3, tmp)
         mnuccc(i) = dum(i) * nnuccc(i) * &
-             pi/6._r8*rhow* &
+             pi*onesixth*rhow* &
              tmp/lamc(i)**3
      else
         mnuccc(i) = 0._r8
@@ -1705,7 +1713,7 @@ subroutine contact_freezing (microp_uniform, t, p, rndst, nacon, &
         end if
 
         tcnt=(270.16_r8-t(i))**1.3_r8
-        viscosity = 1.8e-5_r8*(t(i)/298.0_r8)**0.85_r8    ! Viscosity (kg/m/s)
+        viscosity = 1.8e-5_r8*(t(i)*r298)**0.85_r8    ! Viscosity (kg/m/s)
         mfp = 2.0_r8*viscosity/ &                         ! Mean free path (m)
                      (p(i)*sqrt( 8.0_r8*28.96e-3_r8/(pi*8.314409_r8*t(i)) ))
 
@@ -1719,7 +1727,7 @@ subroutine contact_freezing (microp_uniform, t, p, rndst, nacon, &
         contact_factor = dot_product(ndfaer,nacon(i,:)*tcnt) * pi * &
                                      ncic(i) * (pgam(i) + 1._r8) / lamc(i)
         call rising_factorial(pgam(i)+2._r8, 3, tmp)
-        mnucct(i) = dum * contact_factor * pi/3._r8*rhow*tmp/lamc(i)**3
+        mnucct(i) = dum * contact_factor * pi*onethird*rhow*tmp/lamc(i)**3
         nnucct(i) = dum1 * 2._r8 * contact_factor
      else
         mnucct(i) = 0._r8
@@ -1771,7 +1779,7 @@ subroutine snow_self_aggregation(t, rho, asn, rhosn, qsic, nsic, nsagg, vlen)
   do i=1,vlen
      if (qsic(i) >= qsmall .and. t(i) <= tmelt_util) then
         nsagg(i) = -1108._r8*eii/(4._r8*720._r8*rhosn)*asn(i)*qsic(i)*nsic(i)*rho(i)*&
-             ((qsic(i)/nsic(i))*(1._r8/(rhosn*pi)))**((bs-1._r8)/3._r8)
+             ((qsic(i)/nsic(i))*(1._r8/(rhosn*pi)))**((bs-1._r8)*onethird)
      else
         nsagg(i) = 0._r8
      end if
@@ -1854,7 +1862,7 @@ subroutine accrete_cloud_water_snow(t, rho, asn, uns, mu, qcic, ncic, qsic, &
         ! no impact of sub-grid distribution of qc since psacws
         ! is linear in qc
 
-        accrete_rate = pi/4._r8*asn(i)*rho(i)*n0s(i)*eci*gamma_bs_plus3 / lams(i)**(bs+3._r8)
+        accrete_rate = pi*0.25_r8*asn(i)*rho(i)*n0s(i)*eci*gamma_bs_plus3 / lams(i)**(bs+3._r8)
         psacws(i)  = accrete_rate*qcic(i)
         npsacws(i) = accrete_rate*ncic(i)
      else
@@ -1899,9 +1907,9 @@ subroutine secondary_ice_production(t, psacws, msacwi, nsacwi, vlen)
 #endif // defined(OPENMP_GPU)
   do i=1,vlen
      if((t(i) < 270.16_r8) .and. (t(i) >= 268.16_r8)) then
-        nsacwi(i) = 3.5e8_r8*(270.16_r8-t(i))/2.0_r8*psacws(i)
+        nsacwi(i) = 3.5e8_r8*(270.16_r8-t(i))*0.5_r8*psacws(i)
      else if((t(i) < 268.16_r8) .and. (t(i) >= 265.16_r8)) then
-        nsacwi(i) = 3.5e8_r8*(t(i)-265.16_r8)/3.0_r8*psacws(i)
+        nsacwi(i) = 3.5e8_r8*(t(i)-265.16_r8)*onethird*psacws(i)
      else
         nsacwi(i) = 0.0_r8
      endif
@@ -2202,7 +2210,7 @@ subroutine accrete_cloud_ice_snow(t, rho, asn, qiic, niic, qsic, &
 #endif // defined(OPENMP_GPU)
   do i=1,vlen
      if (qsic(i) >= qsmall .and. qiic(i) >= qsmall .and. t(i) <= tmelt_util) then
-        accrete_rate = pi/4._r8 * eii * asn(i) * rho(i) * n0s(i) * gamma_bs_plus3/ &
+        accrete_rate = pi * 0.25_r8 * eii * asn(i) * rho(i) * n0s(i) * gamma_bs_plus3/ &
              lams(i)**(bs+3._r8)
         prai(i)  = accrete_rate * qiic(i)
         nprai(i) = accrete_rate * niic(i)
@@ -2313,8 +2321,8 @@ subroutine evaporate_sublimate_precip(t, rho, dv, mu, sc, q, qvl, qvi, &
               eps = 2._r8*pi*n0r(i)*rho(i)*Dv(i)* &
                     (f1r/(lamr(i)*lamr(i))+ &
                     f2r*(arn(i)*rho(i)/mu(i))**0.5_r8* &
-                    sc(i)**(1._r8/3._r8)*gamma_half_br_plus5/ &
-                    (lamr(i)**(5._r8/2._r8+br/2._r8)))
+                    sc(i)**(onethird)*gamma_half_br_plus5/ &
+                    (lamr(i)**(2.5_r8+br*0.5_r8)))
               pre(i) = eps*(qclr-qvl(i))/abr
               ! only evaporate in out-of-cloud region
               ! and distribute across precip_frac
@@ -2333,8 +2341,8 @@ subroutine evaporate_sublimate_precip(t, rho, dv, mu, sc, q, qvl, qvi, &
            eps = 2._r8*pi*n0s(i)*rho(i)*Dv(i)* &
                 (f1s/(lams(i)*lams(i))+ &
                 f2s*(asn(i)*rho(i)/mu(i))**0.5_r8* &
-                sc(i)**(1._r8/3._r8)*gamma_half_bs_plus5/ &
-                (lams(i)**(5._r8/2._r8+bs/2._r8)))
+                sc(i)**(onethird)*gamma_half_bs_plus5/ &
+                (lams(i)**(2.5_r8+bs*0.5_r8)))
            prds(i) = eps*(qclr-qvi(i))/ab
            ! only sublimate in out-of-cloud region and distribute over precip_frac
            prds(i) = min(prds(i)*am_evp_st(i),0._r8)
@@ -2469,8 +2477,8 @@ subroutine evaporate_sublimate_precip_graupel(t, rho, dv, mu, sc, q, qvl, qvi, &
               eps = 2._r8*pi*n0r(i)*rho(i)*Dv(i)* &
                  (f1r/(lamr(i)*lamr(i))+ &
                  f2r*(arn(i)*rho(i)/mu(i))**0.5_r8* &
-                 sc(i)**(1._r8/3._r8)*gamma_half_br_plus5/ &
-                 (lamr(i)**(5._r8/2._r8+br/2._r8)))
+                 sc(i)**(onethird)*gamma_half_br_plus5/ &
+                 (lamr(i)**(2.5_r8+br*0.5_r8)))
               pre(i) = eps*(qclr-qvl(i))/abr
               ! only evaporate in out-of-cloud region
               ! and distribute across precip_frac
@@ -2489,8 +2497,8 @@ subroutine evaporate_sublimate_precip_graupel(t, rho, dv, mu, sc, q, qvl, qvi, &
            eps = 2._r8*pi*n0s(i)*rho(i)*Dv(i)* &
                 (f1s/(lams(i)*lams(i))+ &
                 f2s*(asn(i)*rho(i)/mu(i))**0.5_r8* &
-                sc(i)**(1._r8/3._r8)*gamma_half_bs_plus5/ &
-                (lams(i)**(5._r8/2._r8+bs/2._r8)))
+                sc(i)**(onethird)*gamma_half_bs_plus5/ &
+                (lams(i)**(2.5_r8+bs*0.5_r8)))
            prds(i) = eps*(qclr-qvi(i))/ab
            ! only sublimate in out-of-cloud region and distribute over precip_frac
            prds(i) = min(prds(i)*am_evp_st(i),0._r8)
@@ -2505,8 +2513,8 @@ subroutine evaporate_sublimate_precip_graupel(t, rho, dv, mu, sc, q, qvl, qvi, &
            eps = 2._r8*pi*n0g(i)*rho(i)*Dv(i)*                    &
                 (f1s/(lamg(i)*lamg(i))+                           &
                 f2s*(agn(i)*rho(i)/mu(i))**0.5_r8*                &
-                sc(i)**(1._r8/3._r8)*gamma(5._r8/2._r8+bg/2._r8)/ &
-                (lamg(i)**(5._r8/2._r8+bs/2._r8)))
+                sc(i)**(onethird)*gamma(2.5_r8+bg*0.5_r8)/ &
+                (lamg(i)**(2.5_r8+bs*0.5_r8)))
            prdg(i) = eps*(qclr-qvi(i))/abg
            ! only sublimate in out-of-cloud region and distribute over precip_frac
            prdg(i) = min(prdg(i)*am_evp_st(i),0._r8)
@@ -2582,8 +2590,8 @@ subroutine bergeron_process_snow(t, rho, dv, mu, sc, qvl, qvi, asn, &
         eps = 2._r8*pi*n0s(i)*rho(i)*Dv(i)* &
              (f1s/(lams(i)*lams(i))+ &
              f2s*(asn(i)*rho(i)/mu(i))**0.5_r8* &
-             sc(i)**(1._r8/3._r8)*gamma_half_bs_plus5/ &
-             (lams(i)**(5._r8/2._r8+bs/2._r8)))
+             sc(i)**(onethird)*gamma_half_bs_plus5/ &
+             (lams(i)**(2.5_r8+bs*0.5_r8)))
         bergs(i) = eps*(qvl(i)-qvi(i))/ab
      else
         bergs(i) = 0._r8
@@ -2731,17 +2739,15 @@ subroutine graupel_riming_liquid_snow(psacws,qsic,qcic,nsic,rho,rhosn,rhog,asn,l
   real(r8), dimension(vlen), intent(out)   :: pgsacw  ! dQ graupel due to collection droplets by snow
   real(r8), dimension(vlen), intent(out)   :: nscng   ! dN graupel due to collection droplets by snow
 
-  real(r8) :: cons
   real(r8) :: rhosu
+  real(r8) :: cons
   real(r8) :: dum
   integer  :: i 
 !........................................................................
 !Input: PSACWS,qs,qc,n0s,rho,lams,rhos,rhog
 !Output:PSACWS,PGSACW,NSCNG
 
-
   rhosu = 85000._r8/(ra * tmelt_util)    ! typical air density at 850 mb
-
   cons  = 4._r8 *2._r8 *3._r8*rhosu*pi*ecid*ecid*gamma_2bs_plus2/(8._r8*(rhog-rhosn))
 
   !$acc parallel vector_length(VLENS)
@@ -2897,7 +2903,9 @@ subroutine graupel_rain_riming_snow(pracs,npracs,psacr,qsic,qric,nric,nsic,n0s,l
   integer  :: i 
   real(r8), parameter :: cons18 = rhosn*rhosn
   real(r8), parameter :: cons19 = rhow*rhow
-  real(r8) :: dum
+  real(r8) :: dum,rdtime
+
+  rdtime = 1._r8 / dtime
 
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
@@ -2920,8 +2928,8 @@ subroutine graupel_rain_riming_snow(pracs,npracs,psacr,qsic,qric,nric,nsic,n0s,l
         pgracs(i) = (1._r8-dum)*pracs(i)
         ngracs(i) = (1._r8-dum)*npracs(i)
         ! limit max number converted to min of either rain or snow number concentration
-        ngracs(i) = min(ngracs(i),nric(i)/dtime)
-        ngracs(i) = min(ngracs(i),nsic(i)/dtime)
+        ngracs(i) = min(ngracs(i),nric(i)*rdtime)
+        ngracs(i) = min(ngracs(i),nsic(i)*rdtime)
         ! amount left for snow production
         
         pracs(i)  = pracs(i) - pgracs(i)
@@ -2996,9 +3004,9 @@ subroutine graupel_rime_splintering(t,qcic,qric,qgic,psacwg,pracg,&
                  if (t(i).gt.tm_3) then
                     fmult = 0._r8
                  else if (t(i).le.tm_3.and.t(i).gt.tm_5)  then
-                    fmult = (tm_3-t(i))/2._r8
+                    fmult = (tm_3-t(i))*0.5_r8
                  else if (t(i).ge.tm_8.and.t(i).le.tm_5)   then
-                    fmult = (t(i)-tm_8)/3._r8
+                    fmult = (t(i)-tm_8)*onethird
                  else if (t(i).lt.tm_8) then
                     fmult = 0._r8
                  end if
@@ -3176,7 +3184,7 @@ SUBROUTINE kr_externs_in_micro_mg_utils(kgen_unit)
     READ (UNIT = kgen_unit) gamma_half_bs_plus5 
     READ (UNIT = kgen_unit) gamma_2bs_plus2 
 #if defined(OPENMP_GPU)
-!$omp target update to (rv_util,cpp_util,tmelt_util,xxlv_util, &
+!$omp target update to (rv_util,cpp_util,rcpp_util,tmelt_util,xxlv_util, &
 !$omp                   xxls_util,gamma_bs_plus3,gamma_half_br_plus5, &
 !$omp                   gamma_half_bs_plus5,gamma_2bs_plus2)
 #endif // defined(OPENMP_GPU)
