@@ -2914,9 +2914,9 @@ subroutine micro_mg_tend ( &
   call size_dist_param_basic(mg_ice_props, dumi, dumni, lami, mgncol, nlev)
   call size_dist_param_liq(mg_liq_props, dumc, dumnc, rho, pgam, lamc, mgncol, nlev)
 
-  !$acc parallel vector_length(VLENS)
+  !$acc parallel vector_length(VLENS) async(LQUEUE)
 #if defined(OPENMP_GPU)
-!$omp target teams
+!$omp target teams nowait
 #endif // defined(OPENMP_GPU)
   !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
@@ -2946,7 +2946,23 @@ subroutine micro_mg_tend ( &
            fc(i,k) = 0._r8
            fnc(i,k)= 0._r8
         end if
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
+  !$acc parallel vector_length(VLENS) async(IQUEUE)
+#if defined(OPENMP_GPU)
+!$omp target teams nowait
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2) 
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif // defined(OPENMP_GPU)
+  do k=1,nlev
+     do i=1,mgncol
         ! calculate number and mass weighted fall velocity for cloud ice
         if (dumi(i,k).ge.qsmall) then
            vtrmi(i,k)=min(ain(i,k)*gamma_bi_plus4/(6._r8*lami(i,k)**bi), &
@@ -3003,7 +3019,42 @@ subroutine micro_mg_tend ( &
 
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
-!$omp target teams
+!$omp target teams 
+#endif
+  !$acc loop gang vector collapse(2)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif
+  do k=1,nlev
+     do i=1,mgncol
+        pdel_inv(i,k) = 1._r8/pdel(i,k)
+        ! redefine dummy variables - sedimentation is calculated over grid-scale
+        ! quantities to ensure conservation
+        dumc(i,k) = (qc(i,k)+qctend(i,k)*deltat)
+        dumnc(i,k) = max((nc(i,k)+nctend(i,k)*deltat),0._r8)
+        dumi(i,k) = (qi(i,k)+qitend(i,k)*deltat)
+        dumni(i,k) = max((ni(i,k)+nitend(i,k)*deltat),0._r8)
+        dumr(i,k) = (qr(i,k)+qrtend(i,k)*deltat)
+        dumnr(i,k) = max((nr(i,k)+nrtend(i,k)*deltat),0._r8)
+        dums(i,k) = (qs(i,k)+qstend(i,k)*deltat)
+        dumns(i,k) = max((ns(i,k)+nstend(i,k)*deltat),0._r8)
+        dumg(i,k) = (qg(i,k)+qgtend(i,k)*deltat)
+        dumng(i,k) = max((ng(i,k)+ngtend(i,k)*deltat),0._r8)
+        if (dumc(i,k).lt.qsmall) dumnc(i,k)=0._r8
+        if (dumi(i,k).lt.qsmall) dumni(i,k)=0._r8
+        if (dumr(i,k).lt.qsmall) dumnr(i,k)=0._r8
+        if (dums(i,k).lt.qsmall) dumns(i,k)=0._r8
+        if (dumg(i,k).lt.qsmall) dumng(i,k)=0._r8
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
+  !$acc parallel vector_length(VLENS) async(RQUEUE)
+#if defined(OPENMP_GPU)
+!$omp target teams nowait
 #endif // defined(OPENMP_GPU)
   !$acc loop gang vector
 #if defined(OPENMP_GPU)
@@ -3038,7 +3089,27 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
+  !$acc parallel vector_length(VLENS) async(SQUEUE)
+#if defined(OPENMP_GPU)
+!$omp target teams nowait
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+  do i=1,mgncol
+     !$acc loop seq
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+     do k=1,nlev
         if (lams(i,k).ge.qsmall) then
            qtmp = lams(i,k)**bs
            ! 'final' values of number and mass weighted mean fallspeed for snow (m/s)
@@ -3064,7 +3135,27 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
+  !$acc parallel vector_length(VLENS) async(GQUEUE)
+#if defined(OPENMP_GPU)
+!$omp target teams nowait
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+  do i=1,mgncol
+     !$acc loop seq
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif // defined(OPENMP_GPU)
+     do k=1,nlev
         if (lamg(i,k).ge.qsmall) then
            qtmp = lamg(i,k)**bgtmp
            ! 'final' values of number and mass weighted mean fallspeed for graupel (m/s)
@@ -3085,30 +3176,12 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
-
-        pdel_inv(i,k) = 1._r8/pdel(i,k)
-        ! redefine dummy variables - sedimentation is calculated over grid-scale
-        ! quantities to ensure conservation
-        dumc(i,k) = (qc(i,k)+qctend(i,k)*deltat)
-        dumnc(i,k) = max((nc(i,k)+nctend(i,k)*deltat),0._r8)
-        dumi(i,k) = (qi(i,k)+qitend(i,k)*deltat)
-        dumni(i,k) = max((ni(i,k)+nitend(i,k)*deltat),0._r8)
-        dumr(i,k) = (qr(i,k)+qrtend(i,k)*deltat)
-        dumnr(i,k) = max((nr(i,k)+nrtend(i,k)*deltat),0._r8)
-        dums(i,k) = (qs(i,k)+qstend(i,k)*deltat)
-        dumns(i,k) = max((ns(i,k)+nstend(i,k)*deltat),0._r8)
-        dumg(i,k) = (qg(i,k)+qgtend(i,k)*deltat)
-        dumng(i,k) = max((ng(i,k)+ngtend(i,k)*deltat),0._r8)
-        if (dumc(i,k).lt.qsmall) dumnc(i,k)=0._r8
-        if (dumi(i,k).lt.qsmall) dumni(i,k)=0._r8
-        if (dumr(i,k).lt.qsmall) dumnr(i,k)=0._r8
-        if (dums(i,k).lt.qsmall) dumns(i,k)=0._r8
-        if (dumg(i,k).lt.qsmall) dumng(i,k)=0._r8
      end do
   end do
   !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
+!$omp taskwait
 #endif // defined(OPENMP_GPU)
 
   ! begin sedimentation
@@ -3154,7 +3227,6 @@ subroutine micro_mg_tend ( &
 
   !$acc parallel vector_length(VLENS) wait(RQUEUE,SQUEUE,GQUEUE)
 #if defined(OPENMP_GPU)
-!$omp taskwait depend(in:prect_r,prect_s,prect_g,preci_s,preci_g)
 !$omp target teams
 #endif
   !$acc loop gang vector
@@ -3169,6 +3241,7 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
+
 
   !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   ! get new update for variables that includes sedimentation tendency
@@ -4191,7 +4264,7 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
 #endif // defined(OPENMP_GPU)
    !$acc parallel vector_length(VLENS) async(queue)
 #if defined(OPENMP_GPU)
-!$omp target teams nowait
+!$omp target teams nowait depend(in:fx,fnx)
 #endif // defined(OPENMP_GPU)
    !$acc loop gang vector 
 #if defined(OPENMP_GPU)
