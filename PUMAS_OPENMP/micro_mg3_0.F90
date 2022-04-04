@@ -210,7 +210,12 @@ real(r8), parameter :: mi0l_min = 4._r8/3._r8*pi*rhow*(4.e-6_r8)**3
 
 real(r8), parameter :: sublim_factor =0.0_r8      !number sublimation factor. 
 
-integer, parameter :: VLENS = 128  ! vector length of a GPU compute kernel
+integer, parameter :: VLENS  = 128    ! vector length of a GPU compute kernel
+integer, parameter :: RQUEUE = 101    ! GPU stream ID for rain
+integer, parameter :: SQUEUE = 102    ! GPU stream ID for snow
+integer, parameter :: LQUEUE = 103    ! GPU stream ID for liquid
+integer, parameter :: IQUEUE = 104    ! GPU stream ID for ice
+integer, parameter :: GQUEUE = 105    ! GPU stream ID for hail/graupel
 
 !=========================================================
 ! Constants set in initialization
@@ -262,10 +267,7 @@ character(len=16)  :: micro_mg_precip_frac_method  ! type of precipitation fract
 real(r8)           :: micro_mg_berg_eff_factor     ! berg efficiency factor
 
 logical  :: remove_supersat ! If true, remove supersaturation after sedimentation loop
-logical  :: do_sb_physics   ! do SB 2001 autoconversion or accretion physics
-
-real(r8) :: rg              ! reciprocal of gravity
-
+logical  :: do_sb_physics ! do SB 2001 autoconversion or accretion physics
 !$acc declare copyin (nccons,nicons,ngcons,nrcons,nscons,ncnst,ninst,ngnst,   &
 !$acc                 nrnst,nsnst,evap_sed_off,icenuc_rh_off,evap_scl_ifs,    &
 !$acc                 icenuc_use_meyers,evap_rhthrsh_ifs,rainfreeze_ifs,      &
@@ -277,7 +279,7 @@ real(r8) :: rg              ! reciprocal of gravity
 !$acc                 gamma_bs_plus4,gamma_bi_plus1,gamma_bi_plus4,           &
 !$acc                 gamma_bj_plus1,gamma_bj_plus4,gamma_bg_plus1,           &
 !$acc                 gamma_bg_plus4,micro_mg_berg_eff_factor,                &
-!$acc                 remove_supersat,do_sb_physics,rg)
+!$acc                 remove_supersat,do_sb_physics)
 #if defined(OPENMP_GPU)
 !$omp declare target (nccons,nicons,ngcons,nrcons,nscons,ncnst,ninst,&
 !$omp ngnst,nrnst,nsnst,evap_sed_off,icenuc_rh_off,evap_scl_ifs,&
@@ -288,7 +290,7 @@ real(r8) :: rg              ! reciprocal of gravity
 !$omp gamma_br_plus1,gamma_br_plus4,gamma_bs_plus1,gamma_bs_plus4,&
 !$omp gamma_bi_plus1,gamma_bi_plus4,gamma_bj_plus1,gamma_bj_plus4,&
 !$omp gamma_bg_plus1,gamma_bg_plus4,micro_mg_berg_eff_factor,&
-!$omp remove_supersat,do_sb_physics,rg)
+!$omp remove_supersat,do_sb_physics)
 #endif // defined(OPENMP_GPU)
 !===============================================================================
 PUBLIC kr_externs_in_micro_mg3_0 
@@ -597,9 +599,6 @@ subroutine micro_mg_tend ( &
   real(r8) :: deltat            ! sub-time step (s)
   real(r8) :: mtime             ! the assumed ice nucleation timescale
   real(r8) :: rdeltat           ! reciprocal of sub-time step (1/s)
-  real(r8) :: rxlf,rcpp,rrhows  ! reciprocal of some module variables
-  real(r8) :: const1,const2,const3 ! reciprocal of some constants
-
   ! physical properties of the air at a given point
 
   real(r8) :: rho(mgncol,nlev)    ! density (kg m-3)
@@ -837,6 +836,26 @@ subroutine micro_mg_tend ( &
 
   real(r8) :: nimey  !meyers ice nucleation
   real(r8) :: niact(mgncol,nlev) ! dummy for modified activation
+
+  ! temporary local variables for asynchronous GPU run
+  ! ice
+  real(r8) :: prect_i(mgncol)
+  real(r8) :: tlat_i(mgncol,nlev)
+  real(r8) :: qvlat_i(mgncol,nlev)
+  real(r8) :: preci_i(mgncol)
+  ! liq
+  real(r8) :: prect_l(mgncol)
+  real(r8) :: tlat_l(mgncol,nlev)
+  real(r8) :: qvlat_l(mgncol,nlev)
+  ! rain
+  real(r8) :: prect_r(mgncol)
+  ! snow
+  real(r8) :: prect_s(mgncol)        
+  real(r8) :: preci_s(mgncol)
+  ! graupel
+  real(r8) :: prect_g(mgncol)  
+  real(r8) :: preci_g(mgncol)
+
   !cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   ! Return error message
 
@@ -844,14 +863,9 @@ subroutine micro_mg_tend ( &
   ! Process inputs
   ! assign variable deltat to deltatin
 
+
   deltat  = deltatin
   rdeltat = 1._r8 / deltat
-  rcpp    = 1._r8 / cpp
-  rxlf    = 1._r8 / xlf
-  rrhows  = 1._r8 / rhows
-  const1  = 1._r8 / (4._r8*pi*5.12e-16_r8*rhow)
-  const2  = 1._r8 / (4._r8*3.14_r8*1.563e-14_r8*500._r8)
-  const3  = 1._r8 / 0.63_r8
 
   if (trim(micro_mg_precip_frac_method) == 'in_cloud') then
      precip_frac_method = MG_PRECIP_FRAC_INCLOUD
@@ -896,7 +910,9 @@ subroutine micro_mg_tend ( &
   !$acc               faloutr,faloutnr,falouts,faloutns,rainrt,dum1A,     &
   !$acc               dum2A,dum3A,dumni0A2D,dumns0A2D,ttmpA,qtmpAI,dumc,  &
   !$acc               dumnc,dumi,dumni,dumr,dumnr,dums,dumns,dumg,dumng,  &
-  !$acc               dum_2D,pdel_inv,niact)    
+  !$acc               dum_2D,pdel_inv,niact,prect_i,tlat_i,qvlat_i,       &
+  !$acc               preci_i,prect_l,tlat_l,qvlat_l,prect_r,prect_s,     &
+  !$acc               preci_s,prect_g,preci_g) 
 #if defined(OPENMP_GPU)
 !$omp target data map (alloc:qc,qi,nc,ni,qr,qs,nr,ns,qg,ng,rho,dv,mu,sc,rhof,&
 !$omp                 precip_frac,cldm,icldm,lcldm,qsfm,qcic,qiic,qsic,   &
@@ -916,7 +932,9 @@ subroutine micro_mg_tend ( &
 !$omp                 faloutr,faloutnr,falouts,faloutns,rainrt,dum1A,     &
 !$omp                 dum2A,dum3A,dumni0A2D,dumns0A2D,ttmpA,qtmpAI,dumc,  &
 !$omp                 dumnc,dumi,dumni,dumr,dumnr,dums,dumns,dumg,dumng,  &
-!$omp                 dum_2D,pdel_inv,niact)
+!$omp                 dum_2D,pdel_inv,niact,prect_i,tlat_i,qvlat_i,       &
+!$omp                 preci_i,prect_l,tlat_l,qvlat_l,prect_r,prect_s,     &
+!$omp                 preci_s,prect_g,preci_g)
 #endif // defined(OPENMP_GPU)
 
   ! Copies of input concentrations that may be changed internally.
@@ -1184,6 +1202,14 @@ subroutine micro_mg_tend ( &
   do i=1,mgncol
      prect(i)                   = 0._r8
      preci(i)                   = 0._r8
+     prect_i(i)                 = 0._r8
+     preci_i(i)                 = 0._r8
+     prect_l(i)                 = 0._r8
+     prect_r(i)                 = 0._r8
+     prect_s(i)                 = 0._r8
+     preci_s(i)                 = 0._r8
+     prect_g(i)                 = 0._r8
+     preci_g(i)                 = 0._r8
   end do
   !$acc end parallel
 #if defined(OPENMP_GPU)
@@ -1308,6 +1334,11 @@ subroutine micro_mg_tend ( &
         ncal(i,k)               = 0._r8
         ncai(i,k)               = 0._r8
         nfice(i,k)              = 0._r8
+
+        tlat_i(i,k)             = 0._r8  
+        qvlat_i(i,k)            = 0._r8
+        tlat_l(i,k)             = 0._r8
+        qvlat_l(i,k)            = 0._r8
      end do
   end do
   !$acc end parallel
@@ -1360,7 +1391,7 @@ subroutine micro_mg_tend ( &
               if (niact(i,k) > 0._r8 .and. t(i,k) < icenuct) then
                  !if NAAI > 0. then set numice = naai (as before)
                  !note: this is gridbox averaged
-                 nnuccd(i,k) = (niact(i,k)-ni(i,k)/icldm(i,k))*rdeltat*icldm(i,k)
+                 nnuccd(i,k) = (niact(i,k)-ni(i,k)/icldm(i,k))/mtime*icldm(i,k)
                  nnuccd(i,k) = max(nnuccd(i,k),0._r8)
                  nimax(i,k) = naai(i,k)*icldm(i,k)
                  !Calc mass of new particles using new crystal mass...
@@ -1377,7 +1408,7 @@ subroutine micro_mg_tend ( &
                  relhum(i,k)*esl(i,k)/esi(i,k) > 1.05_r8) then
                  !if NAAI > 0. then set numice = naai (as before)
                  !note: this is gridbox averaged
-                 nnuccd(i,k) = (naai(i,k)-ni(i,k)/icldm(i,k))*rdeltat*icldm(i,k)
+                 nnuccd(i,k) = (naai(i,k)-ni(i,k)/icldm(i,k))/mtime*icldm(i,k)
                  nnuccd(i,k) = max(nnuccd(i,k),0._r8)
                  nimax(i,k) = naai(i,k)*icldm(i,k)
                  !Calc mass of new particles using new crystal mass...
@@ -1417,9 +1448,9 @@ subroutine micro_mg_tend ( &
            if (qs(i,k) > 0._r8) then
               ! make sure melting snow doesn't reduce temperature below threshold
 
-              dum = -xlf*rcpp*qs(i,k)
+              dum = -xlf/cpp*qs(i,k)
               if (t(i,k)+dum < snowmelt) then
-                 dum = (t(i,k)-snowmelt)*cpp*rxlf
+                 dum = (t(i,k)-snowmelt)*cpp/xlf
                  dum = dum/qs(i,k)
                  dum = max(0._r8,dum)
                  dum = min(1._r8,dum)
@@ -1448,9 +1479,9 @@ subroutine micro_mg_tend ( &
            if (qg(i,k) > 0._r8) then
               ! make sure melting graupel doesn't reduce temperature below threshold
 
-              dum = -xlf*rcpp*qg(i,k)
+              dum = -xlf/cpp*qg(i,k)
               if (t(i,k)+dum < snowmelt) then
-                 dum = (t(i,k)-snowmelt)*cpp*rxlf
+                 dum = (t(i,k)-snowmelt)*cpp/xlf
                  dum = dum/qg(i,k)
                  dum = max(0._r8,dum)
                  dum = min(1._r8,dum)
@@ -1480,9 +1511,9 @@ subroutine micro_mg_tend ( &
            if (qr(i,k) > 0._r8) then
               ! make sure freezing rain doesn't increase temperature above threshold
 
-              dum = xlf*rcpp*qr(i,k)
+              dum = xlf/cpp*qr(i,k)
               if (t(i,k)+dum > rainfrze) then
-                 dum = -(t(i,k)-rainfrze)*cpp*rxlf
+                 dum = -(t(i,k)-rainfrze)*cpp/xlf
                  dum = dum/qr(i,k)
                  dum = max(0._r8,dum)
                  dum = min(1._r8,dum)
@@ -2492,7 +2523,7 @@ subroutine micro_mg_tend ( &
         qtmpAI(i,k)=q(i,k)-(ice_sublim(i,k)+vap_dep(i,k)+mnuccd(i,k)+ &
                 (pre(i,k)+prds(i,k)+prdg(i,k))*precip_frac(i,k))*deltat
         ttmpA(i,k)=t(i,k)+((pre(i,k)*precip_frac(i,k))*xxlv+ &
-             ((prds(i,k)+prdg(i,k))*precip_frac(i,k)+vap_dep(i,k)+ice_sublim(i,k)+mnuccd(i,k))*xxls)*deltat*rcpp
+             ((prds(i,k)+prdg(i,k))*precip_frac(i,k)+vap_dep(i,k)+ice_sublim(i,k)+mnuccd(i,k))*xxls)*deltat/cpp
      end do
   end do
   !$acc end parallel
@@ -2520,7 +2551,7 @@ subroutine micro_mg_tend ( &
               dum2A(i,k)=prds(i,k)*precip_frac(i,k)/((pre(i,k)+prds(i,k)+prdg(i,k))*precip_frac(i,k)+ice_sublim(i,k))
               dum3A(i,k)=prdg(i,k)*precip_frac(i,k)/((pre(i,k)+prds(i,k)+prdg(i,k))*precip_frac(i,k)+ice_sublim(i,k))
               ! recalculate q and t after vap_dep and mnuccd but without evap or sublim
-              ttmpA(i,k)=t(i,k)+((vap_dep(i,k)+mnuccd(i,k))*xxls)*deltat*rcpp
+              ttmpA(i,k)=t(i,k)+((vap_dep(i,k)+mnuccd(i,k))*xxls)*deltat/cpp
               dum_2D(i,k)=q(i,k)-(vap_dep(i,k)+mnuccd(i,k))*deltat
            end if
         end if
@@ -2882,6 +2913,7 @@ subroutine micro_mg_tend ( &
 
   call size_dist_param_basic(mg_ice_props, dumi, dumni, lami, mgncol, nlev)
   call size_dist_param_liq(mg_liq_props, dumc, dumnc, rho, pgam, lamc, mgncol, nlev)
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -2955,6 +2987,7 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
+
   ! fallspeed for rain
 
   call size_dist_param_basic(mg_rain_props, dumr, dumnr, lamr, mgncol, nlev)
@@ -2967,7 +3000,7 @@ subroutine micro_mg_tend ( &
   if (do_graupel) then
      call size_dist_param_basic(mg_graupel_props, dumg, dumng, lamg, mgncol, nlev)
   end if
-  
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3052,8 +3085,8 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
-        pdel_inv(i,k) = 1._r8/pdel(i,k)
 
+        pdel_inv(i,k) = 1._r8/pdel(i,k)
         ! redefine dummy variables - sedimentation is calculated over grid-scale
         ! quantities to ensure conservation
         dumc(i,k) = (qc(i,k)+qctend(i,k)*deltat)
@@ -3077,27 +3110,66 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
+
   ! begin sedimentation
   ! ice
-
   call Sedimentation(mgncol,nlev,do_cldice,deltat,fi,fni,pdel_inv, &
-                       qitend,nitend,qisedten,dumi,dumni,prect,iflx, &
-                       xxlx=xxls,qxsevap=qisevap,tlat=tlat,qvlat=qvlat, &
-                       xcldm=icldm,preci=preci)
+                       qitend,nitend,qisedten,dumi,dumni,prect_i,iflx,IQUEUE, &
+                       xxlx=xxls,qxsevap=qisevap,tlat=tlat_i,qvlat=qvlat_i, &
+                       xcldm=icldm,preci=preci_i)
   ! liq
   call Sedimentation(mgncol,nlev,.TRUE.,deltat,fc,fnc,pdel_inv, &
-                       qctend,nctend,qcsedten,dumc,dumnc,prect,lflx, &
-                       xxlx=xxlv,qxsevap=qcsevap,tlat=tlat,qvlat=qvlat,xcldm=lcldm)
+                       qctend,nctend,qcsedten,dumc,dumnc,prect_l,lflx,LQUEUE, &
+                       xxlx=xxlv,qxsevap=qcsevap,tlat=tlat_l,qvlat=qvlat_l,xcldm=lcldm)
   ! rain
   call Sedimentation(mgncol,nlev,.TRUE.,deltat,fr,fnr,pdel_inv, &
-                       qrtend,nrtend,qrsedten,dumr,dumnr,prect,rflx)
+                       qrtend,nrtend,qrsedten,dumr,dumnr,prect_r,rflx,RQUEUE)
   ! snow
   call Sedimentation(mgncol,nlev,.TRUE.,deltat,fs,fns,pdel_inv, &
-                       qstend,nstend,qssedten,dums,dumns,prect,sflx,preci=preci)
+                       qstend,nstend,qssedten,dums,dumns,prect_s,sflx,SQUEUE,preci=preci_s)
   ! graupel
   call Sedimentation(mgncol,nlev,.TRUE.,deltat,fg,fng,pdel_inv, &
-                       qgtend,ngtend,qgsedten,dumg,dumng,prect,gflx,preci=preci)
+                       qgtend,ngtend,qgsedten,dumg,dumng,prect_g,gflx,GQUEUE,preci=preci_g)
   ! end sedimentation
+
+  !$acc parallel vector_length(VLENS) wait(IQUEUE,LQUEUE)
+#if defined(OPENMP_GPU)
+!$omp taskwait
+!$omp target teams
+#endif
+  !$acc loop gang vector collapse(2)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif
+  do k=1,nlev
+     do i=1,mgncol
+        tlat(i,k)  = tlat(i,k) + tlat_i(i,k) + tlat_l(i,k)
+        qvlat(i,k) = qvlat(i,k) + qvlat_i(i,k) + qvlat_l(i,k)
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif
+
+  !$acc parallel vector_length(VLENS) wait(RQUEUE,SQUEUE,GQUEUE)
+#if defined(OPENMP_GPU)
+!$omp taskwait depend(in:prect_r,prect_s,prect_g,preci_s,preci_g)
+!$omp target teams
+#endif
+  !$acc loop gang vector
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams)
+#endif
+  do i=1,mgncol
+     prect(i)  = prect(i) + prect_i(i) + prect_l(i) + prect_r(i) + prect_s(i) + prect_g(i)
+     preci(i)  = preci(i) + preci_i(i) + preci_s(i) + preci_g(i)
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
   !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   ! get new update for variables that includes sedimentation tendency
   ! note : here dum variables are grid-average, NOT in-cloud
@@ -3158,12 +3230,12 @@ subroutine micro_mg_tend ( &
   !====================================================================
   ! melting of snow at +2 C
 
-        if (t(i,k)+tlat(i,k)*rcpp*deltat > snowmelt) then
+        if (t(i,k)+tlat(i,k)/cpp*deltat > snowmelt) then
            if (dums(i,k) > 0._r8) then
               ! make sure melting snow doesn't reduce temperature below threshold
-              dum = -xlf*rcpp*dums(i,k)
-              if (t(i,k)+tlat(i,k)*rcpp*deltat+dum.lt. snowmelt) then
-                 dum = (t(i,k)+tlat(i,k)*rcpp*deltat-snowmelt)*cpp*rxlf
+              dum = -xlf/cpp*dums(i,k)
+              if (t(i,k)+tlat(i,k)/cpp*deltat+dum.lt. snowmelt) then
+                 dum = (t(i,k)+tlat(i,k)/cpp*deltat-snowmelt)*cpp/xlf
                  dum = dum/dums(i,k)
                  dum = max(0._r8,dum)
                  dum = min(1._r8,dum)
@@ -3191,12 +3263,12 @@ subroutine micro_mg_tend ( &
 
   ! melting of graupel at +2 C
 
-        if (t(i,k)+tlat(i,k)*rcpp*deltat > snowmelt) then
+        if (t(i,k)+tlat(i,k)/cpp*deltat > snowmelt) then
            if (dumg(i,k) > 0._r8) then
               ! make sure melting graupel doesn't reduce temperature below threshold
-              dum = -xlf*rcpp*dumg(i,k)
-              if (t(i,k)+tlat(i,k)*rcpp*deltat+dum .lt. snowmelt) then
-                 dum = (t(i,k)+tlat(i,k)*rcpp*deltat-snowmelt)*cpp*rxlf
+              dum = -xlf/cpp*dumg(i,k)
+              if (t(i,k)+tlat(i,k)/cpp*deltat+dum .lt. snowmelt) then
+                 dum = (t(i,k)+tlat(i,k)/cpp*deltat-snowmelt)*cpp/xlf
                  dum = dum/dumg(i,k)
                  dum = max(0._r8,dum)
                  dum = min(1._r8,dum)
@@ -3242,12 +3314,12 @@ subroutine micro_mg_tend ( &
   do k=1,nlev
      do i=1,mgncol
         ! freezing of rain at -5 C
-        if (t(i,k)+tlat(i,k)*rcpp*deltat < rainfrze) then
+        if (t(i,k)+tlat(i,k)/cpp*deltat < rainfrze) then
            if (dumr(i,k) > 0._r8) then
               ! make sure freezing rain doesn't increase temperature above threshold
-              dum = xlf*rcpp*dumr(i,k)
-              if (t(i,k)+tlat(i,k)*rcpp*deltat+dum.gt.rainfrze) then
-                 dum = -(t(i,k)+tlat(i,k)*rcpp*deltat-rainfrze)*cpp*rxlf
+              dum = xlf/cpp*dumr(i,k)
+              if (t(i,k)+tlat(i,k)/cpp*deltat+dum.gt.rainfrze) then
+                 dum = -(t(i,k)+tlat(i,k)/cpp*deltat-rainfrze)*cpp/xlf
                  dum = dum/dumr(i,k)
                  dum = max(0._r8,dum)
                  dum = min(1._r8,dum)
@@ -3295,13 +3367,13 @@ subroutine micro_mg_tend ( &
 #endif // defined(OPENMP_GPU)
       do k=1,nlev
         do i=1,mgncol
-           if (t(i,k)+tlat(i,k)*rcpp*deltat > tmelt) then
+           if (t(i,k)+tlat(i,k)/cpp*deltat > tmelt) then
               if (dumi(i,k) > 0._r8) then
                  ! limit so that melting does not push temperature below freezing
                  !-----------------------------------------------------------------
-                 dum = -dumi(i,k)*xlf*rcpp
-                 if (t(i,k)+tlat(i,k)*rcpp*deltat+dum.lt.tmelt) then
-                    dum = (t(i,k)+tlat(i,k)*rcpp*deltat-tmelt)*cpp*rxlf
+                 dum = -dumi(i,k)*xlf/cpp
+                 if (t(i,k)+tlat(i,k)/cpp*deltat+dum.lt.tmelt) then
+                    dum = (t(i,k)+tlat(i,k)/cpp*deltat-tmelt)*cpp/xlf
                     dum = dum/dumi(i,k)
                     dum = max(0._r8,dum)
                     dum = min(1._r8,dum)
@@ -3316,7 +3388,8 @@ subroutine micro_mg_tend ( &
                  ! assume melting ice produces droplet
                  ! mean volume radius of 8 micron
 
-                 nctend(i,k)=nctend(i,k)+3._r8*dum*dumi(i,k)*rdeltat*const1
+                 nctend(i,k)=nctend(i,k)+3._r8*dum*dumi(i,k)*rdeltat/ &
+                      (4._r8*pi*5.12e-16_r8*rhow)
 
                  qitend(i,k)=((1._r8-dum)*dumi(i,k)-qi(i,k))*rdeltat
                  nitend(i,k)=((1._r8-dum)*dumni(i,k)-ni(i,k))*rdeltat
@@ -3327,12 +3400,12 @@ subroutine micro_mg_tend ( &
      ! homogeneously freeze droplets at -40 C
      !-----------------------------------------------------------------
 
-           if (t(i,k)+tlat(i,k)*rcpp*deltat < 233.15_r8) then
+           if (t(i,k)+tlat(i,k)/cpp*deltat < 233.15_r8) then
               if (dumc(i,k) > 0._r8) then
                  ! limit so that freezing does not push temperature above threshold
-                 dum = dumc(i,k)*xlf*rcpp
-                 if (t(i,k)+tlat(i,k)*rcpp*deltat+dum.gt.233.15_r8) then
-                    dum = -(t(i,k)+tlat(i,k)/cpp*deltat-233.15_r8)*cpp*rxlf
+                 dum = dumc(i,k)*xlf/cpp
+                 if (t(i,k)+tlat(i,k)/cpp*deltat+dum.gt.233.15_r8) then
+                    dum = -(t(i,k)+tlat(i,k)/cpp*deltat-233.15_r8)*cpp/xlf
                     dum = dum/dumc(i,k)
                     dum = max(0._r8,dum)
                     dum = min(1._r8,dum)
@@ -3346,7 +3419,7 @@ subroutine micro_mg_tend ( &
                  ! assume 25 micron mean volume radius of homogeneously frozen droplets
                  ! consistent with size of detrained ice in stratiform.F90
 
-                 nitend(i,k)=nitend(i,k)+dum*3._r8*dumc(i,k)*const2*rdeltat
+                 nitend(i,k)=nitend(i,k)+dum*3._r8*dumc(i,k)/(4._r8*3.14_r8*1.563e-14_r8*500._r8)*rdeltat
                  qctend(i,k)=((1._r8-dum)*dumc(i,k)-qc(i,k))*rdeltat
                  nctend(i,k)=((1._r8-dum)*dumnc(i,k)-nc(i,k))*rdeltat
                  tlat(i,k)=tlat(i,k)+xlf*dum*dumc(i,k)*rdeltat
@@ -3359,7 +3432,7 @@ subroutine micro_mg_tend ( &
      ! follow code similar to old CAM scheme
 
            dum_2D(i,k)=q(i,k)+qvlat(i,k)*deltat
-           ttmpA(i,k)=t(i,k)+tlat(i,k)*rcpp*deltat
+           ttmpA(i,k)=t(i,k)+tlat(i,k)/cpp*deltat
         end do
      end do
      !$acc end parallel
@@ -3528,7 +3601,7 @@ subroutine micro_mg_tend ( &
               sadice(i,k) = 0._r8
            end if
            ! ice effective diameter for david mitchell's optics
-           deffi(i,k)=effi(i,k)*rhoi*rrhows*2._r8
+           deffi(i,k)=effi(i,k)*rhoi/rhows*2._r8
         end do
      end do
      !$acc end parallel
@@ -3603,7 +3676,7 @@ subroutine micro_mg_tend ( &
               nctend(i,k)=(dumnc(i,k)*lcldm(i,k)-nc(i,k))*rdeltat
            end if
 
-           effc(i,k) = (pgam(i,k)+3._r8)/lamc(i,k)*0.5_r8*1.e6_r8
+           effc(i,k) = (pgam(i,k)+3._r8)/lamc(i,k)/2._r8*1.e6_r8
            !assign output fields for shape here
            lamcrad(i,k)=lamc(i,k)
            pgamrad(i,k)=pgam(i,k)
@@ -3636,7 +3709,7 @@ subroutine micro_mg_tend ( &
   do k =1,nlev
      do i=1,mgncol
         if (dumc(i,k).ge.qsmall) then
-           effc_fn(i,k) = (pgam(i,k)+3._r8)/lamc(i,k)*0.5_r8*1.e6_r8
+           effc_fn(i,k) = (pgam(i,k)+3._r8)/lamc(i,k)/2._r8*1.e6_r8
         else
            effc(i,k) = 10._r8
            lamcrad(i,k)=0._r8
@@ -3832,7 +3905,7 @@ subroutine micro_mg_tend ( &
            qsout2(i,k) = qsout(i,k) * precip_frac(i,k)
            nsout2(i,k) = nsout(i,k) * precip_frac(i,k)
            freqs(i,k) = precip_frac(i,k)      
-           dsout(i,k)=3._r8*rhosn*rrhows*dsout2(i,k)
+           dsout(i,k)=3._r8*rhosn/rhows*dsout2(i,k)
            reff_snow(i,k)=1.5_r8*dsout2(i,k)*1.e6_r8
         else
            dsout(i,k)  = 0._r8
@@ -3893,7 +3966,7 @@ subroutine micro_mg_tend ( &
            qgout2(i,k) = qgout(i,k) * precip_frac(i,k)
            ngout2(i,k) = ngout(i,k) * precip_frac(i,k)
            freqg(i,k) = precip_frac(i,k)
-           dgout(i,k)=3._r8*rhogtmp*rrhows*dgout2(i,k)
+           dgout(i,k)=3._r8*rhogtmp/rhows*dgout2(i,k)
            reff_grau(i,k)=1.5_r8*dgout2(i,k)*1.e6_r8
         else
            dgout(i,k)  = 0._r8
@@ -3912,17 +3985,17 @@ subroutine micro_mg_tend ( &
 
         if (qc(i,k).ge.qsmall .and. (nc(i,k)+nctend(i,k)*deltat).gt.10._r8) then
            dum=(qc(i,k)/lcldm(i,k)*rho(i,k)*1000._r8)**2 &
-                /(0.109_r8*(nc(i,k)+nctend(i,k)*deltat)/lcldm(i,k)*rho(i,k)*1.e-6_r8)*lcldm(i,k)/precip_frac(i,k)
+                /(0.109_r8*(nc(i,k)+nctend(i,k)*deltat)/lcldm(i,k)*rho(i,k)/1.e6_r8)*lcldm(i,k)/precip_frac(i,k)
         else
            dum=0._r8
         end if
         if (qi(i,k).ge.qsmall) then
-           dum1=(qi(i,k)*rho(i,k)/icldm(i,k)*10000._r8)**const3*icldm(i,k)/precip_frac(i,k)
+           dum1=(qi(i,k)*rho(i,k)/icldm(i,k)*1000._r8/0.1_r8)**(1._r8/0.63_r8)*icldm(i,k)/precip_frac(i,k)
         else
            dum1=0._r8
         end if
         if (qsout(i,k).ge.qsmall) then
-           dum1=dum1+(qsout(i,k)*rho(i,k)*10000._r8)**const3
+           dum1=dum1+(qsout(i,k)*rho(i,k)*1000._r8/0.1_r8)**(1._r8/0.63_r8)
         end if
         refl(i,k)=dum+dum1
         ! add rain rate, but for 37 GHz formulation instead of 94 GHz
@@ -4078,7 +4151,7 @@ end subroutine calc_rercld
 !========================================================================
 
 subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxtend, &
-                            qxsedten,dumx,dumnx,prect,xflx,xxlx,qxsevap,xcldm,tlat,qvlat,preci)
+                         qxsedten,dumx,dumnx,prect,xflx,queue,xxlx,qxsevap,xcldm,tlat,qvlat,preci)
 
    integer, intent(in)               :: mgncol,nlev
    logical, intent(in)               :: do_cldice
@@ -4093,6 +4166,7 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
    real(r8), intent(inout)           :: dumnx(mgncol,nlev)
    real(r8), intent(inout)           :: prect(mgncol)
    real(r8), intent(inout)           :: xflx(mgncol,nlev+1)
+   integer,  intent(in)              :: queue
    real(r8), intent(in)   , optional :: xxlx
    real(r8), intent(inout), optional :: qxsevap(mgncol,nlev)
    real(r8), intent(in)   , optional :: xcldm(mgncol,nlev)
@@ -4111,13 +4185,13 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
    present_preci   = present(preci)
    ! loop over sedimentation sub-time step to ensure stability
    !==============================================================
-   !$acc data create  (faloutx,faloutnx,dum1)
+   !$acc enter data create (faloutx,faloutnx,dum1) async(queue)
 #if defined(OPENMP_GPU)
-!$omp target data map(alloc:faloutx,faloutnx,dum1)
+!$omp target enter data map(alloc:faloutx,faloutnx,dum1) nowait
 #endif // defined(OPENMP_GPU)
-   !$acc parallel vector_length(VLENS)
+   !$acc parallel vector_length(VLENS) async(queue)
 #if defined(OPENMP_GPU)
-!$omp target teams
+!$omp target teams nowait
 #endif // defined(OPENMP_GPU)
    !$acc loop gang vector 
 #if defined(OPENMP_GPU)
@@ -4185,23 +4259,23 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
                if(present_tlat)    tlat(i,k)   = tlat(i,k) + (faltndqxe-faltndx)*xxlx*rnstep
             end if 
    
-            xflx(i,k+1) = xflx(i,k+1) + faloutx(i,k) * rg * rnstep
+            xflx(i,k+1) = xflx(i,k+1) + faloutx(i,k) / g * rnstep
          end do
          ! units below are m/s
          ! sedimentation flux at surface is added to precip flux at surface
          ! to get total precip (cloud + precip water) rate
 
-         prect(i) = prect(i)+faloutx(i,nlev)*rg*rnstep*1.e-3_r8
-         if(present_preci) preci(i) = preci(i)+faloutx(i,nlev)*rg*rnstep*1.e-3_r8
+         prect(i) = prect(i)+faloutx(i,nlev)/g*rnstep/1000._r8
+         if(present_preci) preci(i) = preci(i)+faloutx(i,nlev)/g*rnstep/1000._r8
       end do  ! n loop of 1, nstep
    end do  ! i loop of 1, mgncol
    !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
-   !$acc end data
+   !$acc exit data delete(faloutx,faloutnx,dum1) async(queue)
 #if defined(OPENMP_GPU)
-!$omp end target data
+!$omp target exit data map(delete:faloutx,faloutnx,dum1) nowait
 #endif // defined(OPENMP_GPU)
 
 end subroutine Sedimentation
@@ -4266,8 +4340,6 @@ SUBROUTINE kr_externs_in_micro_mg3_0(kgen_unit)
     READ (UNIT = kgen_unit) micro_mg_berg_eff_factor 
     READ (UNIT = kgen_unit) remove_supersat 
     READ (UNIT = kgen_unit) do_sb_physics 
-
-    rg      = 1._r8 / g
 #if defined(OPENMP_GPU)
 !$omp target update to (nccons,nicons,ngcons,nrcons,nscons,ncnst,ninst,&
 !$omp ngnst,nrnst,nsnst,evap_sed_off,icenuc_rh_off,evap_scl_ifs,&
@@ -4278,7 +4350,7 @@ SUBROUTINE kr_externs_in_micro_mg3_0(kgen_unit)
 !$omp gamma_br_plus1,gamma_br_plus4,gamma_bs_plus1,gamma_bs_plus4,&
 !$omp gamma_bi_plus1,gamma_bi_plus4,gamma_bj_plus1,gamma_bj_plus4,&
 !$omp gamma_bg_plus1,gamma_bg_plus4,micro_mg_berg_eff_factor,&
-!$omp remove_supersat,do_sb_physics,rg)
+!$omp remove_supersat,do_sb_physics)
 #endif // defined(OPENMP_GPU)
 END SUBROUTINE kr_externs_in_micro_mg3_0 
   
