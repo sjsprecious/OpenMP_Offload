@@ -827,17 +827,9 @@ subroutine size_dist_param_basic_vect(props, qic, nic, lam, vlen, n0)
      else
         lam(i) = 0._r8
      end if
-  end do
 
-  if (present_n0) then
-     !$acc loop gang vector
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
-     do i = 1, vlen 
-        n0(i) = nic(i) * lam(i)
-     end do
-  end if
+     if (present_n0) n0(i) = nic(i) * lam(i)
+  end do
   !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
@@ -898,20 +890,10 @@ subroutine size_dist_param_basic_2D(props, qic, nic, lam, dim1, dim2, n0)
         else
            lam(i,k) = 0._r8
         end if
+
+        if (present_n0) n0(i,k) = nic(i,k) * lam(i,k)
      end do
   end do
-
-  if (present_n0) then
-     !$acc loop gang vector collapse(2)
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif // defined(OPENMP_GPU)
-     do k = 1, dim2
-        do i = 1, dim1
-           n0(i,k) = nic(i,k) * lam(i,k)
-        end do
-     end do
-  end if
   !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
@@ -947,7 +929,6 @@ subroutine size_dist_param_basic_vect2(props, qic, nic, shapeC, lbnd, ubnd, lam,
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
   do i=1,vlen
-
      if (qic(i) > qsmall) then
         ! add upper limit to in-cloud number concentration to prevent
         ! numerical error
@@ -972,17 +953,8 @@ subroutine size_dist_param_basic_vect2(props, qic, nic, shapeC, lbnd, ubnd, lam,
         lam(i) = 0._r8
      end if
 
-  end do
-
-  if (present_n0) then
-     !$acc loop gang vector
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
-     do i = 1,vlen
-        n0(i) = nic(i) * lam(i)
-     end do
-  end if
+     if (present_n0) n0(i) = nic(i) * lam(i)
+  end do 
   !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
@@ -1905,13 +1877,7 @@ subroutine secondary_ice_production(t, psacws, msacwi, nsacwi, vlen)
      else
         nsacwi(i) = 0.0_r8
      endif
-  end do
-  !$acc loop gang vector
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams)
-#endif // defined(OPENMP_GPU)
-
-  do i=1,vlen
+  
      msacwi(i) = min(nsacwi(i)*mi0, psacws(i))
      psacws(i) = psacws(i) - msacwi(i)
   end do
@@ -2292,11 +2258,19 @@ subroutine evaporate_sublimate_precip(t, rho, dv, mu, sc, q, qvl, qvi, &
         dum(i) = lcldm(i)
      end if
   end do
-  !$acc loop gang vector 
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams)
 #endif // defined(OPENMP_GPU)
-
   do i=1,vlen
      ! only calculate if there is some precip fraction > cloud fraction
      if (precip_frac(i) > dum(i)) then

@@ -912,7 +912,7 @@ subroutine micro_mg_tend ( &
   !$acc               dumnc,dumi,dumni,dumr,dumnr,dums,dumns,dumg,dumng,  &
   !$acc               dum_2D,pdel_inv,niact,prect_i,tlat_i,qvlat_i,       &
   !$acc               preci_i,prect_l,tlat_l,qvlat_l,prect_r,prect_s,     &
-  !$acc               preci_s,prect_g,preci_g) 
+  !$acc               preci_s,prect_g,preci_g)
 #if defined(OPENMP_GPU)
 !$omp target data map (alloc:qc,qi,nc,ni,qr,qs,nr,ns,qg,ng,rho,dv,mu,sc,rhof,&
 !$omp                 precip_frac,cldm,icldm,lcldm,qsfm,qcic,qiic,qsic,   &
@@ -938,6 +938,7 @@ subroutine micro_mg_tend ( &
 #endif // defined(OPENMP_GPU)
 
   ! Copies of input concentrations that may be changed internally.
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -946,8 +947,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-
   do k = 1,nlev
      do i = 1,mgncol
         qc(i,k) = qcn(i,k)
@@ -962,63 +961,63 @@ subroutine micro_mg_tend ( &
         ng(i,k) = ngr(i,k)
      end do
   end do
+  
   ! cldn: used to set cldm, unused for subcolumns
   ! liqcldf: used to set lcldm, unused for subcolumns
   ! icecldf: used to set icldm, unused for subcolumns
 
-
-  if (microp_uniform) then
+     if (microp_uniform) then
      ! subcolumns, set cloud fraction variables to one
      ! if cloud water or ice is present, if not present
      ! set to mincld (mincld used instead of zero, to prevent
      ! possible division by zero errors).
+
      !$acc loop gang vector collapse(2)
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-     do k=1,nlev
-       do i=1,mgncol
-          if (qc(i,k) >= qsmall) then
-             lcldm(i,k) = 1._r8
-          else
-             lcldm(i,k) = mincld
-          end if
-
-          if (qi(i,k) >= qsmall) then
-             icldm(i,k) = 1._r8
-          else
-             icldm(i,k) = mincld
-          end if
-
-          cldm(i,k) = max(icldm(i,k), lcldm(i,k))
-          qsfm(i,k) = 1._r8
+        do k=1,nlev
+           do i=1,mgncol
+             if (qc(i,k) >= qsmall) then
+                lcldm(i,k) = 1._r8
+             else
+                lcldm(i,k) = mincld
+             end if
+   
+             if (qi(i,k) >= qsmall) then
+                icldm(i,k) = 1._r8
+             else
+                icldm(i,k) = mincld
+             end if
+   
+             cldm(i,k) = max(icldm(i,k), lcldm(i,k))
+             qsfm(i,k) = 1._r8
+           end do
         end do
-     end do
-  else
+     else
      ! get cloud fraction, check for minimum
+
      !$acc loop gang vector collapse(2)
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-     do k=1,nlev
-        do i=1,mgncol
-          cldm(i,k) = max(cldn(i,k),mincld)
-          lcldm(i,k) = max(liqcldf(i,k),mincld)
-          icldm(i,k) = max(icecldf(i,k),mincld)
-          qsfm(i,k) = qsatfac(i,k)
+        do k=1,nlev
+           do i=1,mgncol
+             cldm(i,k) = max(cldn(i,k),mincld)
+             lcldm(i,k) = max(liqcldf(i,k),mincld)
+             icldm(i,k) = max(icecldf(i,k),mincld)
+             qsfm(i,k) = qsatfac(i,k)
+           end do
         end do
-     end do
-  end if
+     end if
+
   ! Initialize local variables
   ! local physical properties
+
   !$acc loop gang vector collapse(2)
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-
   do k=1,nlev
      do i=1,mgncol
         rho(i,k) = p(i,k)/(r*t(i,k))
@@ -1054,9 +1053,9 @@ subroutine micro_mg_tend ( &
   !cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   ! Get humidity and saturation vapor pressures
 
-
   call qsat_water(t, p, esl, qvl, mgncol*nlev)
   call qsat_ice(t, p, esi, qvi, mgncol*nlev)
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -1065,7 +1064,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         ! make sure when above freezing that esi=esl, not active yet
@@ -1093,9 +1091,25 @@ subroutine micro_mg_tend ( &
         else
            niact(i,k)=naai(i,k)
         end if
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams 
+#endif // defined(OPENMP_GPU)
 
   ! initialize microphysics output
 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif // defined(OPENMP_GPU)
+  do k=1,nlev
+     do i=1,mgncol
         qcsevap(i,k)            = 0._r8
         qisevap(i,k)            = 0._r8
         qvres(i,k)              = 0._r8
@@ -1281,9 +1295,25 @@ subroutine micro_mg_tend ( &
         nsic(i,k)               = 0._r8
         nric(i,k)               = 0._r8
         ngic(i,k)               = 0._r8
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams 
+#endif // defined(OPENMP_GPU)
 
   ! initialize precip at surface
 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams 
+#endif
+  !$acc loop gang vector collapse(2)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif
+  do k=1,nlev
+     do i=1,mgncol
         ! initialize precip fallspeeds to zero
         ums(i,k)                = 0._r8
         uns(i,k)                = 0._r8
@@ -1335,6 +1365,7 @@ subroutine micro_mg_tend ( &
         ncai(i,k)               = 0._r8
         nfice(i,k)              = 0._r8
 
+        pdel_inv(i,k)           = 1._r8/pdel(i,k)
         tlat_i(i,k)             = 0._r8  
         qvlat_i(i,k)            = 0._r8
         tlat_l(i,k)             = 0._r8
@@ -1669,6 +1700,7 @@ subroutine micro_mg_tend ( &
   if (.not. do_sb_physics) then
     call kk2000_liq_autoconversion(microp_uniform, qcic, ncic, rho, relvar, prc, nprc, nprc1, mgncol*nlev)
   end if
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -1677,7 +1709,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         ! assign qric based on prognostic qr, using assumed precip fraction
@@ -1723,6 +1754,7 @@ subroutine micro_mg_tend ( &
   else
      ! Add in the particles that we have already converted to snow, and
      ! don't do any further autoconversion of ice.
+
      !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -1731,7 +1763,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
      do k=1,nlev
         do i=1,mgncol
            prci(i,k)  = tnd_qsnow(i,k) / cldm(i,k)
@@ -1746,6 +1777,7 @@ subroutine micro_mg_tend ( &
   ! note, currently we don't have this
   ! inside the do_cldice block, should be changed later
   ! assign qsic based on prognostic qs, using assumed precip fraction
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -1754,8 +1786,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-
   do k=1,nlev
      do i=1,mgncol
         qsic(i,k) = qs(i,k)/precip_frac(i,k)
@@ -1810,7 +1840,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (lamr(i,k) >= qsmall) then
@@ -1840,7 +1869,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (ifs_sed) then
@@ -1885,7 +1913,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (lamg(i,k) > 0._r8) then
@@ -1919,8 +1946,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-
         do k=1,nlev
            do i=1,mgncol
               if (qcic(i,k).ge.qsmall .and. t(i,k).lt.269.15_r8 .and. &
@@ -1952,7 +1977,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
         do k=1,nlev
            do i=1,mgncol
               mi0l(i,k) = qcic(i,k)/max(ncic(i,k), 1.0e6_r8/rho(i,k))
@@ -2220,15 +2244,7 @@ subroutine micro_mg_tend ( &
         if (qc(i,k) >= qsmall) then
            vap_dep(i,k) = vap_dep(i,k)*(1._r8-qcrat(i,k))
         end if
-     end do
-  end do
-  !$acc loop gang vector collapse(2) 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif // defined(OPENMP_GPU)
 
-  do k=1,nlev
-     do i=1,mgncol
         !=================================================================
         ! apply limiter to ensure that ice/snow sublimation and rain evap
         ! don't push conditions into supersaturation, and ice deposition/nucleation don't
@@ -2254,11 +2270,19 @@ subroutine micro_mg_tend ( &
         end if
      end do
   end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
   !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         !===================================================================
@@ -2293,11 +2317,19 @@ subroutine micro_mg_tend ( &
         end if
      end do
   end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
   !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         ! conservation of rain mixing ratio
@@ -2319,15 +2351,7 @@ subroutine micro_mg_tend ( &
            mnuccr(i,k)=mnuccr(i,k)*ratio
            mnuccri(i,k)=mnuccri(i,k)*ratio
         end if
-     end do
-  end do
-  !$acc loop gang vector collapse(2)
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif // defined(OPENMP_GPU)
 
-  do k=1,nlev
-     do i=1,mgncol
         ! conservation of rain number
         !-------------------------------------------------------------------
         ! Add evaporation of rain number.
@@ -2336,15 +2360,7 @@ subroutine micro_mg_tend ( &
         else
            nsubr(i,k) = 0._r8
         end if
-     end do
-  end do
-  !$acc loop gang vector collapse(2) 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif // defined(OPENMP_GPU)
 
-  do k=1,nlev
-     do i=1,mgncol
         dum = ((-nsubr(i,k)+npracs(i,k)+nnuccr(i,k)+nnuccri(i,k)-nragg(i,k)+npracg(i,k)+ngracs(i,k)) &
              *precip_frac(i,k)- nprc(i,k)*lcldm(i,k))*deltat
         if (dum.gt.nr(i,k)) then
@@ -2360,9 +2376,17 @@ subroutine micro_mg_tend ( &
         end if
      end do
   end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
   if (do_cldice) then
-     !$acc loop gang vector collapse(2) 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
@@ -2382,17 +2406,7 @@ subroutine micro_mg_tend ( &
               prai(i,k) = prai(i,k)*ratio
               ice_sublim(i,k) = ice_sublim(i,k)*ratio
            end if
-        end do
-     end do
-  end if
 
-  if (do_cldice) then
-     !$acc loop gang vector collapse(2) 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif // defined(OPENMP_GPU)
-     do k=1,nlev
-        do i=1,mgncol
            ! conservation of ni
            !-------------------------------------------------------------------
            if (use_hetfrz_classnuc) then
@@ -2414,12 +2428,20 @@ subroutine micro_mg_tend ( &
            end if
         end do
      end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
   end if
+
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
   !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         ! conservation of snow mixing ratio
@@ -2447,15 +2469,7 @@ subroutine micro_mg_tend ( &
            end if
            prds(i,k)=prds(i,k)*ratio
         end if
-     end do
-  end do
-  !$acc loop gang vector collapse(2) 
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif // defined(OPENMP_GPU)
 
-  do k=1,nlev
-     do i=1,mgncol
         ! conservation of snow number
         !-------------------------------------------------------------------
         ! calculate loss of number due to sublimation
@@ -2482,18 +2496,25 @@ subroutine micro_mg_tend ( &
         end if
      end do
   end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
 ! Graupel Conservation Checks
 !-------------------------------------------------------------------
-
 
   if (do_hail.or.do_graupel) then
      ! conservation of graupel mass
      !-------------------------------------------------------------------
-     !$acc loop gang vector collapse(2) 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
      do k=1,nlev
         do i=1,mgncol
            dum= ((-pracg(i,k)-pgracs(i,k)-prdg(i,k)-psacr(i,k)-mnuccr(i,k))*precip_frac(i,k) &
@@ -2506,14 +2527,22 @@ subroutine micro_mg_tend ( &
            end if
         end do
      end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
      ! conservation of graupel number: not needed, no sinks
      !-------------------------------------------------------------------
   end if
-  !$acc loop gang vector collapse(2)
+
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2) 
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         ! next limit ice and snow sublimation and rain evaporation
@@ -2564,6 +2593,7 @@ subroutine micro_mg_tend ( &
   ! use rhw to allow ice supersaturation
 
   call qsat_water(ttmpA, p, esnA, qvnA, mgncol*nlev)
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -2572,7 +2602,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if ((pre(i,k)+prds(i,k)+prdg(i,k))*precip_frac(i,k)+ice_sublim(i,k) < -1.e-20_r8) then
@@ -2590,9 +2619,11 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
+
   ! do separately using RHI for prds and ice_sublim
 
   call qsat_ice(ttmpA, p, esnA, qvnA, mgncol*nlev)
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -2616,6 +2647,12 @@ subroutine micro_mg_tend ( &
               ice_sublim(i,k) = dum*dum1A(i,k)*rdeltat
            end if
         end if
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
         ! get tendencies due to microphysical conversion processes
         !==========================================================
@@ -2626,6 +2663,16 @@ subroutine micro_mg_tend ( &
         ! because they may have a value already set for instantaneous
         ! melting/freezing.
 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2) 
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif // defined(OPENMP_GPU)
+  do k=1,nlev
+     do i=1,mgncol
         qvlat(i,k) = qvlat(i,k)-(pre(i,k)+prds(i,k))*precip_frac(i,k)-&
              vap_dep(i,k)-ice_sublim(i,k)-mnuccd(i,k)-mnudep(i,k)*lcldm(i,k) &
              -prdg(i,k)*precip_frac(i,k) 
@@ -2710,7 +2757,23 @@ subroutine micro_mg_tend ( &
         ! Avoid zero/near-zero division.
         qcsinksum_rate1ord(i,k) = qcsinksum_rate1ord(i,k) / &
              max(qc(i,k),1.0e-30_r8)
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif // defined(OPENMP_GPU)
+  do k=1,nlev
+     do i=1,mgncol
         ! microphysics output, note this is grid-averaged
         pratot(i,k)     = pra(i,k)*lcldm(i,k)
         prctot(i,k)     = prc(i,k)*lcldm(i,k)
@@ -2742,7 +2805,23 @@ subroutine micro_mg_tend ( &
         nmultgtot(i,k)  = nmultg(i,k)*lcldm(i,k)
         nmultrgtot(i,k) = nmultrg(i,k)*precip_frac(i,k)
         npsacwgtot(i,k) = npsacwg(i,k)*lcldm(i,k)
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
 
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2) 
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif // defined(OPENMP_GPU)
+  do k=1,nlev
+     do i=1,mgncol
         nctend(i,k) = nctend(i,k)+&
              (-nnuccc(i,k)-nnucct(i,k)-npsacws(i,k)+nsubc(i,k) &
              -npra(i,k)-nprc1(i,k)-npsacwg(i,k))*lcldm(i,k)
@@ -2859,6 +2938,13 @@ subroutine micro_mg_tend ( &
         ! modify to include snow. in prain & evap (diagnostic here: for wet dep)
         nevapr(i,k) = nevapr(i,k) + evapsnow(i,k)
         prain(i,k) = prain(i,k) + prodsnow(i,k)
+     end do
+  end do
+  !$acc end parallel
+#if defined(OPENMP_GPU)
+!$omp end target teams
+#endif // defined(OPENMP_GPU)
+
 
         ! calculate sedimentation for cloud water and ice
         ! and Graupel (mg3)
@@ -2866,6 +2952,16 @@ subroutine micro_mg_tend ( &
         ! update in-cloud cloud mixing ratio and number concentration
         ! with microphysical tendencies to calculate sedimentation, assign to dummy vars
         ! note: these are in-cloud values***, hence we divide by cloud fraction
+  !$acc parallel vector_length(VLENS)
+#if defined(OPENMP_GPU)
+!$omp target teams
+#endif // defined(OPENMP_GPU)
+  !$acc loop gang vector collapse(2)
+#if defined(OPENMP_GPU)
+!$omp loop bind(teams) collapse(2)
+#endif // defined(OPENMP_GPU)
+  do k=1,nlev
+     do i=1,mgncol
         dumc(i,k)  = (qc(i,k)+qctend(i,k)*deltat)/lcldm(i,k)
         dumi(i,k)  = (qi(i,k)+qitend(i,k)*deltat)/icldm(i,k)
         dumnc(i,k) = max((nc(i,k)+nctend(i,k)*deltat)/lcldm(i,k),0._r8)
@@ -2914,6 +3010,18 @@ subroutine micro_mg_tend ( &
   call size_dist_param_basic(mg_ice_props, dumi, dumni, lami, mgncol, nlev)
   call size_dist_param_liq(mg_liq_props, dumc, dumnc, rho, pgam, lamc, mgncol, nlev)
 
+  ! fallspeed for rain
+  call size_dist_param_basic(mg_rain_props, dumr, dumnr, lamr, mgncol, nlev)
+  ! fallspeed for snow
+  call size_dist_param_basic(mg_snow_props, dums, dumns, lams, mgncol, nlev)
+  ! fallspeed for graupel
+  if (do_hail) then
+     call size_dist_param_basic(mg_hail_props, dumg, dumng, lamg, mgncol, nlev)
+  end if
+  if (do_graupel) then
+     call size_dist_param_basic(mg_graupel_props, dumg, dumng, lamg, mgncol, nlev)
+  end if
+
   !$acc parallel vector_length(VLENS) async(LQUEUE)
 #if defined(OPENMP_GPU)
 !$omp target teams nowait
@@ -2946,6 +3054,11 @@ subroutine micro_mg_tend ( &
            fc(i,k) = 0._r8
            fnc(i,k)= 0._r8
         end if
+        ! redefine dummy variables - sedimentation is calculated over grid-scale
+        ! quantities to ensure conservation
+        dumc(i,k) = (qc(i,k)+qctend(i,k)*deltat)
+        dumnc(i,k) = max((nc(i,k)+nctend(i,k)*deltat),0._r8)
+        if (dumc(i,k).lt.qsmall) dumnc(i,k)=0._r8
      end do
   end do
   !$acc end parallel
@@ -2997,54 +3110,11 @@ subroutine micro_mg_tend ( &
            fi(i,k) = 0._r8
            fni(i,k)= 0._r8
         end if
-     end do
-  end do
-  !$acc end parallel
-#if defined(OPENMP_GPU)
-!$omp end target teams
-#endif // defined(OPENMP_GPU)
-
-  ! fallspeed for rain
-
-  call size_dist_param_basic(mg_rain_props, dumr, dumnr, lamr, mgncol, nlev)
-  ! fallspeed for snow
-  call size_dist_param_basic(mg_snow_props, dums, dumns, lams, mgncol, nlev)
-  ! fallspeed for graupel
-  if (do_hail) then
-     call size_dist_param_basic(mg_hail_props, dumg, dumng, lamg, mgncol, nlev)
-  end if
-  if (do_graupel) then
-     call size_dist_param_basic(mg_graupel_props, dumg, dumng, lamg, mgncol, nlev)
-  end if
-
-  !$acc parallel vector_length(VLENS)
-#if defined(OPENMP_GPU)
-!$omp target teams 
-#endif
-  !$acc loop gang vector collapse(2)
-#if defined(OPENMP_GPU)
-!$omp loop bind(teams) collapse(2)
-#endif
-  do k=1,nlev
-     do i=1,mgncol
-        pdel_inv(i,k) = 1._r8/pdel(i,k)
         ! redefine dummy variables - sedimentation is calculated over grid-scale
         ! quantities to ensure conservation
-        dumc(i,k) = (qc(i,k)+qctend(i,k)*deltat)
-        dumnc(i,k) = max((nc(i,k)+nctend(i,k)*deltat),0._r8)
         dumi(i,k) = (qi(i,k)+qitend(i,k)*deltat)
         dumni(i,k) = max((ni(i,k)+nitend(i,k)*deltat),0._r8)
-        dumr(i,k) = (qr(i,k)+qrtend(i,k)*deltat)
-        dumnr(i,k) = max((nr(i,k)+nrtend(i,k)*deltat),0._r8)
-        dums(i,k) = (qs(i,k)+qstend(i,k)*deltat)
-        dumns(i,k) = max((ns(i,k)+nstend(i,k)*deltat),0._r8)
-        dumg(i,k) = (qg(i,k)+qgtend(i,k)*deltat)
-        dumng(i,k) = max((ng(i,k)+ngtend(i,k)*deltat),0._r8)
-        if (dumc(i,k).lt.qsmall) dumnc(i,k)=0._r8
         if (dumi(i,k).lt.qsmall) dumni(i,k)=0._r8
-        if (dumr(i,k).lt.qsmall) dumnr(i,k)=0._r8
-        if (dums(i,k).lt.qsmall) dumns(i,k)=0._r8
-        if (dumg(i,k).lt.qsmall) dumng(i,k)=0._r8
      end do
   end do
   !$acc end parallel
@@ -3089,6 +3159,11 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
+        ! redefine dummy variables - sedimentation is calculated over grid-scale
+        ! quantities to ensure conservation
+        dumr(i,k) = (qr(i,k)+qrtend(i,k)*deltat)
+        dumnr(i,k) = max((nr(i,k)+nrtend(i,k)*deltat),0._r8)
+        if (dumr(i,k).lt.qsmall) dumnr(i,k)=0._r8
      end do
   end do
   !$acc end parallel
@@ -3135,6 +3210,11 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
+        ! redefine dummy variables - sedimentation is calculated over grid-scale
+        ! quantities to ensure conservation
+        dums(i,k) = (qs(i,k)+qstend(i,k)*deltat)
+        dumns(i,k) = max((ns(i,k)+nstend(i,k)*deltat),0._r8)
+        if (dums(i,k).lt.qsmall) dumns(i,k)=0._r8
      end do
   end do
   !$acc end parallel
@@ -3176,6 +3256,11 @@ subroutine micro_mg_tend ( &
               end if
            end if
         end if
+        ! redefine dummy variables - sedimentation is calculated over grid-scale
+        ! quantities to ensure conservation
+        dumg(i,k) = (qg(i,k)+qgtend(i,k)*deltat)
+        dumng(i,k) = max((ng(i,k)+ngtend(i,k)*deltat),0._r8)
+        if (dumg(i,k).lt.qsmall) dumng(i,k)=0._r8
      end do
   end do
   !$acc end parallel
@@ -3242,10 +3327,10 @@ subroutine micro_mg_tend ( &
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
 
-
   !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   ! get new update for variables that includes sedimentation tendency
   ! note : here dum variables are grid-average, NOT in-cloud
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3566,6 +3651,7 @@ subroutine micro_mg_tend ( &
   ! 25 micron for cloud ice
   ! update cloud variables after instantaneous processes to get effective radius
   ! variables are in-cloud to calculate size dist parameters
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3574,8 +3660,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-
   do k=1,nlev
      do i=1,mgncol
         dumc(i,k) = max(qc(i,k)+qctend(i,k)*deltat,0._r8)/lcldm(i,k)
@@ -3628,6 +3712,7 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
+
   ! cloud ice effective radius
   !-----------------------------------------------------------------
 
@@ -3651,6 +3736,7 @@ subroutine micro_mg_tend ( &
 #endif // defined(OPENMP_GPU)
 
      call size_dist_param_basic(mg_ice_props, dumi, dumni, lami, mgncol, nlev, n0=dumni0A2D)
+
      !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3659,7 +3745,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
      do k=1,nlev
         do i=1,mgncol
            if (dumi(i,k).ge.qsmall) then
@@ -3703,6 +3788,7 @@ subroutine micro_mg_tend ( &
   end if
   ! cloud droplet effective radius
   !-----------------------------------------------------------------
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3711,8 +3797,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
-
   do k=1,nlev
      do i=1,mgncol
         dum_2D(i,k) = dumnc(i,k)
@@ -3732,7 +3816,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (dumc(i,k).ge.qsmall) then
@@ -3778,7 +3861,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k =1,nlev
      do i=1,mgncol
         if (dumc(i,k).ge.qsmall) then
@@ -3810,7 +3892,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (dumr(i,k).ge.qsmall) then
@@ -3841,7 +3922,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (dums(i,k).ge.qsmall) then
@@ -3879,7 +3959,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (dumg(i,k).ge.qsmall) then
@@ -3926,6 +4005,7 @@ subroutine micro_mg_tend ( &
   ! outputs are just drout2 times constants.
 
   call avg_diameter_vec(qrout,nrout,rho,rhow,drout2,mgncol*nlev)
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3934,7 +4014,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (qrout(i,k) .gt. 1.e-7_r8 .and. nrout(i,k) .gt. 0._r8) then
@@ -3955,6 +4034,7 @@ subroutine micro_mg_tend ( &
         if (nsout(i,k) .eq. 0._r8) nsout(i,k) = 1.e-34_r8
      end do
   end do
+
   !$acc end parallel
 #if defined(OPENMP_GPU)
 !$omp end target teams
@@ -3963,6 +4043,7 @@ subroutine micro_mg_tend ( &
   ! outputs are just dsout2 times constants.
 
   call avg_diameter_vec(qsout, nsout, rho, rhosn,dsout2,mgncol*nlev)
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -3971,7 +4052,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (qsout(i,k) .gt. 1.e-7_r8 .and. nsout(i,k) .gt. 0._r8) then
@@ -4024,6 +4104,7 @@ subroutine micro_mg_tend ( &
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
   end if
+
   !$acc parallel vector_length(VLENS)
 #if defined(OPENMP_GPU)
 !$omp target teams
@@ -4032,7 +4113,6 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp loop bind(teams) collapse(2)
 #endif // defined(OPENMP_GPU)
-
   do k=1,nlev
      do i=1,mgncol
         if (qgout(i,k) .gt. 1.e-7_r8 .and. ngout(i,k) .gt. 0._r8) then
@@ -4135,11 +4215,11 @@ subroutine micro_mg_tend ( &
 #if defined(OPENMP_GPU)
 !$omp end target teams
 #endif // defined(OPENMP_GPU)
+
   !$acc end data
 #if defined(OPENMP_GPU)
 !$omp end target data
 #endif // defined(OPENMP_GPU)
-
 
 end subroutine micro_mg_tend
 !========================================================================
@@ -4224,7 +4304,7 @@ end subroutine calc_rercld
 !========================================================================
 
 subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxtend, &
-                         qxsedten,dumx,dumnx,prect,xflx,queue,xxlx,qxsevap,xcldm,tlat,qvlat,preci)
+                            qxsedten,dumx,dumnx,prect,xflx,queue,xxlx,qxsevap,xcldm,tlat,qvlat,preci)
 
    integer, intent(in)               :: mgncol,nlev
    logical, intent(in)               :: do_cldice
@@ -4256,15 +4336,17 @@ subroutine Sedimentation(mgncol,nlev,do_cldice,deltat,fx,fnx,pdel_inv,qxtend,nxt
    present_xcldm   = present(xcldm)
    present_qxsevap = present(qxsevap)
    present_preci   = present(preci)
+
    ! loop over sedimentation sub-time step to ensure stability
    !==============================================================
+
    !$acc enter data create (faloutx,faloutnx,dum1) async(queue)
 #if defined(OPENMP_GPU)
 !$omp target enter data map(alloc:faloutx,faloutnx,dum1) nowait
 #endif // defined(OPENMP_GPU)
    !$acc parallel vector_length(VLENS) async(queue)
 #if defined(OPENMP_GPU)
-!$omp target teams nowait depend(in:fx,fnx)
+!$omp target teams nowait
 #endif // defined(OPENMP_GPU)
    !$acc loop gang vector 
 #if defined(OPENMP_GPU)
