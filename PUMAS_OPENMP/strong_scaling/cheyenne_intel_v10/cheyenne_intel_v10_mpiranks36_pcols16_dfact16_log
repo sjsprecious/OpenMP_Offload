@@ -1,0 +1,593 @@
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.25.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26762.18
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.35.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      208 Time per call (usec):    22465.17
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.2.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.
+ 2
+ 
+ mg3_tend: DFACT*mgncol:      224 Time per call (usec):    24948.60
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.18.0.1' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0
+ .1
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26098.96
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.8.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.
+ 2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26885.04
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.27.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31431.84
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.14.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26653.28
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.18.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26952.45
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.31.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26871.14
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.23.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31762.07
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.16.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31782.43
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.12.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26819.82
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.24.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26980.81
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.10.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31759.34
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.19.0.2' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0
+ .2
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31321.89
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.31.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27170.75
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.27.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    32404.12
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.14.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26846.69
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.12.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27076.36
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.8.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          121
+ Number of non-identical variables within tolerance:            1
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.
+ 3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27171.63
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.5.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.
+ 3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27302.09
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.16.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    32706.18
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.25.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27054.88
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.23.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    32633.77
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.10.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    32542.92
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.24.0.3' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0
+ .3
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27156.54
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.4.0.4' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.
+ 4
+ 
+ mg3_tend: DFACT*mgncol:      224 Time per call (usec):    24192.32
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.7.0.4' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.
+ 4
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    29892.49
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.16.0.4' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0
+ .4
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    30333.39
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.23.0.4' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          121
+ Number of non-identical variables within tolerance:            1
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0
+ .4
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    30187.95
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.2.0.4' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.
+ 4
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    25898.48
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.8.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.
+ 5
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    32405.84
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.0.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.
+ 5
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27161.73
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.23.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0
+ .5
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31798.07
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.25.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0
+ .5
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31422.90
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.2.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.
+ 5
+ 
+ mg3_tend: DFACT*mgncol:      224 Time per call (usec):    25024.86
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.24.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0
+ .5
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    26946.94
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.18.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0
+ .5
+ 
+ mg3_tend: DFACT*mgncol:      240 Time per call (usec):    27274.32
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.16.0.5' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          118
+ Number of non-identical variables within tolerance:            4
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0
+ .5
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31905.56
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.32.0.1' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          120
+ Number of non-identical variables within tolerance:            2
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0
+ .1
+ 
+ mg3_tend: DFACT*mgncol:      224 Time per call (usec):    24284.35
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols1
+ 6/mg3_tend.24.0.14' *****************
+ 
+ Number of output variables:          122
+ Number of identical variables:          119
+ Number of non-identical variables within tolerance:            3
+ Number of non-identical variables out of tolerance:            0
+ Tolerance:   2.000000000000000E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0
+ .14
+ 
+ mg3_tend: DFACT*mgncol:      256 Time per call (usec):    31603.35
+ 
+****************************************************
+    kernel execution summary: mg3_tend
+****************************************************
+ total_columns:        10016
+    Total number of verification cases  :    41
+    Number of verification-passed cases :    41
+ 
+    kernel: mg3_tend: PASSED verification
+ 
+    number of processes 36
+ 
+    Average call time (usec):  0.285E+05
+    Minimum call time (usec):  0.225E+05
+    Maximum call time (usec):  0.327E+05
+ 
+    number of columns:    244
+    Average columns per sec :    307843.41
+****************************************************
