@@ -2,7 +2,7 @@
 
 #PBS -N MG3_KERNEL 
 #PBS -A NTDD0004
-#PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1
+#PBS -l select=4:ncpus=36:mpiprocs=36:mem=300GB:ngpus=2
 #PBS -l gpu_type=v100
 #PBS -l walltime=23:30:00
 #PBS -q casper 
@@ -32,7 +32,7 @@ module load cuda/11.4.0
 # Step 2: Set wrapper script for MPI+GPU configuration #
 ########################################################
 
-let ngpus=1    # number of GPUs used in this kernel run
+let ngpus=2    # number of GPUs used in this kernel run
 
 echo '#!/bin/bash'                       > set_device_rank.sh
 echo 'unset CUDA_VISIBLE_DEVICES'        >> set_device_rank.sh
@@ -59,17 +59,17 @@ let pcol=16    # pcols value for input data
 let ntask=36   # ntasks value for input data
 
 # add a loop to compile the code with different number of mpi ranks
-for n in 4 
+for n in 36 72 144
 do
     # add a loop to compile the code with different dfact
-    for i in 9 18 36 72 144 288 576 1152
+    for i in 1 2 4 8 16 32 64 128 256
     do
         # compile the code
         make clean
         make ntasks=$ntask pcols=$pcol dfact=$i
     
         # run the code
-        mpirun -n $n ./set_device_rank.sh ./kernel.exe >& casper_nvhpc_openacc_v10_mpiranks${n}_pcols${pcol}_dfact${i}_log
+        mpirun -n $n ./set_device_rank.sh ./kernel.exe >& casper_nvhpc_openacc_v10_2gpus_mpiranks${n}_pcols${pcol}_dfact${i}_log
     
         # clean the files
         make clean
