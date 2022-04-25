@@ -16,7 +16,7 @@ module purge
 # load modules
 module load ncarenv/1.3
 module load intel/19.1.1
-module load mpt/2.22
+module load mpt/2.25
 module load ncarcompilers/0.5.0
 
 cd $PBS_O_WORKDIR
