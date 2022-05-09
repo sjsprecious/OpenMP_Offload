@@ -304,7 +304,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22371.54
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21424.24
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0.2' *****************
  # of GPUs:             1
@@ -611,7 +611,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0.2
  
- mg3_tend: DFACT*mgncol:     1664 Time per call (usec):    18545.91
+ mg3_tend: DFACT*mgncol:     1664 Time per call (usec):    17815.57
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.2' *****************
  # of GPUs:             1
@@ -911,7 +911,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.2
  
- mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    22045.82
+ mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    21086.72
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.1' *****************
  # of GPUs:             1
@@ -1218,7 +1218,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.1
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21049.82
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    20404.54
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.2' *****************
  # of GPUs:             1
@@ -1402,6 +1402,8 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
+ # of GPUs:             1
+ GPU id:             0
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -1496,14 +1498,12 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- GPU id:             0
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -1525,7 +1525,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22736.91
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21803.51
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.2' *****************
  # of GPUs:             1
@@ -1825,7 +1825,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.2
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21847.71
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    20596.63
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.2' *****************
  # of GPUs:             1
@@ -1985,12 +1985,12 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -2132,7 +2132,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22321.76
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22075.05
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.2' *****************
  # of GPUs:             1
@@ -2232,8 +2232,8 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- GPU id:             0
  # of GPUs:             1
+ GPU id:             0
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -2432,7 +2432,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22177.21
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21220.46
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.2' *****************
  # of GPUs:             1
@@ -2739,7 +2739,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21979.65
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21310.94
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.2' *****************
  # of GPUs:             1
@@ -3046,7 +3046,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.2
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    23207.54
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22324.44
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.2' *****************
  # of GPUs:             1
@@ -3156,8 +3156,8 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -3346,7 +3346,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.2
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22260.38
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21310.04
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.2' *****************
  # of GPUs:             1
@@ -3646,7 +3646,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22127.05
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    20908.60
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.2' *****************
  # of GPUs:             1
@@ -3862,7 +3862,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- GPU id:             0
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
@@ -3892,6 +3891,7 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
+ GPU id:             0
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -3953,7 +3953,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.2
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23798.90
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23720.79
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.2' *****************
  # of GPUs:             1
@@ -4260,7 +4260,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.2
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22625.47
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22137.23
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0.2' *****************
  # of GPUs:             1
@@ -4560,7 +4560,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0.2
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21502.18
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    20728.91
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.3' *****************
  # of GPUs:             1
@@ -4867,7 +4867,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22391.21
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21325.39
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.3' *****************
  # of GPUs:             1
@@ -5167,7 +5167,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.3
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    23593.83
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22557.23
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.3' *****************
  # of GPUs:             1
@@ -5474,7 +5474,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22723.59
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22359.49
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.3' *****************
  # of GPUs:             1
@@ -5774,7 +5774,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23414.90
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22613.34
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.3' *****************
  # of GPUs:             1
@@ -5892,7 +5892,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -5900,6 +5899,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -6074,7 +6074,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    24204.74
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23697.31
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.3' *****************
  # of GPUs:             1
@@ -6256,7 +6256,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -6270,6 +6269,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -6374,7 +6374,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    24189.40
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23867.11
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.3' *****************
  # of GPUs:             1
@@ -6674,7 +6674,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.3
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    24185.19
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    23876.59
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.3' *****************
  # of GPUs:             1
@@ -6814,10 +6814,10 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -6981,7 +6981,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    24030.94
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23728.65
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.3' *****************
  # of GPUs:             1
@@ -7197,7 +7197,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -7207,6 +7206,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -7288,7 +7288,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.3
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22681.62
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22717.56
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.3' *****************
  # of GPUs:             1
@@ -7588,7 +7588,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.3
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    24788.14
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    24286.77
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.3' *****************
  # of GPUs:             1
@@ -7895,7 +7895,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.3
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    24701.71
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    23318.19
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.4' *****************
  # of GPUs:             1
@@ -8195,7 +8195,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.4
  
- mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    21976.56
+ mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    20429.33
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.4' *****************
  # of GPUs:             1
@@ -8369,8 +8369,8 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- GPU id:             0
  # of GPUs:             1
+ GPU id:             0
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -8495,7 +8495,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.4
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21010.65
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    20376.38
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.4' *****************
  # of GPUs:             1
@@ -8729,7 +8729,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -8737,6 +8736,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -8795,7 +8795,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.4
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21199.93
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    20586.44
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.4' *****************
  # of GPUs:             1
@@ -9102,7 +9102,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.4
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21451.91
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    20330.44
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.4' *****************
  # of GPUs:             1
@@ -9402,7 +9402,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.4
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21611.08
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    20635.98
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.5' *****************
  # of GPUs:             1
@@ -9709,7 +9709,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.5
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    23106.19
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22372.36
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.5' *****************
  # of GPUs:             1
@@ -10016,7 +10016,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.5
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22750.89
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22812.05
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.5' *****************
  # of GPUs:             1
@@ -10234,7 +10234,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -10258,6 +10257,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -10323,7 +10323,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.5
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22947.99
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22107.40
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.5' *****************
  # of GPUs:             1
@@ -10375,8 +10375,8 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -10630,7 +10630,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.5
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22869.12
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22495.44
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.5' *****************
  # of GPUs:             1
@@ -10692,8 +10692,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
- GPU id:             0
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -10780,7 +10778,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -10796,6 +10793,9 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
+ GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -10930,7 +10930,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.5
  
- mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    21821.71
+ mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    20673.66
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.5' *****************
  # of GPUs:             1
@@ -11156,7 +11156,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -11178,6 +11177,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -11230,7 +11230,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.5
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21576.13
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    21732.39
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.5' *****************
  # of GPUs:             1
@@ -11350,7 +11350,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -11384,6 +11383,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -11530,7 +11530,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.5
  
- mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    24174.47
+ mg3_tend: DFACT*mgncol:     1920 Time per call (usec):    22900.30
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.5' *****************
  # of GPUs:             1
@@ -11830,7 +11830,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.5
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    23570.72
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    23129.17
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0.1' *****************
  # of GPUs:             1
@@ -11972,7 +11972,6 @@
  # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
- # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -11986,6 +11985,7 @@
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
+ # of GPUs:             1
  GPU id:             0
  # of GPUs:             1
  GPU id:             0
@@ -12130,7 +12130,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0.1
  
- mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    21577.34
+ mg3_tend: DFACT*mgncol:     1792 Time per call (usec):    20642.93
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.14' *****************
  # of GPUs:             1
@@ -12430,7 +12430,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.14
  
- mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    22068.16
+ mg3_tend: DFACT*mgncol:     2048 Time per call (usec):    21193.44
  
 ****************************************************
     kernel execution summary: mg3_tend
@@ -12443,10 +12443,10 @@
  
     number of processes144
  
-    Average call time (usec):  0.226E+05
-    Minimum call time (usec):  0.185E+05
-    Maximum call time (usec):  0.248E+05
+    Average call time (usec):  0.218E+05
+    Minimum call time (usec):  0.178E+05
+    Maximum call time (usec):  0.243E+05
  
     number of columns:   1954
-    Average columns per sec :  12468889.41
+    Average columns per sec :  12880739.95
 ****************************************************
