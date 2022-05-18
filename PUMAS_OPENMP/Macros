@@ -2,6 +2,7 @@
  
 # User settings (all case-insensitive):
 COMPILER = nvhpc-openacc       # Intel, GNU, ARM (later, PGI?)
+GPU      = A100                # V100, A100
 ARCH     = bdw                 # Not currently used (using xHost/native modes)
 MPI      = yes                 # Yes/No, True/False or Enabled/Disabled
 DEBUG    = no
@@ -12,6 +13,7 @@ MPIFC = mpif90         # Could be mpif90 (default), or mpiifort, etc
  
 # Convert all above vars to lower case:
 COMPILER := $(shell echo ${COMPILER} | tr '[:upper:]' '[:lower:]')
+GPU      := $(shell echo ${GPU}      | tr '[:upper:]' '[:lower:]')
 ARCH     := $(shell echo ${ARCH}     | tr '[:upper:]' '[:lower:]')
 MPI      := $(shell echo ${MPI}      | tr '[:upper:]' '[:lower:]')
  
@@ -71,7 +73,12 @@ endif
 # ********* NVHPC-OpenACC compiler options ************
 ifeq ($(COMPILER),nvhpc-openacc)
   FC := nvfortran
-  FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__
+  ifeq ($(GPU),v100)
+    FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__
+  endif
+  ifeq ($(GPU),a100)
+    FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc80,lineinfo,nofma -Minfo=all -D__OPENACC__
+  endif
   LD_FLAGS +=
 endif
 
