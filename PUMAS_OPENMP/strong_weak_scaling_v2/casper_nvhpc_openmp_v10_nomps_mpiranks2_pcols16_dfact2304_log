@@ -16,7 +16,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    91958.81
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    93038.81
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0.2' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -35,7 +35,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0.2
  
- mg3_tend: DFACT*mgncol:    29952 Time per call (usec):    78114.27
+ mg3_tend: DFACT*mgncol:    29952 Time per call (usec):    77313.09
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.2' *****************
  
@@ -47,7 +47,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.2
  
- mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    86587.96
+ mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    86172.52
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.1' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -66,7 +66,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.1
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    85588.60
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    85219.20
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.2' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -85,7 +85,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    95818.22
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    96678.02
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.2' *****************
  
@@ -97,7 +97,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.2
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    91188.21
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    91184.54
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.2' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -116,7 +116,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    93830.17
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   321650.05
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.2' *****************
  
@@ -128,7 +128,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    92627.88
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    92503.12
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.2' *****************
  packed_nctend is NOT IDENTICAL(out of tolerance).
@@ -147,7 +147,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    91507.14
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    91162.69
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.2' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -166,7 +166,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.2
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec): 16169076.76
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   100341.99
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.2' *****************
  
@@ -178,7 +178,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.2
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    96389.57
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    96568.30
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.2' *****************
  
@@ -190,7 +190,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    89852.09
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    89424.46
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.2' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -209,7 +209,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.2
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   100488.18
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   100600.92
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.2' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -228,7 +228,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.2
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec): 15673589.82
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   101752.27
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0.2' *****************
  
@@ -240,7 +240,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0.2
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec): 15742507.17
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    91891.23
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.3' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -259,7 +259,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    93196.09
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    93083.38
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.3' *****************
  
@@ -271,7 +271,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.3
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   103180.99
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   103062.91
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.3' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -290,7 +290,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    97519.90
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    97550.50
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.3' *****************
  
@@ -302,7 +302,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   101086.44
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   100996.44
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.3' *****************
  
@@ -314,7 +314,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   104627.38
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   105342.53
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.3' *****************
  
@@ -326,7 +326,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   105931.04
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   105741.86
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.3' *****************
  
@@ -338,7 +338,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.3
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   106638.29
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   107253.39
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.3' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -357,7 +357,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   103881.73
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   103987.19
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.3' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -376,7 +376,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.3
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   102525.19
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   102250.82
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.3' *****************
  
@@ -388,7 +388,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.3
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   110962.57
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   111324.84
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.3' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -407,7 +407,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.3
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   103019.38
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   103095.39
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.4' *****************
  
@@ -419,7 +419,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.4
  
- mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    81253.75
+ mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    80582.70
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.4' *****************
  
@@ -431,7 +431,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.4
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    86953.45
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    86280.47
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.4' *****************
  
@@ -443,7 +443,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.4
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    88869.28
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    88159.16
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.4' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -462,7 +462,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.4
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    87849.55
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    87325.48
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.4' *****************
  
@@ -474,7 +474,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.4
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    86777.34
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    86184.19
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.5' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -493,7 +493,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.5
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   103947.90
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   103698.22
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.5' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -512,7 +512,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.5
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    98711.95
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    99188.49
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.5' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -531,7 +531,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.5
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    98441.13
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    98336.06
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.5' *****************
  packed_lambdac is NOT IDENTICAL(out of tolerance).
@@ -550,7 +550,7 @@
  
  Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.5
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    99630.81
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   100486.95
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.5' *****************
  
@@ -562,7 +562,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.5
  
- mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    85275.15
+ mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    84704.10
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.5' *****************
  
@@ -574,7 +574,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.5
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    90685.73
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):    90312.59
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.5' *****************
  
@@ -586,7 +586,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.5
  
- mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   102769.33
+ mg3_tend: DFACT*mgncol:    34560 Time per call (usec):   102935.92
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.5' *****************
  
@@ -598,7 +598,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.5
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   102979.61
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):   102824.47
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0.1' *****************
  
@@ -610,7 +610,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0.1
  
- mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    81404.53
+ mg3_tend: DFACT*mgncol:    32256 Time per call (usec):    80860.97
  
  ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.14' *****************
  
@@ -622,7 +622,7 @@
  
  Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.14
  
- mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    95205.85
+ mg3_tend: DFACT*mgncol:    36864 Time per call (usec):    94970.57
  
 ****************************************************
     kernel execution summary: mg3_tend
@@ -635,10 +635,10 @@
  
     number of processes  2
  
-    Average call time (usec):  0.125E+07
-    Minimum call time (usec):  0.781E+05
-    Maximum call time (usec):  0.162E+08
+    Average call time (usec):  0.101E+06
+    Minimum call time (usec):  0.773E+05
+    Maximum call time (usec):  0.322E+06
  
     number of columns:  35178
-    Average columns per sec :     56337.07
+    Average columns per sec :    697429.29
 ****************************************************
