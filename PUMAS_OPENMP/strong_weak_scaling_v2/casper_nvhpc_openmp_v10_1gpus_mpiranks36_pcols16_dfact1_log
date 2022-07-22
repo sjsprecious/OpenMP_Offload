@@ -1,0 +1,18 @@
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           14  of           480  elements are different.
+ Average - kernel     94303.48154145725     
+ Average - reference     94303.48154151057     
+ RMS of difference is    1.2145842490948314E-006
+ Normalized RMS of difference is    4.9893586764680746E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            53
+ Number of non-identical variables within tolerance:            68
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2
+ 
