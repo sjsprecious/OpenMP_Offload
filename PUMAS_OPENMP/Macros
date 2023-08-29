@@ -3,7 +3,7 @@
 # User settings (all case-insensitive):
 COMPILER = nvhpc-openacc       # Intel, GNU, ARM (later, PGI?)
 GPU      = A100                # V100, A100
-ARCH     = bdw                 # Not currently used (using xHost/native modes)
+ARCH     = milan               # CPU architecture
 MPI      = yes                 # Yes/No, True/False or Enabled/Disabled
 DEBUG    = no
  
@@ -58,7 +58,11 @@ ifeq ($(COMPILER),intel)
   ifeq ($(DEBUG),yes)
       FC_FLAGS += -qno-opt-dynamic-align -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source -qopt-report -xCORE_AVX2 -no-fma -qopenmp -O0 -g -check uninit -check bounds -check pointers -fpe0 -check noarg_temp_created
   else
-      FC_FLAGS += -qno-opt-dynamic-align -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source -qopt-report -xCORE_AVX2 -no-fma -qopenmp -O2 -debug minimal
+      ifeq ($(ARCH),milan)
+          FC_FLAGS += -qno-opt-dynamic-align -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source -qopt-report -march=core-avx2 -no-fma -qopenmp -O2 -debug minimal
+      else
+          FC_FLAGS += -qno-opt-dynamic-align -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source -qopt-report -xCORE_AVX2 -no-fma -qopenmp -O2 -debug minimal
+      endif
   endif
   LD_FLAGS +=
 endif
@@ -66,7 +70,10 @@ endif
 # ********* NVHPC compiler options ************
 ifeq ($(COMPILER),nvhpc)
   FC := nvfortran
-  FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma
+  ifeq ($(ARCH),milan)
+      FC_FLAGS += -mp -O -tp=zen3 -Mfree -Mnofma
+  else
+      FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma
   LD_FLAGS +=
 endif
 
@@ -74,10 +81,14 @@ endif
 ifeq ($(COMPILER),nvhpc-openacc)
   FC := nvfortran
   ifeq ($(GPU),v100)
-    FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__
+      FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc70,lineinfo,nofma -Minfo=all -D__OPENACC__
   endif
   ifeq ($(GPU),a100)
-    FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc80,lineinfo,nofma -Minfo=all -D__OPENACC__
+      ifeq ($(ARCH),milan)
+          FC_FLAGS += -mp -O -tp=zen3 -Mfree -Mnofma -acc -gpu=cc80,lineinfo,nofma -Minfo=all -D__OPENACC__
+      else
+          FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma -acc -gpu=cc80,lineinfo,nofma -Minfo=all -D__OPENACC__
+      endif
   endif
   LD_FLAGS +=
 endif
@@ -85,7 +96,20 @@ endif
 # ********* NVHPC-OpenMP compiler options ************
 ifeq ($(COMPILER),nvhpc-openmp)
   FC := nvfortran
-  FC_FLAGS += -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU
+  ifeq ($(GPU),v100)
+      ifeq ($(ARCH),milan)
+          FC_FLAGS += -O -tp=zen3 -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU
+      else
+          FC_FLAGS += -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU
+      endif
+  endif
+  ifeq ($(GPU),a100)
+      ifeq ($(ARCH),milan)
+          FC_FLAGS += -O -tp=zen3 -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc80,lineinfo,nofma -Minfo=all -DOPENMP_GPU 
+      else
+          FC_FLAGS += -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU 
+      endif
+  endif
   LD_FLAGS +=
 endif
 
