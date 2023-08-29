@@ -19,6 +19,9 @@ module load cray-mpich/8.1.25
 module load cuda/11.7.1
 module load ncarcompilers/1.0.0
 
+# Enable MPI with GPU support
+export MPICH_GPU_SUPPORT_ENABLED=1
+
 cd $PBS_O_WORKDIR
 let pcol=16      # pcols value for input data
 let ntask=36     # ntasks value for input data
