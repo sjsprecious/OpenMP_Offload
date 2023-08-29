@@ -74,6 +74,7 @@ ifeq ($(COMPILER),nvhpc)
       FC_FLAGS += -mp -O -tp=zen3 -Mfree -Mnofma
   else
       FC_FLAGS += -mp -O -tp=skylake -Mfree -Mnofma
+  endif
   LD_FLAGS +=
 endif
 
