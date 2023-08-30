@@ -3,7 +3,7 @@
 # User settings (all case-insensitive):
 COMPILER = nvhpc-openacc       # Intel, GNU, ARM (later, PGI?)
 GPU      = A100                # V100, A100
-ARCH     = milan               # CPU architecture
+ARCH     = skylake             # CPU architecture
 MPI      = yes                 # Yes/No, True/False or Enabled/Disabled
 DEBUG    = no
  
@@ -108,7 +108,7 @@ ifeq ($(COMPILER),nvhpc-openmp)
       ifeq ($(ARCH),milan)
           FC_FLAGS += -O -tp=zen3 -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc80,lineinfo,nofma -Minfo=all -DOPENMP_GPU 
       else
-          FC_FLAGS += -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc70,lineinfo,nofma -Minfo=all -DOPENMP_GPU 
+          FC_FLAGS += -O -tp=skylake -Mfree -Mnofma -target=gpu -mp=gpu -gpu=cc80,lineinfo,nofma -Minfo=all -DOPENMP_GPU 
       endif
   endif
   LD_FLAGS +=

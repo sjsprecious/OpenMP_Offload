@@ -1,0 +1,805 @@
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2' *****************
+ packed_tlat is NOT IDENTICAL(out of tolerance).
+           98  of           480  elements are different.
+ Average - kernel    9.5702958465329769E-003
+ Average - reference    1.1775910146440991E-003
+ RMS of difference is    0.1676466257544062     
+ Normalized RMS of difference is     208.4521910283873     
+ 
+ packed_qctend is NOT IDENTICAL(out of tolerance).
+           69  of           480  elements are different.
+ Average - kernel    1.3971910261217476E-005
+ Average - reference   -1.0806479279192349E-010
+ RMS of difference is    2.1951598834177789E-003
+ Normalized RMS of difference is     2599387.174464307     
+ 
+ packed_qitend is NOT IDENTICAL(out of tolerance).
+          112  of           480  elements are different.
+ Average - kernel    2.5085815698957170E-008
+ Average - reference    2.1190999952542955E-010
+ RMS of difference is    5.0237662390319500E-007
+ Normalized RMS of difference is     2186.142615120569     
+ 
+ packed_nctend is NOT IDENTICAL(out of tolerance).
+           40  of           480  elements are different.
+ Average - kernel     2874.982358523035     
+ Average - reference    -2.061819600532675     
+ RMS of difference is     17036.81256073096     
+ Normalized RMS of difference is     139923.6009382762     
+ 
+ packed_nitend is NOT IDENTICAL(out of tolerance).
+           80  of           480  elements are different.
+ Average - kernel     760.2393437919292     
+ Average - reference    6.5204783680150227E-003
+ RMS of difference is     15354.37191777189     
+ Normalized RMS of difference is     7239.656901617356     
+ 
+ packed_prect is NOT IDENTICAL(out of tolerance).
+            6  of            15  elements are different.
+ Average - kernel    4.9263537278858521E-004
+ Average - reference    1.2909554703685828E-010
+ RMS of difference is    1.3328313688110648E-003
+ Normalized RMS of difference is     1964670.632951748     
+ 
+ packed_cflx is NOT IDENTICAL(out of tolerance).
+           55  of           480  elements are different.
+ Average - kernel    0.1997400204133786     
+ Average - reference    9.2581134392053458E-008
+ RMS of difference is     1.236306471522219     
+ Normalized RMS of difference is     5184.814247047734     
+ 
+ packed_qcsedten is NOT IDENTICAL(out of tolerance).
+           68  of           480  elements are different.
+ Average - kernel    1.3996879139127480E-005
+ Average - reference   -1.3092582242311278E-011
+ RMS of difference is    2.1952823687305350E-003
+ Normalized RMS of difference is     1492191.700767977     
+ 
+ packed_homo is NOT IDENTICAL(out of tolerance).
+            2  of           480  elements are different.
+ Average - kernel    2.4873905699431743E-008
+ Average - reference     0.000000000000000     
+ RMS of difference is    5.0237662390319500E-007
+ Normalized RMS of difference is    5.0237662390319500E-007
+ 
+ packed_refl is NOT IDENTICAL(out of tolerance).
+           71  of           480  elements are different.
+ Average - kernel    -6901.870563984688     
+ Average - reference    -7011.136559677660     
+ RMS of difference is     1207.445531215812     
+ Normalized RMS of difference is     5.860472023990960     
+ 
+ packed_arefl is NOT IDENTICAL(out of tolerance).
+           71  of           480  elements are different.
+ Average - kernel    -2.964607979371948     
+ Average - reference    -5.623541496651125     
+ RMS of difference is     15.59567366036431     
+ Normalized RMS of difference is     2.771519475784316     
+ 
+ packed_areflz is NOT IDENTICAL(out of tolerance).
+           91  of           480  elements are different.
+ Average - kernel     5661473.284132954     
+ Average - reference    1.3518462425477044E-003
+ RMS of difference is     113190966.3054352     
+ Normalized RMS of difference is     1247804163675346.     
+ 
+ packed_frefl is NOT IDENTICAL(out of tolerance).
+            7  of           480  elements are different.
+ Average - kernel    0.1823155298672199     
+ Average - reference    0.1810275150944682     
+ RMS of difference is    7.0441096370172956E-002
+ Normalized RMS of difference is    7.0441096370172956E-002
+ 
+ packed_csrfl is NOT IDENTICAL(out of tolerance).
+           71  of           480  elements are different.
+ Average - kernel    -6904.205557252758     
+ Average - reference    -7011.136559677660     
+ RMS of difference is     1204.991259271828     
+ Normalized RMS of difference is     5.792391096823000     
+ 
+ packed_acsrfl is NOT IDENTICAL(out of tolerance).
+           46  of           480  elements are different.
+ Average - kernel    0.1987802230155181     
+ Average - reference    -1.935635638272092     
+ RMS of difference is     12.41385144336990     
+ Normalized RMS of difference is     5.886064695560301     
+ 
+ packed_fcsrfl is NOT IDENTICAL(out of tolerance).
+           19  of           480  elements are different.
+ Average - kernel    0.1044537489599113     
+ Average - reference    8.7745416897354114E-002
+ RMS of difference is    0.1405503394084747     
+ Normalized RMS of difference is    0.1405651539008540     
+ 
+ packed_nfice is NOT IDENTICAL(out of tolerance).
+           57  of           480  elements are different.
+ Average - kernel    0.2294165517965660     
+ Average - reference    0.3278223496281040     
+ RMS of difference is    0.3120655748163992     
+ Normalized RMS of difference is    0.3322528796393234     
+ 
+ packed_rel is NOT IDENTICAL(out of tolerance).
+           42  of           480  elements are different.
+ Average - kernel     11.24463809462237     
+ Average - reference     10.07146352555716     
+ RMS of difference is     4.941239313005877     
+ Normalized RMS of difference is    0.9835890636317129     
+ 
+ packed_rei is NOT IDENTICAL(out of tolerance).
+           74  of           480  elements are different.
+ Average - kernel     49.46266262317168     
+ Average - reference     49.62748738589480     
+ RMS of difference is     2.559412511119497     
+ Normalized RMS of difference is    3.2291791579225584E-002
+ 
+ packed_sadice is NOT IDENTICAL(out of tolerance).
+          104  of           480  elements are different.
+ Average - kernel    2.7682210214411101E-005
+ Average - reference    8.7964197447370224E-007
+ RMS of difference is    5.3310756474546231E-004
+ Normalized RMS of difference is     469.4447012248905     
+ 
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           43  of           480  elements are different.
+ Average - kernel     76991.77734151542     
+ Average - reference     94303.48154151057     
+ RMS of difference is     222342.4387746006     
+ Normalized RMS of difference is     45335.77290179757     
+ 
+ packed_mu is NOT IDENTICAL(out of tolerance).
+           31  of           480  elements are different.
+ Average - kernel    0.9404358476881832     
+ Average - reference    0.6310909549498734     
+ RMS of difference is     2.259751441315600     
+ Normalized RMS of difference is     2.065719585495694     
+ 
+ packed_dei is NOT IDENTICAL(out of tolerance).
+           71  of           480  elements are different.
+ Average - kernel     53.93965389658882     
+ Average - reference     54.11939736738828     
+ RMS of difference is     2.791071440697380     
+ Normalized RMS of difference is    3.2291791579225584E-002
+ 
+ rel_fn_dum is NOT IDENTICAL(out of tolerance).
+           37  of           480  elements are different.
+ Average - kernel     10.83197533719866     
+ Average - reference     9.523411157281792     
+ RMS of difference is     5.187617312771689     
+ Normalized RMS of difference is     1.784338993039435     
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            50
+ Number of non-identical variables within tolerance:            48
+ Number of non-identical variables out of tolerance:            24
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    17699.19
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           10  of           416  elements are different.
+ Average - kernel     79256.89611559646     
+ Average - reference     79256.89611562024     
+ RMS of difference is    4.2398876978379538E-007
+ Normalized RMS of difference is    1.7421719863377565E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            58
+ Number of non-identical variables within tolerance:            63
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.35.0.2
+ 
+ mg3_tend: DFACT*mgncol:    14976 Time per call (usec):    16777.05
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.2' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            59
+ Number of non-identical variables within tolerance:            63
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.2
+ 
+ mg3_tend: DFACT*mgncol:    16128 Time per call (usec):    16176.16
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.1' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           17  of           480  elements are different.
+ Average - kernel     210734.6249259468     
+ Average - reference     210734.6249259467     
+ RMS of difference is    4.2373177063151432E-009
+ Normalized RMS of difference is    5.5836179463222107E-015
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            68
+ Number of non-identical variables within tolerance:            53
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.1
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    17108.68
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           14  of           480  elements are different.
+ Average - kernel     150993.2902966326     
+ Average - reference     150993.2902966313     
+ RMS of difference is    2.8646264869505928E-008
+ Normalized RMS of difference is    3.7870463089146829E-014
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    19790.99
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.2' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            52
+ Number of non-identical variables within tolerance:            70
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.2
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    17029.96
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           12  of           480  elements are different.
+ Average - kernel     95318.85886392364     
+ Average - reference     95318.85886392774     
+ RMS of difference is    1.3691040125581626E-007
+ Normalized RMS of difference is    3.2343471296576994E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            58
+ Number of non-identical variables within tolerance:            63
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    18483.63
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.2' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            68
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    18664.46
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.2' *****************
+ packed_nctend is NOT IDENTICAL(out of tolerance).
+            6  of           480  elements are different.
+ Average - kernel     22.97767099027885     
+ Average - reference     22.97767099046016     
+ RMS of difference is    3.9723404612247897E-009
+ Normalized RMS of difference is    8.4961563052914163E-011
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            52
+ Number of non-identical variables within tolerance:            69
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    17053.23
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           14  of           512  elements are different.
+ Average - kernel     83859.68142842817     
+ Average - reference     83859.68142842851     
+ RMS of difference is    4.0830279941605354E-007
+ Normalized RMS of difference is    4.4823612176261607E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            55
+ Number of non-identical variables within tolerance:            66
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.2
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    19541.76
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.2' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            68
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.2
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    18698.70
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.2' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            56
+ Number of non-identical variables within tolerance:            66
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    17958.64
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           21  of           480  elements are different.
+ Average - kernel     226083.5827319706     
+ Average - reference     226083.5827319791     
+ RMS of difference is    1.8853769698409775E-007
+ Normalized RMS of difference is    2.2770183791447204E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.2
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    20596.79
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.2' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           12  of           512  elements are different.
+ Average - kernel     107264.3381159697     
+ Average - reference     107264.3381159706     
+ RMS of difference is    1.5088529601792390E-008
+ Normalized RMS of difference is    8.9351416911179074E-015
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            55
+ Number of non-identical variables within tolerance:            66
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.2
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    18798.86
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0.2' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            58
+ Number of non-identical variables within tolerance:            64
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.19.0.2
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    17854.47
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.3' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           17  of           480  elements are different.
+ Average - kernel     164271.4904988812     
+ Average - reference     164271.4904988605     
+ RMS of difference is    4.5593347922949008E-007
+ Normalized RMS of difference is    2.9593083615179896E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.31.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    17646.69
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.3' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            51
+ Number of non-identical variables within tolerance:            71
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.27.0.3
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    20077.31
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.3' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           10  of           480  elements are different.
+ Average - kernel     105095.4488857035     
+ Average - reference     105095.4488857034     
+ RMS of difference is    2.5622833382170932E-009
+ Normalized RMS of difference is    1.1728120914403046E-015
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            59
+ Number of non-identical variables within tolerance:            62
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.14.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    18459.63
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.3' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            48
+ Number of non-identical variables within tolerance:            74
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.12.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    19422.37
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.3' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            49
+ Number of non-identical variables within tolerance:            73
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    20172.61
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.3' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            41
+ Number of non-identical variables within tolerance:            81
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.5.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    21215.28
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.3' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            47
+ Number of non-identical variables within tolerance:            75
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.3
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    20163.37
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.3' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           11  of           480  elements are different.
+ Average - kernel     151071.4200961064     
+ Average - reference     151071.4200961071     
+ RMS of difference is    1.6822141406198831E-008
+ Normalized RMS of difference is    2.0001252941596019E-014
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            47
+ Number of non-identical variables within tolerance:            74
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    19771.08
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.3' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           14  of           512  elements are different.
+ Average - kernel     110903.0199997762     
+ Average - reference     110903.0199997807     
+ RMS of difference is    1.0182792409179088E-007
+ Normalized RMS of difference is    3.3405424464081244E-014
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.3
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    19668.81
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.3' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            48
+ Number of non-identical variables within tolerance:            74
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.10.0.3
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    20785.05
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.3' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           12  of           480  elements are different.
+ Average - kernel     215393.5351702844     
+ Average - reference     215393.5351702872     
+ RMS of difference is    6.0126145586384473E-008
+ Normalized RMS of difference is    1.9417055526461399E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            48
+ Number of non-identical variables within tolerance:            73
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.3
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    20322.47
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.4' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            68
+ Number of non-identical variables within tolerance:            54
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.4.0.4
+ 
+ mg3_tend: DFACT*mgncol:    16128 Time per call (usec):    15567.39
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.4' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            68
+ Number of non-identical variables within tolerance:            54
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.7.0.4
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    15971.64
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.4' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            70
+ Number of non-identical variables within tolerance:            52
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.4
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    17784.52
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.4' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           21  of           512  elements are different.
+ Average - kernel     229596.0543723658     
+ Average - reference     229596.0543723814     
+ RMS of difference is    3.5199761077289103E-007
+ Normalized RMS of difference is    4.6603560259289738E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            68
+ Number of non-identical variables within tolerance:            53
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.4
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    17221.24
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.4' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            67
+ Number of non-identical variables within tolerance:            55
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.4
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    16812.85
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.5' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           10  of           512  elements are different.
+ Average - kernel     137311.3344844024     
+ Average - reference     137311.3344844025     
+ RMS of difference is    3.2310147139532865E-009
+ Normalized RMS of difference is    1.9581801015631012E-015
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.8.0.5
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    20051.21
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.5' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           29  of           480  elements are different.
+ Average - kernel     212512.1395245631     
+ Average - reference     212512.1395245339     
+ RMS of difference is    6.5263009550814800E-007
+ Normalized RMS of difference is    1.2262256599305981E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            50
+ Number of non-identical variables within tolerance:            71
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.0.0.5
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    19459.67
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.5' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+           13  of           512  elements are different.
+ Average - kernel     152626.8058405077     
+ Average - reference     152626.8058405012     
+ RMS of difference is    1.4694293332991482E-007
+ Normalized RMS of difference is    1.4486835154139142E-013
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            54
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.23.0.5
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    19048.24
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.5' *****************
+ packed_lambdac is NOT IDENTICAL(out of tolerance).
+            8  of           512  elements are different.
+ Average - kernel     86194.16514561167     
+ Average - reference     86194.16514561251     
+ RMS of difference is    2.3871905907622398E-008
+ Normalized RMS of difference is    1.0536011479656753E-014
+ 
+ 
+ Number of output variables:           122
+ Number of identical variables:            53
+ Number of non-identical variables within tolerance:            68
+ Number of non-identical variables out of tolerance:             1
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification FAILED with./input_casper_intel19/mpirank36_pcols16/mg3_tend.25.0.5
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    18809.38
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.5' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            55
+ Number of non-identical variables within tolerance:            67
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.2.0.5
+ 
+ mg3_tend: DFACT*mgncol:    16128 Time per call (usec):    16231.08
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.5' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            52
+ Number of non-identical variables within tolerance:            70
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.5
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    16920.15
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.5' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            49
+ Number of non-identical variables within tolerance:            73
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.18.0.5
+ 
+ mg3_tend: DFACT*mgncol:    17280 Time per call (usec):    19684.05
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.5' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            48
+ Number of non-identical variables within tolerance:            74
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.16.0.5
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    20992.14
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0.1' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            68
+ Number of non-identical variables within tolerance:            54
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.32.0.1
+ 
+ mg3_tend: DFACT*mgncol:    16128 Time per call (usec):    15805.87
+ 
+ ***************** Verification against './input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.14' *****************
+ 
+ Number of output variables:           122
+ Number of identical variables:            50
+ Number of non-identical variables within tolerance:            72
+ Number of non-identical variables out of tolerance:             0
+ Tolerance:    2.0000000000000001E-009
+ 
+ Verification PASSED with ./input_casper_intel19/mpirank36_pcols16/mg3_tend.24.0.14
+ 
+ mg3_tend: DFACT*mgncol:    18432 Time per call (usec):    18071.14
+ 
+****************************************************
+    kernel execution summary: mg3_tend
+****************************************************
+ total_columns:        721152
+    Total number of verification cases  :    41
+    Number of verification-passed cases :    22
+ 
+    kernel: mg3_tend: PASSED verification
+ 
+    number of processes  1
+ 
+    Average call time (usec):  0.185E+05
+    Minimum call time (usec):  0.156E+05
+    Maximum call time (usec):  0.212E+05
+ 
+    number of columns:  17589
+    Average columns per sec :    950922.47
+****************************************************

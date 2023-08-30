@@ -2,13 +2,13 @@
 
 #PBS -N MG3_KERNEL 
 #PBS -A NTDD0004
-#PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1
+#PBS -l select=1:ncpus=36:mpiprocs=36:mem=300GB:ngpus=1:mps=1
 #PBS -l gpu_type=a100
-#PBS -l walltime=01:00:00
+#PBS -l walltime=05:30:00
 #PBS -q preview 
 #PBS -j oe
 #PBS -k eod
-#PBS -S /glade/u/apps/dav/opt/nvidia-mps/mps_bash
+###PBS -S /glade/u/apps/dav/opt/nvidia-mps/mps_bash
 
 ulimit -s unlimited
 
@@ -26,7 +26,7 @@ module load ncarenv/1.3
 module load nvhpc/22.2
 module load openmpi/4.1.1
 module load ncarcompilers/0.5.0
-module load cuda/11.4.0
+module load cuda/11.6
 
 ########################################################
 # Step 2: Set wrapper script for MPI+GPU configuration #
@@ -59,10 +59,10 @@ let pcol=16    # pcols value for input data
 let ntask=36   # ntasks value for input data
 
 # add a loop to compile the code with different number of mpi ranks
-for n in 36 # 1 2 4 9 18 36
+for n in 1 # 1 2 4 9 18 36
 do
     # add a loop to compile the code with different dfact
-    for i in 64 128 256 # 1 2 4 8 16 32 64 128 256
+    for i in 36 72 144 288 576 1152 2304 4608 9216 # 1 2 4 8 16 32 64 128 256
     do
         # compile the code
         make clean
